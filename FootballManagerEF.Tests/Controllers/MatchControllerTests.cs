@@ -1,20 +1,19 @@
-﻿using System;
+﻿using FootballManagerEF.Controllers;
+using FootballManagerEF.Repositories;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NUnit.Framework;
-using FootballManagerEF.EFModel;
-using FootballManagerEF.Controllers;
-using FootballManagerEF.Repositories;
 
-namespace FootballManagerEF.Tests
+namespace FootballManagerEF.Tests.Controllers
 {
     [TestFixture]
-    public class SomeTests
+    public class MatchControllerTests
     {
         [Test]
-        public void Matches_WhenGetMatchesIsCalledReturnsListOfMatches()
+        public void MatchController_WhenGetMatchesIsCalledReturnsListOfMatches()
         {
             //Arrange 
             var fakeMatchRepo = new FakeMatchRepository();

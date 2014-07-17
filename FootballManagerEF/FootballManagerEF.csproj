@@ -40,9 +40,6 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -92,7 +89,6 @@
     </Compile>
     <Compile Include="Repositories\FakeMatchRepository.cs" />
     <Compile Include="Repositories\MatchRepository.cs" />
-    <Compile Include="Tests\SomeTests.cs" />
     <Compile Include="Resources\Utils.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

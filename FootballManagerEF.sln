@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballManagerEF", "FootballManagerEF\FootballManagerEF.csproj", "{8AE5D6F5-FD5B-4234-8DB2-AC06F3B2EEA8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballManagerEF.Tests", "FootballManagerEF.Tests\FootballManagerEF.Tests.csproj", "{F91CF8FD-BC21-425A-91C8-C59FC30388BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{8AE5D6F5-FD5B-4234-8DB2-AC06F3B2EEA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AE5D6F5-FD5B-4234-8DB2-AC06F3B2EEA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AE5D6F5-FD5B-4234-8DB2-AC06F3B2EEA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F91CF8FD-BC21-425A-91C8-C59FC30388BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F91CF8FD-BC21-425A-91C8-C59FC30388BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F91CF8FD-BC21-425A-91C8-C59FC30388BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F91CF8FD-BC21-425A-91C8-C59FC30388BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
