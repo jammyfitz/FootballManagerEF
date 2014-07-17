@@ -40,11 +40,16 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -62,26 +67,33 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\FootballEntities.cs">
+    <Compile Include="Controllers\MatchController.cs" />
+    <Compile Include="DomainModel\Match.cs" />
+    <Compile Include="EFModel\FootballEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FootballEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IMatch.cs" />
+    <Compile Include="Interfaces\IMatchRepository.cs" />
     <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Interfaces\ITeam.cs" />
-    <Compile Include="Model\Match.cs">
+    <Compile Include="EFModel\Match.cs">
       <DependentUpon>FootballEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Player.cs">
+    <Compile Include="EFModel\Player.cs">
       <DependentUpon>FootballEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\PlayerMatch.cs">
+    <Compile Include="EFModel\PlayerMatch.cs">
       <DependentUpon>FootballEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Team.cs">
+    <Compile Include="EFModel\Team.cs">
       <DependentUpon>FootballEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\FakeMatchRepository.cs" />
+    <Compile Include="Repositories\MatchRepository.cs" />
+    <Compile Include="Tests\SomeTests.cs" />
+    <Compile Include="Resources\Utils.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -90,12 +102,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\FootballEntities.Context.cs">
+    <Compile Include="EFModel\FootballEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FootballEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\FootballEntities.Designer.cs">
+    <Compile Include="EFModel\FootballEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FootballEntities.edmx</DependentUpon>
@@ -123,19 +135,19 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Model\FootballEntities.edmx">
+    <EntityDeploy Include="EFModel\FootballEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>FootballEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Model\FootballEntities.Context.tt">
+    <None Include="EFModel\FootballEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>FootballEntities.edmx</DependentUpon>
       <LastGenOutput>FootballEntities.Context.cs</LastGenOutput>
     </None>
-    <None Include="Model\FootballEntities.edmx.diagram">
+    <None Include="EFModel\FootballEntities.edmx.diagram">
       <DependentUpon>FootballEntities.edmx</DependentUpon>
     </None>
-    <None Include="Model\FootballEntities.tt">
+    <None Include="EFModel\FootballEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>FootballEntities.edmx</DependentUpon>
       <LastGenOutput>FootballEntities.cs</LastGenOutput>
@@ -152,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\OriginalCodeBehind.txt" />
@@ -161,6 +174,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\moleinthebarn.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,22 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FootballManagerEF.Model
+namespace FootballManagerEF.EFModel
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Match
     {
         public Match()
         {
             this.PlayerMatches = new HashSet<PlayerMatch>();
         }
-    
+
         public int MatchID { get; set; }
         public Nullable<System.DateTime> MatchDate { get; set; }
         public Nullable<int> MatchWinner { get; set; }
-    
+
         public virtual ICollection<PlayerMatch> PlayerMatches { get; set; }
     }
 }

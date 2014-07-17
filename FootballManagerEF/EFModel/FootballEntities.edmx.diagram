@@ -5,10 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="8459e11c0f1e4050b7f3c225423baa46" Name="Diagram1">
-        <EntityTypeShape EntityType="FootballModel.Match" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="FootballModel.Player" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="FootballModel.PlayerMatch" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="FootballModel.Team" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FootballModel.Match" Width="1.5" PointX="1.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FootballModel.Player" Width="1.5" PointX="4.875" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FootballModel.PlayerMatch" Width="1.5" PointX="4.875" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FootballModel.Team" Width="1.5" PointX="8.375" PointY="1.125" IsExpanded="true" />
         <AssociationConnector Association="FootballModel.FK_PlayerMatch_Match" ManuallyRouted="false" />
         <AssociationConnector Association="FootballModel.FK_PlayerMatch_Player" ManuallyRouted="false" />
         <AssociationConnector Association="FootballModel.FK_PlayerMatch_Team" ManuallyRouted="false" />

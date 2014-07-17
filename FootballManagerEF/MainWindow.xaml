@@ -26,7 +26,7 @@
             <ColumnDefinition Width="0"/>
         </Grid.ColumnDefinitions>
         <Label x:Name="lbl_Matches" Content="Matches" HorizontalAlignment="Left" Height="19" Margin="7,9,0,0" VerticalAlignment="Top" Width="79" FontFamily="Aharoni"/>
-        <ListBox x:Name="lb_Matches" HorizontalAlignment="Left" Height="242" Margin="10,28,0,0" VerticalAlignment="Top" Width="91" SelectionChanged="lb_Matches_SelectionChanged" DisplayMemberPath="MatchDate"/>
+        <ListBox x:Name="lb_Matches" HorizontalAlignment="Left" Height="242" Margin="10,28,0,0" VerticalAlignment="Top" Width="91" SelectionChanged="lb_Matches_SelectionChanged" DisplayMemberPath="MatchDate" ItemStringFormat="yyyy-MM-dd"/>
         <Label x:Name="lbl_Selection" Content="Selection" HorizontalAlignment="Left" Height="20" Margin="117,8,0,0" VerticalAlignment="Top" Width="79" FontFamily="Aharoni"/>
 
 

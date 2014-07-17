@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FootballManagerEF.Model
+namespace FootballManagerEF.EFModel
 {
     using System;
     using System.Collections.Generic;

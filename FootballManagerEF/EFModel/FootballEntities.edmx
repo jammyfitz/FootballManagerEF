@@ -110,7 +110,7 @@ warning 6013: The table/view 'Football.dbo.Config' does not have a primary key d
             <PropertyRef Name="MatchID" />
           </Key>
           <Property Name="MatchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MatchDate" Type="DateTime" Precision="0" />
+          <Property Name="MatchDate" Type="DateTime" />
           <Property Name="MatchWinner" Type="Int32" />
           <NavigationProperty Name="PlayerMatches" Relationship="Self.FK_PlayerMatch_Match" FromRole="Match" ToRole="PlayerMatch" />
         </EntityType>

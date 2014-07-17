@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FootballManagerEF.Interfaces;
+using FootballManagerEF.EFModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data.Entity.Core.Objects;
+using FootballManagerEF.Controllers;
 
 namespace FootballManagerEF
 {
@@ -23,11 +27,25 @@ namespace FootballManagerEF
         public MainWindow()
         {
             InitializeComponent();
+            InitializeBindings();
+        }
+
+        private void InitializeBindings()
+        {
+            BindMatches();
+        }
+
+        private void BindMatches()
+        {
+            MatchController matchController = new MatchController();
+            List<Match> matches = matchController.GetMatches();
+
+            lb_Matches.ItemsSource = matches;          
         }
 
         private void lb_Matches_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         private void btn_Update_Click(object sender, RoutedEventArgs e)
@@ -40,7 +58,7 @@ namespace FootballManagerEF
             throw new NotImplementedException();
         }
 
-        #region Hack for DataGrid to provide single click access
+        #region Workaround for DataGrid to provide single click access
         private void DataGridCell_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DataGridCell cell = sender as DataGridCell;
