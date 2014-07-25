@@ -24,7 +24,7 @@ namespace FootballManagerEF.Controllers
             _matchRepository = matchRepository;
         }
 
-        public List<Match> GetMatches(int page=1)
+        public List<Match> GetMatches()
         {
             return _matchRepository.GetMatches();
         }
