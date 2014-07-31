@@ -28,5 +28,10 @@ namespace FootballManagerEF
 
             return false;
         }
+
+        public static DateTime TwoWeeksAgo()
+        {
+            return DateTime.Now.AddDays(-14);
+        }
     }
 }

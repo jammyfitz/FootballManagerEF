@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FootballManagerEF.Repositories
 {
-    public class FakeMatchRepository : IMatchRepository, IDisposable
+    public class FakeMatchRepository : IMatchRepository
     {
         public List<Match> GetMatches()
         {

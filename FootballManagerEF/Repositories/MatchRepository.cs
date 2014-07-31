@@ -20,7 +20,24 @@ namespace FootballManagerEF.Repositories
 
         public List<Match> GetMatches()
         {
-            return context.Matches.ToList();
+            return GetMatchesByDateAscNotOlderThanTwoWeeks();
+        }
+
+        public List<Match> GetMatchesByDateAsc()
+        {
+            return context.Matches.OrderBy(x => x.MatchDate).ToList();
+        }
+
+        public List<Match> GetMatchesByDateAscNotOlderThanTwoWeeks()
+        {
+            DateTime twoWeeksAgo = Utils.TwoWeeksAgo();
+
+            var result = from matches in context.Matches
+                         where (matches.MatchDate > twoWeeksAgo)
+                         orderby matches.MatchDate ascending
+                         select matches;
+
+            return result.ToList();
         }
 
         public Match GetMatchByID(int id)

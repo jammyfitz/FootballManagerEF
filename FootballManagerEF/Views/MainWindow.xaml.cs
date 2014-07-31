@@ -15,9 +15,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.Entity.Core.Objects;
-using FootballManagerEF.Controllers;
+using FootballManagerEF.ViewModels;
 
-namespace FootballManagerEF
+namespace FootballManagerEF.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -37,7 +37,7 @@ namespace FootballManagerEF
 
         private void BindMatches()
         {
-            MatchController matchController = new MatchController();
+            MatchViewModel matchController = new MatchViewModel();
             List<Match> matches = matchController.GetMatches();
 
             lb_Matches.ItemsSource = matches;          

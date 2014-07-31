@@ -8,18 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace FootballManagerEF.Controllers
+namespace FootballManagerEF.ViewModels
 {
-    public class MatchController : Controller
+    public class MatchViewModel : Controller
     {
         private IMatchRepository _matchRepository;
 
-        public MatchController()
+        public MatchViewModel()
         {
             _matchRepository = new MatchRepository(new FootballEntities());
         }
 
-        public MatchController(IMatchRepository matchRepository)
+        public MatchViewModel(IMatchRepository matchRepository)
         {
             _matchRepository = matchRepository;
         }
