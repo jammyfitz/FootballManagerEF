@@ -24,38 +24,12 @@ namespace FootballManagerEF.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        MatchViewModel _matchViewModel = new MatchViewModel();
+
         public MainWindow()
         {
             InitializeComponent();
-            InitializeBindings();
-        }
-
-        private void InitializeBindings()
-        {
-            BindMatches();
-        }
-
-        private void BindMatches()
-        {
-            MatchViewModel matchController = new MatchViewModel();
-            List<Match> matches = matchController.GetMatches();
-
-            lb_Matches.ItemsSource = matches;          
-        }
-
-        private void lb_Matches_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void btn_Update_Click(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void btn_SendEmail_Click(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
+            base.DataContext = _matchViewModel;
         }
 
         #region Workaround for DataGrid to provide single click access

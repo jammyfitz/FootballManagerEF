@@ -17,12 +17,15 @@ namespace FootballManagerEF.ViewModels
         public MatchViewModel()
         {
             _matchRepository = new MatchRepository(new FootballEntities());
+            Matches = _matchRepository.GetMatches();
         }
 
         public MatchViewModel(IMatchRepository matchRepository)
         {
             _matchRepository = matchRepository;
         }
+
+        public List<Match> Matches { get; set; }
 
         public List<Match> GetMatches()
         {
