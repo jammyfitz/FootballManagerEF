@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="ViewModels\MatchViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\PlayerMatchViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

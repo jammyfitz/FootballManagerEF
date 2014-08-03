@@ -18,10 +18,5 @@ namespace FootballManagerEF.EFModel
                 return result.ToList();
             }
         }
-
-        public string ATestMethod(string test)
-        {
-            return "extra " + test;
-        }
     }
 }
