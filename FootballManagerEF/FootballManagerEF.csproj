@@ -65,8 +65,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Interfaces\IPlayerMatchRepository.cs" />
+    <Compile Include="Interfaces\ITeamRepository.cs" />
     <Compile Include="Repositories\FakePlayerMatchRepository.cs" />
+    <Compile Include="Repositories\FakeTeamRepository.cs" />
     <Compile Include="Repositories\PlayerMatchRepository.cs" />
+    <Compile Include="Repositories\TeamRepository.cs" />
     <Compile Include="ViewModels\MatchViewModel.cs" />
     <Compile Include="DomainModel\Match.cs" />
     <Compile Include="EFModel\FootballEntities.cs">

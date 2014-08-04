@@ -17,24 +17,21 @@ namespace FootballManagerEF.ViewModels
     {
         private IMatchRepository _matchRepository;
         private List<Match> _matches;
-        private ObservableCollection<Match> _selectedMatch;
+        private Match _selectedMatch;
 
         public List<Match> Matches
         {
             get { return _matches; }
-            set
-            {
-                this.Matches = value;
-                RaisePropertyChanged("Matches");
-            }
+            set { _matches = value; }
         }
 
-        public ObservableCollection<Match> SelectedMatch
+        public Match SelectedMatch
         {
             get { return _selectedMatch; }
 
-            set {
-                this.SelectedMatch = value;
+            set
+            {
+                _selectedMatch = value;
                 RaisePropertyChanged("SelectedMatch");
             }
         }
@@ -55,10 +52,6 @@ namespace FootballManagerEF.ViewModels
             return _matchRepository.GetMatches();
         }
 
-        public void lb_Matches_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -18,7 +18,7 @@ namespace FootballManagerEF.Tests.ViewModels
         {
             //Arrange 
             var fakePlayerMatchRepo = new FakePlayerMatchRepository();
-            var playerMatchViewModel = new PlayerMatchViewModel(fakePlayerMatchRepo);
+            var playerMatchViewModel = new PlayerMatchViewModel(fakePlayerMatchRepo, null);
 
             //Act
             var result = playerMatchViewModel.GetPlayerMatches(1);
@@ -32,13 +32,27 @@ namespace FootballManagerEF.Tests.ViewModels
         {
             //Arrange 
             var fakePlayerMatchRepo = new FakePlayerMatchRepository();
-            var playerMatchViewModel = new PlayerMatchViewModel(fakePlayerMatchRepo);
+            var playerMatchViewModel = new PlayerMatchViewModel(fakePlayerMatchRepo, null);
 
             //Act
             var result = playerMatchViewModel.GetPlayerMatches(1);
 
             //Assert
             Assert.That(result.Where(x => x.MatchID != 1), Is.Empty);
+        }
+
+        [Test]
+        public void PlayerMatchViewModel_WhenGetTeamsIsCalledReturnsListOfTwoTeams()
+        {
+            //Arrange 
+            var fakeTeamRepo = new FakeTeamRepository();
+            var playerMatchViewModel = new PlayerMatchViewModel(null, fakeTeamRepo);
+
+            //Act
+            var result = playerMatchViewModel.GetTeams();
+
+            //Assert
+            Assert.That(result.Count, Is.EqualTo(2));
         }
     }
 }
