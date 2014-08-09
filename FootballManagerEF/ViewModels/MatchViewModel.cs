@@ -36,6 +36,7 @@ namespace FootballManagerEF.ViewModels
                 _selectedMatch = value;
                 RaisePropertyChanged("SelectedMatch");
                 PlayerMatchVM.PlayerMatches = _playerMatchRepository.GetPlayerMatches(_selectedMatch.MatchID);
+                PlayerMatchVM.PropertyChanged += new PropertyChangedEventHandler(PlayerMatchesChanged);
             }
         }
 
@@ -79,6 +80,11 @@ namespace FootballManagerEF.ViewModels
             {
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        private void PlayerMatchesChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Console.WriteLine("PlayerMatchesChanged has changed: " + e.PropertyName);
         }
 
         #endregion
