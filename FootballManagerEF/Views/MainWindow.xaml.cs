@@ -29,7 +29,9 @@ namespace FootballManagerEF.Views
         public MainWindow()
         {
             InitializeComponent();
+            _matchViewModel.SelectedMatch = _matchViewModel.Matches.First();
             base.DataContext = _matchViewModel;
+
         }
 
         #region Workaround for DataGrid to provide single click access

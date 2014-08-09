@@ -16,8 +16,10 @@ namespace FootballManagerEF.ViewModels
     public class MatchViewModel : INotifyPropertyChanged
     {
         private IMatchRepository _matchRepository;
+        private IPlayerMatchRepository _playerMatchRepository;
         private List<Match> _matches;
         private Match _selectedMatch;
+        private PlayerMatchViewModel _playerMatchViewModel;
 
         public List<Match> Matches
         {
@@ -33,12 +35,25 @@ namespace FootballManagerEF.ViewModels
             {
                 _selectedMatch = value;
                 RaisePropertyChanged("SelectedMatch");
+                PlayerMatchVM.PlayerMatches = _playerMatchRepository.GetPlayerMatches(_selectedMatch.MatchID);
+            }
+        }
+
+        public PlayerMatchViewModel PlayerMatchVM
+        {
+            get { return _playerMatchViewModel; }
+            set
+            {
+                _playerMatchViewModel = value;
+                RaisePropertyChanged("PlayerMatchViewModel");
             }
         }
 
         public MatchViewModel()
         {
             _matchRepository = new MatchRepository(new FootballEntities());
+            _playerMatchRepository = new PlayerMatchRepository(new FootballEntities());
+            _playerMatchViewModel = new PlayerMatchViewModel();
             _matches = GetMatches();
         }
 

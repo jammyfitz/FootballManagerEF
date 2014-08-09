@@ -32,11 +32,33 @@
         <Label HorizontalAlignment="Center" Height="32" Margin="174,9,103,0" VerticalAlignment="Top" Width="139" FontFamily="Aharoni" Content="{Binding SelectedMatch.MatchID}"/>
         <Label x:Name="lbl_Selection" Content="Selection" HorizontalAlignment="Left" Height="20" Margin="117,8,0,0" VerticalAlignment="Top" Width="79" FontFamily="Aharoni"/>
 
-
-        <DataGrid AutoGenerateColumns="False" Height="242" HorizontalAlignment="Left" x:Name="dg_PlayerMatch" VerticalAlignment="Top" Width="180" Margin="117,28,0,0" GridLinesVisibility="None" CanUserAddRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" >
+        <DataGrid ItemsSource="{Binding PlayerMatchVM.PlayerMatches}" AutoGenerateColumns="False" Height="242" HorizontalAlignment="Left" x:Name="dg_PlayerMatch" VerticalAlignment="Top" Width="180" Margin="117,28,0,0" GridLinesVisibility="None" CanUserAddRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" >
             <DataGrid.Columns>
-                <DataGridComboBoxColumn x:Name="cb_Player" Header="Player" SelectedItemBinding="{Binding Players}" Width="90" DisplayMemberPath="PlayerName" SortMemberPath="PlayerName" SortDirection="Ascending"/>
-                <DataGridComboBoxColumn x:Name="cb_Team" Header="Team" SelectedItemBinding="{Binding Teams}" Width="75" DisplayMemberPath="TeamName" SortMemberPath="TeamName" SortDirection="Descending"/>
+                <DataGridComboBoxColumn x:Name="cb_Player" Header="Player" Width="90" DisplayMemberPath="PlayerName" SortMemberPath="PlayerName" SortDirection="Ascending">
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.PlayerMatchVM.Players}"/>
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.PlayerMatchVM.Players}"/>
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+                <DataGridComboBoxColumn x:Name="cb_Team" Header="Team" Width="90" DisplayMemberPath="TeamName" SortMemberPath="TeamName" SortDirection="Ascending">
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.PlayerMatchVM.Teams}"/>
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.PlayerMatchVM.Teams}"/>
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+               
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="btn_Update" Content="Update" HorizontalAlignment="Left" Height="20" Margin="313,30,0,0" Width="68" FontFamily="Aharoni" VerticalAlignment="Top" FontSize="11" RenderTransformOrigin="0.5,0.64" />

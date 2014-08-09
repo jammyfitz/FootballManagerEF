@@ -18,7 +18,7 @@ namespace FootballManagerEF.Tests.ViewModels
         {
             //Arrange 
             var fakePlayerMatchRepo = new FakePlayerMatchRepository();
-            var playerMatchViewModel = new PlayerMatchViewModel(fakePlayerMatchRepo, null);
+            var playerMatchViewModel = new PlayerMatchViewModel(fakePlayerMatchRepo, null, null);
 
             //Act
             var result = playerMatchViewModel.GetPlayerMatches(1);
@@ -32,7 +32,7 @@ namespace FootballManagerEF.Tests.ViewModels
         {
             //Arrange 
             var fakePlayerMatchRepo = new FakePlayerMatchRepository();
-            var playerMatchViewModel = new PlayerMatchViewModel(fakePlayerMatchRepo, null);
+            var playerMatchViewModel = new PlayerMatchViewModel(fakePlayerMatchRepo, null, null);
 
             //Act
             var result = playerMatchViewModel.GetPlayerMatches(1);
@@ -46,7 +46,7 @@ namespace FootballManagerEF.Tests.ViewModels
         {
             //Arrange 
             var fakeTeamRepo = new FakeTeamRepository();
-            var playerMatchViewModel = new PlayerMatchViewModel(null, fakeTeamRepo);
+            var playerMatchViewModel = new PlayerMatchViewModel(null, fakeTeamRepo, null);
 
             //Act
             var result = playerMatchViewModel.GetTeams();
