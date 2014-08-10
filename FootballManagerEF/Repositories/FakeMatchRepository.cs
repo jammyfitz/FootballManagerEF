@@ -1,4 +1,4 @@
-﻿using FootballManagerEF.EFModel;
+﻿using FootballManagerEF.Models;
 using FootballManagerEF.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -34,21 +34,6 @@ namespace FootballManagerEF.Repositories
                   MatchID = 1,
                   MatchDate = DateTime.Today.AddDays(-14)
               };
-        }
-
-        public void InsertMatch(Match match)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteMatch(int matchID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateMatch(Match match)
-        {
-            throw new NotImplementedException();
         }
 
         public void Save()

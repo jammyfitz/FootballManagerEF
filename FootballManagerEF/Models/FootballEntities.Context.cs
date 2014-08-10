@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FootballManagerEF.EFModel
+namespace FootballManagerEF.Models
 {
     using System;
     using System.Data.Entity;

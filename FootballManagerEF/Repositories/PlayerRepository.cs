@@ -1,4 +1,4 @@
-﻿using FootballManagerEF.EFModel;
+﻿using FootballManagerEF.Models;
 using FootballManagerEF.Interfaces;
 using System;
 using System.Collections.Generic;

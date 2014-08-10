@@ -1,4 +1,4 @@
-﻿using FootballManagerEF.EFModel;
+﻿using FootballManagerEF.Models;
 using FootballManagerEF.Interfaces;
 using FootballManagerEF.Repositories;
 using System;
@@ -15,8 +15,9 @@ namespace FootballManagerEF.ViewModels
 {
     public class MatchViewModel : INotifyPropertyChanged
     {
-        private IMatchRepository _matchRepository;
-        private IPlayerMatchRepository _playerMatchRepository;
+        private IFootballRepository _footballRepository;
+        //private IMatchRepository _matchRepository;
+        //private IPlayerMatchRepository _playerMatchRepository;
         private List<Match> _matches;
         private Match _selectedMatch;
         private PlayerMatchViewModel _playerMatchViewModel;
@@ -35,8 +36,7 @@ namespace FootballManagerEF.ViewModels
             {
                 _selectedMatch = value;
                 RaisePropertyChanged("SelectedMatch");
-                PlayerMatchVM.PlayerMatches = _playerMatchRepository.GetPlayerMatches(_selectedMatch.MatchID);
-                PlayerMatchVM.PropertyChanged += new PropertyChangedEventHandler(PlayerMatchesChanged);
+                PlayerMatchVM.PlayerMatches = _footballRepository.GetPlayerMatches(_selectedMatch.MatchID);
             }
         }
 
@@ -52,20 +52,19 @@ namespace FootballManagerEF.ViewModels
 
         public MatchViewModel()
         {
-            _matchRepository = new MatchRepository(new FootballEntities());
-            _playerMatchRepository = new PlayerMatchRepository(new FootballEntities());
+            _footballRepository = new FootballRepository(new FootballEntities());
             _playerMatchViewModel = new PlayerMatchViewModel();
             _matches = GetMatches();
         }
 
-        public MatchViewModel(IMatchRepository matchRepository)
+        public MatchViewModel(IFootballRepository footballRepository)
         {
-            _matchRepository = matchRepository;
+            _footballRepository = footballRepository;
         }
 
         public List<Match> GetMatches()
         {
-            return _matchRepository.GetMatches();
+            return _footballRepository.GetMatches();
         }
 
         #region INotifyPropertyChanged Members
@@ -84,7 +83,7 @@ namespace FootballManagerEF.ViewModels
 
         private void PlayerMatchesChanged(object sender, PropertyChangedEventArgs e)
         {
-            Console.WriteLine("PlayerMatchesChanged has changed: " + e.PropertyName);
+            
         }
 
         #endregion

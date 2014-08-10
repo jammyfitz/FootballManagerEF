@@ -64,18 +64,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Interfaces\IFootballRepository.cs" />
     <Compile Include="Interfaces\IPlayerMatchRepository.cs" />
     <Compile Include="Interfaces\IPlayerRepository.cs" />
     <Compile Include="Interfaces\ITeamRepository.cs" />
+    <Compile Include="Repositories\FakeFootballRepository.cs" />
     <Compile Include="Repositories\FakePlayerMatchRepository.cs" />
     <Compile Include="Repositories\FakePlayerRepository.cs" />
     <Compile Include="Repositories\FakeTeamRepository.cs" />
+    <Compile Include="Repositories\FootballRepository.cs" />
     <Compile Include="Repositories\PlayerMatchRepository.cs" />
     <Compile Include="Repositories\PlayerRepository.cs" />
     <Compile Include="Repositories\TeamRepository.cs" />
     <Compile Include="ViewModels\MatchViewModel.cs" />
-    <Compile Include="DomainModel\Match.cs" />
-    <Compile Include="EFModel\FootballEntities.cs">
+    <Compile Include="Models\FootballEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FootballEntities.tt</DependentUpon>
@@ -84,16 +86,16 @@
     <Compile Include="Interfaces\IMatchRepository.cs" />
     <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Interfaces\ITeam.cs" />
-    <Compile Include="EFModel\Match.cs">
+    <Compile Include="Models\Match.cs">
       <DependentUpon>FootballEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="EFModel\Player.cs">
+    <Compile Include="Models\Player.cs">
       <DependentUpon>FootballEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="EFModel\PlayerMatch.cs">
+    <Compile Include="Models\PlayerMatch.cs">
       <DependentUpon>FootballEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="EFModel\Team.cs">
+    <Compile Include="Models\Team.cs">
       <DependentUpon>FootballEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Repositories\FakeMatchRepository.cs" />
@@ -107,12 +109,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="EFModel\FootballEntities.Context.cs">
+    <Compile Include="Models\FootballEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FootballEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="EFModel\FootballEntities.Designer.cs">
+    <Compile Include="Models\FootballEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FootballEntities.edmx</DependentUpon>
@@ -141,19 +143,19 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="EFModel\FootballEntities.edmx">
+    <EntityDeploy Include="Models\FootballEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>FootballEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="EFModel\FootballEntities.Context.tt">
+    <None Include="Models\FootballEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>FootballEntities.edmx</DependentUpon>
       <LastGenOutput>FootballEntities.Context.cs</LastGenOutput>
     </None>
-    <None Include="EFModel\FootballEntities.edmx.diagram">
+    <None Include="Models\FootballEntities.edmx.diagram">
       <DependentUpon>FootballEntities.edmx</DependentUpon>
     </None>
-    <None Include="EFModel\FootballEntities.tt">
+    <None Include="Models\FootballEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>FootballEntities.edmx</DependentUpon>
       <LastGenOutput>FootballEntities.cs</LastGenOutput>

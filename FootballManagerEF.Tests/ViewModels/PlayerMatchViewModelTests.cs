@@ -17,8 +17,8 @@ namespace FootballManagerEF.Tests.ViewModels
         public void PlayerMatchViewModel_WhenGetPlayerMatchesIsCalledReturnsListOfPlayerMatchesForThatMatch()
         {
             //Arrange 
-            var fakePlayerMatchRepo = new FakePlayerMatchRepository();
-            var playerMatchViewModel = new PlayerMatchViewModel(fakePlayerMatchRepo, null, null);
+            var fakeFootballRepo = new FakeFootballRepository();
+            var playerMatchViewModel = new PlayerMatchViewModel(fakeFootballRepo);
 
             //Act
             var result = playerMatchViewModel.GetPlayerMatches(1);
@@ -31,8 +31,8 @@ namespace FootballManagerEF.Tests.ViewModels
         public void PlayerMatchViewModel_WhenGetPlayerMatchesIsCalledDoesntReturnPlayerMatchForAnotherMatch()
         {
             //Arrange 
-            var fakePlayerMatchRepo = new FakePlayerMatchRepository();
-            var playerMatchViewModel = new PlayerMatchViewModel(fakePlayerMatchRepo, null, null);
+            var fakeFootballRepo = new FakeFootballRepository();
+            var playerMatchViewModel = new PlayerMatchViewModel(fakeFootballRepo);
 
             //Act
             var result = playerMatchViewModel.GetPlayerMatches(1);
@@ -45,8 +45,8 @@ namespace FootballManagerEF.Tests.ViewModels
         public void PlayerMatchViewModel_WhenGetTeamsIsCalledReturnsListOfTwoTeams()
         {
             //Arrange 
-            var fakeTeamRepo = new FakeTeamRepository();
-            var playerMatchViewModel = new PlayerMatchViewModel(null, fakeTeamRepo, null);
+            var fakeFootballRepo = new FakeFootballRepository();
+            var playerMatchViewModel = new PlayerMatchViewModel(fakeFootballRepo);
 
             //Act
             var result = playerMatchViewModel.GetTeams();
