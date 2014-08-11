@@ -68,7 +68,6 @@
     <Compile Include="Interfaces\IPlayerMatchRepository.cs" />
     <Compile Include="Interfaces\IPlayerRepository.cs" />
     <Compile Include="Interfaces\ITeamRepository.cs" />
-    <Compile Include="Repositories\FakeFootballRepository.cs" />
     <Compile Include="Repositories\FakePlayerMatchRepository.cs" />
     <Compile Include="Repositories\FakePlayerRepository.cs" />
     <Compile Include="Repositories\FakeTeamRepository.cs" />

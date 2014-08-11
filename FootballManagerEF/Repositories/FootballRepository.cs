@@ -26,6 +26,14 @@ namespace FootballManagerEF.Repositories
             teamRepository = new TeamRepository(context);
         }
 
+        public FootballRepository()
+        {
+            matchRepository = new FakeMatchRepository();
+            playerMatchRepository = new FakePlayerMatchRepository();
+            playerRepository = new FakePlayerRepository();
+            teamRepository = new FakeTeamRepository();
+        }
+
         #region Match Repository
         public List<Match> GetMatches()
         {
