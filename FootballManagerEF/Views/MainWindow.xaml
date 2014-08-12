@@ -33,7 +33,7 @@
 
         <DataGrid Name="dg_PlayerMatch" ItemsSource="{Binding PlayerMatchVM.PlayerMatches}" AutoGenerateColumns="False" Height="242" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Margin="117,28,0,0" GridLinesVisibility="None" CanUserAddRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" >
             <DataGrid.Columns>
-                <DataGridComboBoxColumn x:Name="cb_Player" Header="Player" Width="90" SelectedValueBinding="{Binding Player.PlayerID}" SelectedValuePath="PlayerID" DisplayMemberPath="PlayerName" SortMemberPath="PlayerName" SortDirection="Ascending">
+                <DataGridComboBoxColumn x:Name="cb_Player" Header="Player" Width="90" SelectedValueBinding="{Binding PlayerID}" SelectedValuePath="PlayerID" DisplayMemberPath="PlayerName" SortMemberPath="PlayerName" SortDirection="Ascending">
                     <DataGridComboBoxColumn.ElementStyle>
                         <Style TargetType="ComboBox">
                             <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.PlayerMatchVM.Players}"/>
@@ -45,7 +45,7 @@
                         </Style>
                     </DataGridComboBoxColumn.EditingElementStyle>
                 </DataGridComboBoxColumn>
-                <DataGridComboBoxColumn x:Name="cb_Team" Header="Team" Width="90" SelectedValueBinding="{Binding Team.TeamID}" SelectedValuePath="TeamID" DisplayMemberPath="TeamName" SortMemberPath="TeamName" SortDirection="Ascending">
+                <DataGridComboBoxColumn x:Name="cb_Team" Header="Team" Width="90" SelectedValueBinding="{Binding TeamID}" SelectedValuePath="TeamID" DisplayMemberPath="TeamName" SortMemberPath="TeamName" SortDirection="Ascending">
                     <DataGridComboBoxColumn.ElementStyle>
                         <Style TargetType="ComboBox">
                             <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.PlayerMatchVM.Teams}"/>

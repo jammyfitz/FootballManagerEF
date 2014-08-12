@@ -10,11 +10,11 @@ namespace FootballManagerEF.Interfaces
     public interface IFootballRepository : IMatchRepository, IPlayerMatchRepository, IPlayerRepository, ITeamRepository, IDisposable
     {
         List<Match> GetMatches();
-        Match GetMatchByID(int matchId);
         List<PlayerMatch> GetPlayerMatches(int matchId);
         List<Player> GetPlayers();
-        Player GetPlayerByID(int playerId);
         List<Team> GetTeams();
+        Match GetMatchByID(int matchId);
+        Player GetPlayerByID(int playerId);
         Team GetTeamByID(int teamId);
         void Save();
     }

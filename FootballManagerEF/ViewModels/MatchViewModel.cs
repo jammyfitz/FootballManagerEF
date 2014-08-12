@@ -16,8 +16,6 @@ namespace FootballManagerEF.ViewModels
     public class MatchViewModel : INotifyPropertyChanged
     {
         private IFootballRepository _footballRepository;
-        //private IMatchRepository _matchRepository;
-        //private IPlayerMatchRepository _playerMatchRepository;
         private List<Match> _matches;
         private Match _selectedMatch;
         private PlayerMatchViewModel _playerMatchViewModel;
