@@ -51,6 +51,11 @@ namespace FootballManagerEF.Repositories
         {
             return playerMatchRepository.GetPlayerMatches(matchId);
         }
+
+        public List<PlayerMatch> GetTenPlayerMatches(int matchId)
+        {
+            return playerMatchRepository.GetTenPlayerMatches(matchId);
+        }
         #endregion
 
         #region Player Repository
@@ -83,6 +88,7 @@ namespace FootballManagerEF.Repositories
             context.SaveChanges();
         }
 
+        #region IDisposable Members
         private bool disposed = false;
 
         protected virtual void Dispose(bool disposing)
@@ -102,5 +108,6 @@ namespace FootballManagerEF.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+        #endregion
     }
 }

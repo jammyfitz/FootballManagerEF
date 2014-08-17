@@ -23,6 +23,11 @@ namespace FootballManagerEF.Repositories
               { 
                   PlayerID = 2,
                   PlayerName = "Mike"
+              },
+              new Player
+              { 
+                  PlayerID = 3,
+                  PlayerName = "Caff"
               }
            };
         }

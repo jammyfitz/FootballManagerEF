@@ -12,6 +12,23 @@ namespace FootballManagerEF.Repositories
     {
         public List<PlayerMatch> GetPlayerMatches(int matchId)
         {
+            return AddFourPlayerMatches();
+        }
+
+        public List<PlayerMatch> GetTenPlayerMatches(int matchId)
+        {
+            List<PlayerMatch> tenPlayerMatches = AddFourPlayerMatches();
+            tenPlayerMatches.Add(new PlayerMatch());
+            tenPlayerMatches.Add(new PlayerMatch());
+            tenPlayerMatches.Add(new PlayerMatch());
+            tenPlayerMatches.Add(new PlayerMatch());
+            tenPlayerMatches.Add(new PlayerMatch());
+            tenPlayerMatches.Add(new PlayerMatch());
+            return tenPlayerMatches;
+        }
+
+        private static List<PlayerMatch> AddFourPlayerMatches()
+        {
             return new List<PlayerMatch> 
            { 
               new PlayerMatch

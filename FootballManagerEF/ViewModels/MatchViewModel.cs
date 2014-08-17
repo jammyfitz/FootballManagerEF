@@ -34,11 +34,11 @@ namespace FootballManagerEF.ViewModels
             {
                 _selectedMatch = value;
                 RaisePropertyChanged("SelectedMatch");
-                PlayerMatchVM.PlayerMatches = _footballRepository.GetPlayerMatches(_selectedMatch.MatchID);
+                PlayerMatchViewModel.PlayerMatches = _footballRepository.GetTenPlayerMatches(_selectedMatch.MatchID);
             }
         }
 
-        public PlayerMatchViewModel PlayerMatchVM
+        public PlayerMatchViewModel PlayerMatchViewModel
         {
             get { return _playerMatchViewModel; }
             set
@@ -48,10 +48,13 @@ namespace FootballManagerEF.ViewModels
             }
         }
 
+        public ButtonViewModel ButtonViewModel { get; set; }
+
         public MatchViewModel()
         {
             _footballRepository = new FootballRepository(new FootballEntities());
-            _playerMatchViewModel = new PlayerMatchViewModel();
+            _playerMatchViewModel = new PlayerMatchViewModel(_footballRepository);
+            ButtonViewModel = new ButtonViewModel(_footballRepository);
             _matches = GetMatches();
         }
 
@@ -79,10 +82,10 @@ namespace FootballManagerEF.ViewModels
             }
         }
 
-        private void PlayerMatchesChanged(object sender, PropertyChangedEventArgs e)
+        /*private void PlayerMatchesChanged(object sender, PropertyChangedEventArgs e)
         {
             
-        }
+        }*/
 
         #endregion
     }

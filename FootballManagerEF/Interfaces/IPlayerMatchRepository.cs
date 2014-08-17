@@ -10,6 +10,7 @@ namespace FootballManagerEF.Interfaces
     public interface IPlayerMatchRepository : IDisposable
     {
         List<PlayerMatch> GetPlayerMatches(int matchId);
+        List<PlayerMatch> GetTenPlayerMatches(int matchId);
         void Save();
     }
 }
