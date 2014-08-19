@@ -56,6 +56,11 @@ namespace FootballManagerEF.Repositories
         {
             return playerMatchRepository.GetTenPlayerMatches(matchId);
         }
+
+        public bool InsertPlayerMatches(List<PlayerMatch> playerMatches, int matchId)
+        {
+            return playerMatchRepository.InsertPlayerMatches(playerMatches, matchId);
+        }
         #endregion
 
         #region Player Repository
@@ -109,5 +114,10 @@ namespace FootballManagerEF.Repositories
             GC.SuppressFinalize(this);
         }
         #endregion
+
+        public List<PlayerMatch> GetFiveFilledAndFiveEmptyPlayerMatches()
+        {
+            return playerMatchRepository.GetFiveFilledAndFiveEmptyPlayerMatches();
+        }
     }
 }

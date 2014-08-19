@@ -35,6 +35,7 @@ namespace FootballManagerEF.ViewModels
                 _selectedMatch = value;
                 RaisePropertyChanged("SelectedMatch");
                 PlayerMatchViewModel.PlayerMatches = _footballRepository.GetTenPlayerMatches(_selectedMatch.MatchID);
+                ButtonViewModel.SelectedMatch = _selectedMatch;
             }
         }
 
@@ -54,7 +55,7 @@ namespace FootballManagerEF.ViewModels
         {
             _footballRepository = new FootballRepository(new FootballEntities());
             _playerMatchViewModel = new PlayerMatchViewModel(_footballRepository);
-            ButtonViewModel = new ButtonViewModel(_footballRepository);
+            ButtonViewModel = new ButtonViewModel(_footballRepository, _playerMatchViewModel);
             _matches = GetMatches();
         }
 

@@ -40,6 +40,22 @@ namespace FootballManagerEF.Repositories
             return AddBlankPlayerMatches(result.ToList(), noOfBlankPlayersToAdd);
         }
 
+        public bool InsertPlayerMatches(List<PlayerMatch> playerMatches, int matchId)
+        {
+            foreach (PlayerMatch playerMatch in playerMatches.Where(x => x.PlayerMatchID == 0))
+            {
+                playerMatch.MatchID = matchId;
+                context.PlayerMatches.Add(playerMatch);
+            }
+
+           return true;
+        }
+
+        public List<PlayerMatch> GetFiveFilledAndFiveEmptyPlayerMatches()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Save()
         {
             context.SaveChanges();

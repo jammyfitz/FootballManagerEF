@@ -11,6 +11,8 @@ namespace FootballManagerEF.Interfaces
     {
         List<PlayerMatch> GetPlayerMatches(int matchId);
         List<PlayerMatch> GetTenPlayerMatches(int matchId);
+        List<PlayerMatch> GetFiveFilledAndFiveEmptyPlayerMatches();
+        bool InsertPlayerMatches(List<PlayerMatch> playerMatches, int matchId);
         void Save();
     }
 }

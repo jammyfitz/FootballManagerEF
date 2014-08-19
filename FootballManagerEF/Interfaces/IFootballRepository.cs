@@ -16,6 +16,9 @@ namespace FootballManagerEF.Interfaces
         Match GetMatchByID(int matchId);
         Player GetPlayerByID(int playerId);
         Team GetTeamByID(int teamId);
+        bool InsertPlayerMatches(List<PlayerMatch> playerMatchesToInsert, int matchId);
         void Save();
+
+        
     }
 }

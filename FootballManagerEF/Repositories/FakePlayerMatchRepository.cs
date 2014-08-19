@@ -12,22 +12,32 @@ namespace FootballManagerEF.Repositories
     {
         public List<PlayerMatch> GetPlayerMatches(int matchId)
         {
-            return AddFourPlayerMatches();
+            return AddFivePlayerMatches();
         }
 
         public List<PlayerMatch> GetTenPlayerMatches(int matchId)
         {
-            List<PlayerMatch> tenPlayerMatches = AddFourPlayerMatches();
-            tenPlayerMatches.Add(new PlayerMatch());
-            tenPlayerMatches.Add(new PlayerMatch());
-            tenPlayerMatches.Add(new PlayerMatch());
-            tenPlayerMatches.Add(new PlayerMatch());
-            tenPlayerMatches.Add(new PlayerMatch());
-            tenPlayerMatches.Add(new PlayerMatch());
-            return tenPlayerMatches;
+            return GetFiveFilledAndFiveEmptyPlayerMatches();
         }
 
-        private static List<PlayerMatch> AddFourPlayerMatches()
+        public bool InsertPlayerMatches(List<PlayerMatch> playerMatches, int matchId)
+        {
+            return true;
+        }
+
+        public List<PlayerMatch> GetFiveFilledAndFiveEmptyPlayerMatches()
+        {
+            List<PlayerMatch> playerMatches = AddFivePlayerMatches();
+            AddFiveEmptyPlayerMatches(playerMatches);
+            return playerMatches;
+        }
+
+        public void Save()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static List<PlayerMatch> AddFivePlayerMatches()
         {
             return new List<PlayerMatch> 
            { 
@@ -58,15 +68,28 @@ namespace FootballManagerEF.Repositories
                   PlayerID = 4,
                   MatchID = 1,
                   TeamID = 2
+              },
+              new PlayerMatch
+              { 
+                  PlayerMatchID = 5,
+                  PlayerID = 5,
+                  MatchID = 1,
+                  TeamID = 2
               }
            };
         }
 
-        public void Save()
+        private static List<PlayerMatch> AddFiveEmptyPlayerMatches(List<PlayerMatch> playerMatches)
         {
-            throw new NotImplementedException();
+            playerMatches.Add(new PlayerMatch());
+            playerMatches.Add(new PlayerMatch());
+            playerMatches.Add(new PlayerMatch());
+            playerMatches.Add(new PlayerMatch());
+            playerMatches.Add(new PlayerMatch());
+            return playerMatches;
         }
 
+        #region IDisposable Members
         private bool disposed = false;
 
         protected virtual void Dispose(bool disposing)
@@ -79,5 +102,6 @@ namespace FootballManagerEF.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+        #endregion
     }
 }
