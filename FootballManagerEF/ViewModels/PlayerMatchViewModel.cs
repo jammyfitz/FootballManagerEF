@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FootballManagerEF.ViewModels
 {
-    public class PlayerMatchViewModel : INotifyPropertyChanged
+    public class PlayerMatchViewModel : IPlayerMatchViewModel, INotifyPropertyChanged
     {
         private IFootballRepository _footballRepository;
         private List<PlayerMatch> _playerMatches;

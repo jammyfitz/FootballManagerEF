@@ -15,9 +15,15 @@ namespace FootballManagerEF.ViewModels
     public class ButtonViewModel
     {
         private IFootballRepository _footballRepository;
-        private PlayerMatchViewModel _playerMatchViewModel;
+        private IPlayerMatchViewModel _playerMatchViewModel;
+        private IDialogService _dialogService;
+        private Match _selectedMatch;
 
-        public Match SelectedMatch { get; set; }
+        public Match SelectedMatch
+        {
+            get { return _selectedMatch; }
+            set { _selectedMatch = value; }
+        }
 
         public List<PlayerMatch> PlayerMatches
         {
@@ -25,10 +31,14 @@ namespace FootballManagerEF.ViewModels
             set { _playerMatchViewModel.PlayerMatches = value; }
         }
 
-        public ButtonViewModel(IFootballRepository footballRepository, PlayerMatchViewModel playerMatchViewModel)
+        public string ErrorMessage { get; set; }
+
+        public ButtonViewModel(IFootballRepository footballRepository, IPlayerMatchViewModel playerMatchViewModel, IDialogService dialogService)
         {
             _footballRepository = footballRepository;
             _playerMatchViewModel = playerMatchViewModel;
+            _dialogService = dialogService;
+            _selectedMatch = new Match();
             _canExecute = true;
         }
 
@@ -50,8 +60,8 @@ namespace FootballManagerEF.ViewModels
 
         private void SendErrorToUser()
         {
-            string errorMessage = GetErrorMessageOnUpdate();
-            MessageBox.Show(errorMessage);
+            ErrorMessage = GetErrorMessageOnUpdate();
+            _dialogService.ShowMessageBox(ErrorMessage);
         }
 
         public string GetErrorMessageOnUpdate()

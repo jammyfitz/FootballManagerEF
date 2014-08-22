@@ -87,7 +87,6 @@ namespace FootballManagerEF.Repositories
         }
         #endregion
 
-
         public void Save()
         {
             context.SaveChanges();

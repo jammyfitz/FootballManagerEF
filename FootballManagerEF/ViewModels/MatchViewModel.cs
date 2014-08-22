@@ -18,7 +18,7 @@ namespace FootballManagerEF.ViewModels
         private IFootballRepository _footballRepository;
         private List<Match> _matches;
         private Match _selectedMatch;
-        private PlayerMatchViewModel _playerMatchViewModel;
+        private IPlayerMatchViewModel _playerMatchViewModel;
 
         public List<Match> Matches
         {
@@ -39,7 +39,7 @@ namespace FootballManagerEF.ViewModels
             }
         }
 
-        public PlayerMatchViewModel PlayerMatchViewModel
+        public IPlayerMatchViewModel PlayerMatchViewModel
         {
             get { return _playerMatchViewModel; }
             set
@@ -55,7 +55,7 @@ namespace FootballManagerEF.ViewModels
         {
             _footballRepository = new FootballRepository(new FootballEntities());
             _playerMatchViewModel = new PlayerMatchViewModel(_footballRepository);
-            ButtonViewModel = new ButtonViewModel(_footballRepository, _playerMatchViewModel);
+            ButtonViewModel = new ButtonViewModel(_footballRepository, _playerMatchViewModel, null);
             _matches = GetMatches();
         }
 

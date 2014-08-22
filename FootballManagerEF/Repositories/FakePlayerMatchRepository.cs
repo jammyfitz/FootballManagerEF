@@ -32,12 +32,62 @@ namespace FootballManagerEF.Repositories
             return playerMatches;
         }
 
+        public List<PlayerMatch> GetPlayerMatchesWithPlayerAndNoTeam()
+        {
+            return new List<PlayerMatch> 
+            { 
+                new PlayerMatch
+                { 
+                    PlayerMatchID = 1,
+                    PlayerID = 1,
+                    MatchID = 1
+                },
+                new PlayerMatch
+                { 
+                    PlayerMatchID = 2,
+                    PlayerID = 2,
+                    MatchID = 1
+                }
+            };
+        }
+
+        public List<PlayerMatch> GetPlayerMatchesWithTeamAndNoPlayer()
+        {
+            return new List<PlayerMatch> 
+            { 
+                new PlayerMatch
+                { 
+                    PlayerMatchID = 1,
+                    TeamID = 1,
+                    MatchID = 1
+                },
+                new PlayerMatch
+                { 
+                    PlayerMatchID = 2,
+                    TeamID = 2,
+                    MatchID = 1
+                }
+            };
+        }
+
         public void Save()
         {
             throw new NotImplementedException();
         }
 
         private static List<PlayerMatch> AddFivePlayerMatches()
+        {
+            return new List<PlayerMatch> 
+            { 
+                AddPlayerMatch(),
+                AddPlayerMatch(),
+                AddPlayerMatch(),
+                AddPlayerMatch(),
+                AddPlayerMatch()
+            };
+        }
+
+        private static List<PlayerMatch> AddFiveDistinctPlayerMatches()
         {
             return new List<PlayerMatch> 
            { 
@@ -81,12 +131,25 @@ namespace FootballManagerEF.Repositories
 
         private static List<PlayerMatch> AddFiveEmptyPlayerMatches(List<PlayerMatch> playerMatches)
         {
-            playerMatches.Add(new PlayerMatch());
-            playerMatches.Add(new PlayerMatch());
-            playerMatches.Add(new PlayerMatch());
-            playerMatches.Add(new PlayerMatch());
-            playerMatches.Add(new PlayerMatch());
-            return playerMatches;
+            return new List<PlayerMatch> 
+            {
+                new PlayerMatch{},
+                new PlayerMatch{},
+                new PlayerMatch{},
+                new PlayerMatch{},
+                new PlayerMatch{}
+            };
+        }
+
+        private static PlayerMatch AddPlayerMatch()
+        {
+            return new PlayerMatch
+            {
+                PlayerMatchID = 1,
+                PlayerID = 1,
+                MatchID = 1,
+                TeamID = 1
+            };
         }
 
         #region IDisposable Members

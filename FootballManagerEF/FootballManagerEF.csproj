@@ -65,8 +65,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Handlers\CommandHandler.cs" />
+    <Compile Include="Interfaces\IButtonViewModel.cs" />
+    <Compile Include="Interfaces\IDialogService.cs" />
     <Compile Include="Interfaces\IFootballRepository.cs" />
     <Compile Include="Interfaces\IPlayerMatchRepository.cs" />
+    <Compile Include="Interfaces\IPlayerMatchViewModel.cs" />
     <Compile Include="Interfaces\IPlayerRepository.cs" />
     <Compile Include="Interfaces\ITeamRepository.cs" />
     <Compile Include="Repositories\FakePlayerMatchRepository.cs" />
@@ -76,6 +79,8 @@
     <Compile Include="Repositories\PlayerMatchRepository.cs" />
     <Compile Include="Repositories\PlayerRepository.cs" />
     <Compile Include="Repositories\TeamRepository.cs" />
+    <Compile Include="Services\FakeDialogService.cs" />
+    <Compile Include="Services\DialogService.cs" />
     <Compile Include="ViewModels\ButtonViewModel.cs" />
     <Compile Include="ViewModels\MatchViewModel.cs" />
     <Compile Include="Models\FootballEntities.cs">
