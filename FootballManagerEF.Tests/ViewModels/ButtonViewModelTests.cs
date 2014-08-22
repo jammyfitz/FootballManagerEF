@@ -17,12 +17,20 @@ namespace FootballManagerEF.Tests.ViewModels
     [TestFixture]
     public class ButtonViewModelTests
     {
+        FootballRepository fakeFootballRepo;
+        PlayerMatchViewModel playerMatchViewModel;
+
+        [TestFixtureSetUp]
+        public void Init()
+        {
+            fakeFootballRepo = new FootballRepository();
+            playerMatchViewModel = new PlayerMatchViewModel(fakeFootballRepo);
+        }
+
         [Test]
         public void ButtonViewModel_WhenInsertPlayerMatchesIsCalledOnlyFilledRecordsAreInserted()
         {
             //Arrange 
-            var fakeFootballRepo = new FootballRepository();
-            var playerMatchViewModel = new PlayerMatchViewModel(fakeFootballRepo);
             playerMatchViewModel.PlayerMatches = fakeFootballRepo.GetFiveFilledAndFiveEmptyPlayerMatches();
             var buttonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, null);
 
@@ -38,10 +46,8 @@ namespace FootballManagerEF.Tests.ViewModels
         {
             //Arrange 
             var mockFootballRepo = MockRepository.GenerateMock<IFootballRepository>();
-            var fakeFootballRepo = new FootballRepository();
             var buttonViewModel = new ButtonViewModel(mockFootballRepo, new PlayerMatchViewModel(mockFootballRepo), null);
             buttonViewModel.PlayerMatches = fakeFootballRepo.GetTenPlayerMatches(1);
-            mockFootballRepo.Stub(x => x.GetTenPlayerMatches(Arg<int>.Is.Anything)).Return(fakeFootballRepo.GetTenPlayerMatches(1));
             mockFootballRepo.Stub(x => x.Save());
 
             //Act
@@ -56,8 +62,7 @@ namespace FootballManagerEF.Tests.ViewModels
         {
             //Arrange 
             var fakePlayerMatchRepo = new FakePlayerMatchRepository();
-            var fakeFootballRepository = new FootballRepository();
-            var buttonViewModel = new ButtonViewModel(fakeFootballRepository, new PlayerMatchViewModel(fakeFootballRepository), new FakeDialogService());
+            var buttonViewModel = new ButtonViewModel(fakeFootballRepo, new PlayerMatchViewModel(fakeFootballRepo), new FakeDialogService());
             buttonViewModel.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesWithPlayerAndNoTeam();
 
             //Act
