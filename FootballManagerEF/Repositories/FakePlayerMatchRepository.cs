@@ -131,14 +131,17 @@ namespace FootballManagerEF.Repositories
 
         private static List<PlayerMatch> AddFiveEmptyPlayerMatches(List<PlayerMatch> playerMatches)
         {
-            return new List<PlayerMatch> 
+            playerMatches.AddRange(
+            new List<PlayerMatch> 
             {
                 new PlayerMatch{},
                 new PlayerMatch{},
                 new PlayerMatch{},
                 new PlayerMatch{},
                 new PlayerMatch{}
-            };
+            });
+
+            return playerMatches;
         }
 
         private static PlayerMatch AddPlayerMatch()

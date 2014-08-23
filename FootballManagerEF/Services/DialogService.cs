@@ -10,9 +10,10 @@ namespace FootballManagerEF.Services
 {
     public class DialogService : IDialogService
     {
-        public void ShowMessageBox(string message)
+        public bool ShowMessageBox(string message)
         {
             MessageBox.Show(message);
+            return true;
         }
     }
 }

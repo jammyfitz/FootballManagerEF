@@ -65,9 +65,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Handlers\CommandHandler.cs" />
-    <Compile Include="Interfaces\IButtonViewModel.cs" />
     <Compile Include="Interfaces\IDialogService.cs" />
     <Compile Include="Interfaces\IFootballRepository.cs" />
+    <Compile Include="Interfaces\IMatchValidatorService.cs" />
     <Compile Include="Interfaces\IPlayerMatchRepository.cs" />
     <Compile Include="Interfaces\IPlayerMatchViewModel.cs" />
     <Compile Include="Interfaces\IPlayerRepository.cs" />
@@ -82,6 +82,8 @@
     <Compile Include="Services\FakeDialogService.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="ViewModels\ButtonViewModel.cs" />
+    <Compile Include="Services\MatchValidatorService.cs" />
+    <Compile Include="Services\FakeMatchValidatorService.cs" />
     <Compile Include="ViewModels\MatchViewModel.cs" />
     <Compile Include="Models\FootballEntities.cs">
       <AutoGen>True</AutoGen>

@@ -46,7 +46,7 @@ namespace FootballManagerEF.Tests.ViewModels
         {
             //Arrange 
             var mockFootballRepo = MockRepository.GenerateMock<IFootballRepository>();
-            var buttonViewModel = new ButtonViewModel(mockFootballRepo, new PlayerMatchViewModel(mockFootballRepo), null);
+            var buttonViewModel = new ButtonViewModel(mockFootballRepo, new PlayerMatchViewModel(mockFootballRepo), new FakeMatchValidatorService(true));
             buttonViewModel.PlayerMatches = fakeFootballRepo.GetTenPlayerMatches(1);
             mockFootballRepo.Stub(x => x.Save());
 
@@ -58,18 +58,19 @@ namespace FootballManagerEF.Tests.ViewModels
         }
 
         [Test]
-        public void ButtonViewModel_WhenUpdateButtonClickedAndDataGridIsInvalidAnErrorMessageIsReturned()
+        public void ButtonViewModel_WhenUpdateButtonClickedAndDataGridIsInvalidSendErrorToUserIsCalled()
         {
             //Arrange 
             var fakePlayerMatchRepo = new FakePlayerMatchRepository();
-            var buttonViewModel = new ButtonViewModel(fakeFootballRepo, new PlayerMatchViewModel(fakeFootballRepo), new FakeDialogService());
-            buttonViewModel.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesWithPlayerAndNoTeam();
+            var mockMatchValidatorService = MockRepository.GenerateMock<IMatchValidatorService>();
+            var buttonViewModel = new ButtonViewModel(fakeFootballRepo, new PlayerMatchViewModel(fakeFootballRepo), mockMatchValidatorService);
+            mockMatchValidatorService.Stub(x => x.DataGridIsValid(null)).Return(false);
 
             //Act
             buttonViewModel.UpdateButtonClicked();
 
             //Assert
-            Assert.That(buttonViewModel.ErrorMessage, Is.Not.Null.Or.Empty);
+            mockMatchValidatorService.AssertWasCalled(x => x.SendErrorToUser());
         }
     }
 }

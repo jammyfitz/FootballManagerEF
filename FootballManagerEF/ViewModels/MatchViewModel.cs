@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Windows.Controls;
+using FootballManagerEF.Services;
 
 namespace FootballManagerEF.ViewModels
 {
@@ -17,6 +18,7 @@ namespace FootballManagerEF.ViewModels
     {
         private IFootballRepository _footballRepository;
         private List<Match> _matches;
+        private List<Team> _teams;
         private Match _selectedMatch;
         private IPlayerMatchViewModel _playerMatchViewModel;
 
@@ -24,6 +26,12 @@ namespace FootballManagerEF.ViewModels
         {
             get { return _matches; }
             set { _matches = value; }
+        }
+
+        public List<Team> Teams
+        {
+            get { return _teams; }
+            set { _teams = value; }
         }
 
         public Match SelectedMatch
@@ -55,8 +63,9 @@ namespace FootballManagerEF.ViewModels
         {
             _footballRepository = new FootballRepository(new FootballEntities());
             _playerMatchViewModel = new PlayerMatchViewModel(_footballRepository);
-            ButtonViewModel = new ButtonViewModel(_footballRepository, _playerMatchViewModel, null);
+            ButtonViewModel = new ButtonViewModel(_footballRepository, _playerMatchViewModel, new MatchValidatorService(new DialogService()));
             _matches = GetMatches();
+            _teams = GetTeams();
         }
 
         public MatchViewModel(IFootballRepository footballRepository)
@@ -67,6 +76,11 @@ namespace FootballManagerEF.ViewModels
         public List<Match> GetMatches()
         {
             return _footballRepository.GetMatches();
+        }
+
+        public List<Team> GetTeams()
+        {
+            return _footballRepository.GetTeams();
         }
 
         #region INotifyPropertyChanged Members

@@ -2,6 +2,7 @@
 using FootballManagerEF.Interfaces;
 using FootballManagerEF.Models;
 using FootballManagerEF.Repositories;
+using FootballManagerEF.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,8 @@ namespace FootballManagerEF.ViewModels
     {
         private IFootballRepository _footballRepository;
         private IPlayerMatchViewModel _playerMatchViewModel;
-        private IDialogService _dialogService;
+        private IMatchValidatorService _matchValidatorService;
+
         private Match _selectedMatch;
 
         public Match SelectedMatch
@@ -31,23 +33,21 @@ namespace FootballManagerEF.ViewModels
             set { _playerMatchViewModel.PlayerMatches = value; }
         }
 
-        public string ErrorMessage { get; set; }
-
-        public ButtonViewModel(IFootballRepository footballRepository, IPlayerMatchViewModel playerMatchViewModel, IDialogService dialogService)
+        public ButtonViewModel(IFootballRepository footballRepository, IPlayerMatchViewModel playerMatchViewModel, IMatchValidatorService matchValidatorService)
         {
             _footballRepository = footballRepository;
             _playerMatchViewModel = playerMatchViewModel;
-            _dialogService = dialogService;
+            _matchValidatorService = matchValidatorService;
             _selectedMatch = new Match();
             _canExecute = true;
         }
 
         public void UpdateButtonClicked()
         {
-            if (DataGridIsValid())
+            if (_matchValidatorService.DataGridIsValid(PlayerMatches))
                 SaveDataGrid();
             else
-                SendErrorToUser();
+                _matchValidatorService.SendErrorToUser();
         }
 
         private void SaveDataGrid()
@@ -58,96 +58,9 @@ namespace FootballManagerEF.ViewModels
             _footballRepository.Save();
         }
 
-        private void SendErrorToUser()
-        {
-            ErrorMessage = GetErrorMessageOnUpdate();
-            _dialogService.ShowMessageBox(ErrorMessage);
-        }
-
-        public string GetErrorMessageOnUpdate()
-        {
-            if (GridRowIncomplete())
-                return "Either the team or the player is missing for one of the entries.";
-
-            if (PlayerAppearsMoreThanOnce())
-                return "One of the selected players appears more than once for this match.";
-
-            if (MoreThanMaxPlayersInATeam())
-                return "One of the teams has 6 players.";
-
-            return string.Empty;
-        }
-
         public List<PlayerMatch> GetPlayerMatchesToInsert()
         {
             return PlayerMatches.Where(x => (x.PlayerID & x.TeamID) != null).ToList();
-        }
-
-        private bool DataGridIsValid()
-        {
-            if (GridRowIncomplete())
-                return false;
-
-            if (PlayerAppearsMoreThanOnce())
-                return false;
-
-            if (MoreThanMaxPlayersInATeam())
-                return false;
-
-            return true;
-        }
-
-        private bool MoreThanMaxPlayersInATeam()
-        {
-            var tooManyPlayers = from x in PlayerMatches
-                                   group x by x.TeamID into grouped
-                                   where grouped.Count() > 5
-                                   select grouped.Key;
-
-            if (tooManyPlayers.Count() > 0)
-                return true;
-
-            return false;
-        }
-
-        private bool GridRowIncomplete()
-        {
-            if (RowsHaveTeamButNoPlayer())
-                return true;
-
-            if (RowsHavePlayerButNoTeam())
-                return true;
-
-            return false;
-        }
-
-        private bool RowsHavePlayerButNoTeam()
-        {
-            if (PlayerMatches.Where(x => x.PlayerID != null && x.TeamID == null).Count() > 0)
-                return true;
-
-            return false;
-        }
-
-        private bool RowsHaveTeamButNoPlayer()
-        {
-            if (PlayerMatches.Where(x => x.PlayerID == null && x.TeamID != null).Count() > 0)
-                return true;
-
-            return false;
-        }
-
-        private bool PlayerAppearsMoreThanOnce()
-        {
-            var duplicatePlayers = from x in PlayerMatches
-                                 group x by x.PlayerID into grouped
-                                 where grouped.Count() > 1
-                                 select grouped.Key;
-
-            if (duplicatePlayers.Count() > 1)
-                return true;
-
-            return false;
         }
 
         #region ICommand Members

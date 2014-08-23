@@ -8,6 +8,6 @@ namespace FootballManagerEF.Interfaces
 {
     public interface IDialogService
     {
-        void ShowMessageBox(string message);
+        bool ShowMessageBox(string message);
     }
 }
