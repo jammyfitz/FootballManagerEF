@@ -11,12 +11,14 @@ namespace FootballManagerEF.ViewModels
     {
         private bool _validationResult;
 
+        public List<PlayerMatch> PlayerMatches { get; set; }
+
         public FakeMatchValidatorService(bool validationResult)
         {
             _validationResult = validationResult;
         }
 
-        public bool DataGridIsValid(List <PlayerMatch> playerMatches)
+        public bool DataGridIsValid()
         {
             return _validationResult;
         }

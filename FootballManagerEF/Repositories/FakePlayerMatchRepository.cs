@@ -10,6 +10,8 @@ namespace FootballManagerEF.Repositories
 {
     public class FakePlayerMatchRepository : IPlayerMatchRepository
     {
+        public void Save() {}
+
         public List<PlayerMatch> GetPlayerMatches(int matchId)
         {
             return AddFivePlayerMatches();
@@ -70,9 +72,62 @@ namespace FootballManagerEF.Repositories
             };
         }
 
-        public void Save()
+        public List<PlayerMatch> GetPlayerMatchesWithDuplicatePlayer()
         {
-            throw new NotImplementedException();
+            return new List<PlayerMatch> 
+            { 
+                AddPlayerMatch(),
+                AddPlayerMatch()
+            };
+        }
+
+        public List<PlayerMatch> GetPlayerMatchesWithTooManyPlayersInATeam()
+        {
+           return new List<PlayerMatch> 
+           { 
+              new PlayerMatch
+              { 
+                  PlayerMatchID = 1,
+                  PlayerID = 1,
+                  MatchID = 1,
+                  TeamID = 1
+              },
+              new PlayerMatch
+              { 
+                  PlayerMatchID = 2,
+                  PlayerID = 2,
+                  MatchID = 1,
+                  TeamID = 1
+              },
+              new PlayerMatch
+              { 
+                  PlayerMatchID = 3,
+                  PlayerID = 3,
+                  MatchID = 1,
+                  TeamID = 1
+              },
+              new PlayerMatch
+              { 
+                  PlayerMatchID = 4,
+                  PlayerID = 4,
+                  MatchID = 1,
+                  TeamID = 1
+              },
+              new PlayerMatch
+              { 
+                  PlayerMatchID = 5,
+                  PlayerID = 5,
+                  MatchID = 1,
+                  TeamID = 1
+              },
+              new PlayerMatch
+              { 
+                  PlayerMatchID = 6,
+                  PlayerID = 6,
+                  MatchID = 1,
+                  TeamID = 1
+              }
+           };
         }
 
         private static List<PlayerMatch> AddFivePlayerMatches()
@@ -169,5 +224,7 @@ namespace FootballManagerEF.Repositories
             GC.SuppressFinalize(this);
         }
         #endregion
+
+
     }
 }

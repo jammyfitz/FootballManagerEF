@@ -5,6 +5,7 @@ using FootballManagerEF.Repositories;
 using FootballManagerEF.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ using System.Windows.Input;
 
 namespace FootballManagerEF.ViewModels
 {
-    public class ButtonViewModel
+    public class ButtonViewModel : INotifyPropertyChanged
     {
         private IFootballRepository _footballRepository;
         private IPlayerMatchViewModel _playerMatchViewModel;
@@ -24,13 +25,13 @@ namespace FootballManagerEF.ViewModels
         public Match SelectedMatch
         {
             get { return _selectedMatch; }
-            set { _selectedMatch = value; }
+            set { _selectedMatch = value; RaisePropertyChanged("SelectedMatch"); }
         }
 
         public List<PlayerMatch> PlayerMatches
         {
             get { return _playerMatchViewModel.PlayerMatches; }
-            set { _playerMatchViewModel.PlayerMatches = value; }
+            set { _playerMatchViewModel.PlayerMatches = value; RaisePropertyChanged("PlayerMatches"); }
         }
 
         public ButtonViewModel(IFootballRepository footballRepository, IPlayerMatchViewModel playerMatchViewModel, IMatchValidatorService matchValidatorService)
@@ -38,13 +39,14 @@ namespace FootballManagerEF.ViewModels
             _footballRepository = footballRepository;
             _playerMatchViewModel = playerMatchViewModel;
             _matchValidatorService = matchValidatorService;
+            _matchValidatorService.PlayerMatches = _playerMatchViewModel.PlayerMatches;
             _selectedMatch = new Match();
             _canExecute = true;
         }
 
         public void UpdateButtonClicked()
         {
-            if (_matchValidatorService.DataGridIsValid(PlayerMatches))
+            if (_matchValidatorService.DataGridIsValid())
                 SaveDataGrid();
             else
                 _matchValidatorService.SendErrorToUser();
@@ -62,6 +64,21 @@ namespace FootballManagerEF.ViewModels
         {
             return PlayerMatches.Where(x => (x.PlayerID & x.TeamID) != null).ToList();
         }
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void RaisePropertyChanged(string propertyName)
+        {
+            // take a copy to prevent thread issues
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        #endregion
 
         #region ICommand Members
         private bool _canExecute;

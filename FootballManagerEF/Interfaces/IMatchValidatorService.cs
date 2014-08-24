@@ -9,7 +9,8 @@ namespace FootballManagerEF.Interfaces
 {
     public interface IMatchValidatorService
     {
-        bool DataGridIsValid(List<PlayerMatch> playerMatches);
+        bool DataGridIsValid();
         bool SendErrorToUser();
+        List<PlayerMatch> PlayerMatches { get; set; }
     }
 }

@@ -19,12 +19,18 @@ namespace FootballManagerEF.Tests.ViewModels
     {
         FootballRepository fakeFootballRepo;
         PlayerMatchViewModel playerMatchViewModel;
+        FakePlayerMatchRepository fakePlayerMatchRepo;
+        MatchValidatorService matchValidatorService;
+        ButtonViewModel buttonViewModel;
 
         [TestFixtureSetUp]
         public void Init()
         {
             fakeFootballRepo = new FootballRepository();
+            fakePlayerMatchRepo = new FakePlayerMatchRepository();
             playerMatchViewModel = new PlayerMatchViewModel(fakeFootballRepo);
+            matchValidatorService = new MatchValidatorService(new PlayerMatchViewModel(fakeFootballRepo), new FakeDialogService());
+            buttonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, matchValidatorService);
         }
 
         [Test]
@@ -32,7 +38,6 @@ namespace FootballManagerEF.Tests.ViewModels
         {
             //Arrange 
             playerMatchViewModel.PlayerMatches = fakeFootballRepo.GetFiveFilledAndFiveEmptyPlayerMatches();
-            var buttonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, null);
 
             //Act
             var result = buttonViewModel.GetPlayerMatchesToInsert();
@@ -46,12 +51,12 @@ namespace FootballManagerEF.Tests.ViewModels
         {
             //Arrange 
             var mockFootballRepo = MockRepository.GenerateMock<IFootballRepository>();
-            var buttonViewModel = new ButtonViewModel(mockFootballRepo, new PlayerMatchViewModel(mockFootballRepo), new FakeMatchValidatorService(true));
-            buttonViewModel.PlayerMatches = fakeFootballRepo.GetTenPlayerMatches(1);
+            var mockButtonViewModel = new ButtonViewModel(mockFootballRepo, new PlayerMatchViewModel(mockFootballRepo), matchValidatorService);
+            mockButtonViewModel.PlayerMatches = fakePlayerMatchRepo.GetTenPlayerMatches(1);
             mockFootballRepo.Stub(x => x.Save());
 
             //Act
-            buttonViewModel.UpdateButtonClicked();
+            mockButtonViewModel.UpdateButtonClicked();
 
             //Assert
             mockFootballRepo.AssertWasCalled(x => x.Save());
@@ -61,16 +66,81 @@ namespace FootballManagerEF.Tests.ViewModels
         public void ButtonViewModel_WhenUpdateButtonClickedAndDataGridIsInvalidSendErrorToUserIsCalled()
         {
             //Arrange 
-            var fakePlayerMatchRepo = new FakePlayerMatchRepository();
+
             var mockMatchValidatorService = MockRepository.GenerateMock<IMatchValidatorService>();
-            var buttonViewModel = new ButtonViewModel(fakeFootballRepo, new PlayerMatchViewModel(fakeFootballRepo), mockMatchValidatorService);
-            mockMatchValidatorService.Stub(x => x.DataGridIsValid(null)).Return(false);
+            var mockButtonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, mockMatchValidatorService);
+            mockMatchValidatorService.Stub(x => x.DataGridIsValid()).Return(false);
+
+            //Act
+            mockButtonViewModel.UpdateButtonClicked();
+
+            //Assert
+            mockMatchValidatorService.AssertWasCalled(x => x.SendErrorToUser());
+        }
+
+        [Test]
+        public void ButtonViewModel_WhenDataGridIsValidIsCalledAndGridRowHasPlayerAndNoTeamReturnExpectedError()
+        {
+            //Arrange 
+            matchValidatorService.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesWithPlayerAndNoTeam();
 
             //Act
             buttonViewModel.UpdateButtonClicked();
 
             //Assert
-            mockMatchValidatorService.AssertWasCalled(x => x.SendErrorToUser());
+            Assert.That(matchValidatorService.ErrorMessage, Is.EqualTo("Either the team or the player is missing for one of the entries."));
+        }
+
+        [Test]
+        public void ButtonViewModel_WhenUpdateButtonIsClickedAndGridRowHasPlayerAndNoTeamReturnExpectedError()
+        {
+            //Arrange 
+            matchValidatorService.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesWithPlayerAndNoTeam();
+
+            //Act
+            buttonViewModel.UpdateButtonClicked();
+
+            //Assert
+            Assert.That(matchValidatorService.ErrorMessage, Is.EqualTo("Either the team or the player is missing for one of the entries."));
+        }
+
+        [Test]
+        public void ButtonViewModel_WhenUpdateButtonIsClickedAndGridRowHasTeamAndNoPlayerReturnExpectedError()
+        {
+            //Arrange 
+            matchValidatorService.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesWithTeamAndNoPlayer();
+
+            //Act
+            buttonViewModel.UpdateButtonClicked();
+
+            //Assert
+            Assert.That(matchValidatorService.ErrorMessage, Is.EqualTo("Either the team or the player is missing for one of the entries."));
+        }
+
+        [Test]
+        public void ButtonViewModel_WhenUpdateButtonIsClickedAndPlayerAppearsMoreThanOnceReturnExpectedError()
+        {
+            //Arrange 
+            matchValidatorService.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesWithDuplicatePlayer();
+
+            //Act
+            buttonViewModel.UpdateButtonClicked();
+
+            //Assert
+            Assert.That(matchValidatorService.ErrorMessage, Is.EqualTo("One of the selected players appears more than once for this match."));
+        }
+
+        [Test]
+        public void ButtonViewModel_WhenUpdateButtonIsClickedAndMoreThanMaxPlayersInATeamReturnExpectedError()
+        {
+            //Arrange 
+            matchValidatorService.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesWithTooManyPlayersInATeam();
+
+            //Act
+            buttonViewModel.UpdateButtonClicked();
+
+            //Assert
+            Assert.That(matchValidatorService.ErrorMessage, Is.EqualTo("One of the teams has more than 5 players."));
         }
     }
 }

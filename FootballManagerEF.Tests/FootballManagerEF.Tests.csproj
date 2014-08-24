@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Services\MatchValidatorServiceTests.cs" />
     <Compile Include="ViewModels\ButtonViewModelTests.cs" />
     <Compile Include="ViewModels\MatchViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

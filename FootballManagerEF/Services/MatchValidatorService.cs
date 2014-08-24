@@ -9,20 +9,25 @@ namespace FootballManagerEF.Services
 {
     public class MatchValidatorService : IMatchValidatorService
     {
-        private List<PlayerMatch> _playerMatches;
+        private IPlayerMatchViewModel _playerMatchViewModel;
         private IDialogService _dialogService;
 
         public string ErrorMessage { get; set; }
 
-        public MatchValidatorService(IDialogService dialogService)
+        public List<PlayerMatch> PlayerMatches
         {
+            get { return _playerMatchViewModel.PlayerMatches; }
+            set { _playerMatchViewModel.PlayerMatches = value; }
+        }
+
+        public MatchValidatorService(IPlayerMatchViewModel playerMatchViewModel, IDialogService dialogService)
+        {
+            _playerMatchViewModel = playerMatchViewModel;
             _dialogService = dialogService;
         }
 
-        public bool DataGridIsValid(List<PlayerMatch> playerMatches)
+        public bool DataGridIsValid()
         {
-            _playerMatches = playerMatches;
-
             if (GridRowIncomplete())
                 return false;
 
@@ -50,14 +55,14 @@ namespace FootballManagerEF.Services
                 return "One of the selected players appears more than once for this match.";
 
             if (MoreThanMaxPlayersInATeam())
-                return "One of the teams has 6 players.";
+                return "One of the teams has more than 5 players.";
 
             return string.Empty;
         }
 
         private bool MoreThanMaxPlayersInATeam()
         {
-            var tooManyPlayers = from x in _playerMatches
+            var tooManyPlayers = from x in PlayerMatches
                                  where x.PlayerID != null
                                  group x by x.TeamID into grouped
                                  where grouped.Count() > 5
@@ -82,7 +87,7 @@ namespace FootballManagerEF.Services
 
         private bool RowsHavePlayerButNoTeam()
         {
-            if (_playerMatches.Where(x => x.PlayerID != null && x.TeamID == null).Count() > 0)
+            if (PlayerMatches.Where(x => x.PlayerID != null && x.TeamID == null).Count() > 0)
                 return true;
 
             return false;
@@ -90,7 +95,7 @@ namespace FootballManagerEF.Services
 
         private bool RowsHaveTeamButNoPlayer()
         {
-            if (_playerMatches.Where(x => x.PlayerID == null && x.TeamID != null).Count() > 0)
+            if (PlayerMatches.Where(x => x.PlayerID == null && x.TeamID != null).Count() > 0)
                 return true;
 
             return false;
@@ -98,12 +103,12 @@ namespace FootballManagerEF.Services
 
         private bool PlayerAppearsMoreThanOnce()
         {
-            var duplicatePlayers = from x in _playerMatches
+            var duplicatePlayers = from x in PlayerMatches where x.PlayerID != null
                                    group x by x.PlayerID into grouped
                                    where grouped.Count() > 1
                                    select grouped.Key;
 
-            if (duplicatePlayers.Count() > 1)
+            if (duplicatePlayers.Count() > 0)
                 return true;
 
             return false;
