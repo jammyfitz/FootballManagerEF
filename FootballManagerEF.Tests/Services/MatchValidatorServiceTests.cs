@@ -15,12 +15,14 @@ namespace FootballManagerEF.Tests.Services
     public class MatchValidatorServiceTests
     {
         FootballRepository fakeFootballRepo;
+        FakePlayerMatchRepository fakePlayerMatchRepo;
         MatchValidatorService matchValidatorService;
 
         [TestFixtureSetUp]
         public void Init()
         {
             fakeFootballRepo = new FootballRepository();
+            fakePlayerMatchRepo = new FakePlayerMatchRepository();
             matchValidatorService = new MatchValidatorService(new PlayerMatchViewModel(fakeFootballRepo), new FakeDialogService());
         }
 
@@ -28,7 +30,6 @@ namespace FootballManagerEF.Tests.Services
         public void MatchValidatorService_WhenDataGridIsValidIsCalledAndGridRowHasPlayerAndNoTeamReturnFalse()
         {
             //Arrange 
-            var fakePlayerMatchRepo = new FakePlayerMatchRepository();
             matchValidatorService.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesWithPlayerAndNoTeam();
 
             //Act
@@ -42,7 +43,6 @@ namespace FootballManagerEF.Tests.Services
         public void MatchValidatorService_WhenDataGridIsValidIsCalledAndGridRowHasTeamAndNoPlayerReturnFalse()
         {
             //Arrange 
-            var fakePlayerMatchRepo = new FakePlayerMatchRepository();
             matchValidatorService.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesWithTeamAndNoPlayer();
 
             //Act
