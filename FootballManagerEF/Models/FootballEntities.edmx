@@ -4,15 +4,16 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FootballModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'Football.dbo.Config' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+    <Schema Namespace="FootballModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Config">
+          <Key>
+            <PropertyRef Name="SmtpPort" />
+          </Key>
           <Property Name="SmtpServer" Type="nvarchar(max)" />
           <Property Name="SmtpAgentSine" Type="nvarchar" MaxLength="50" />
           <Property Name="SmtpAgentDutyCode" Type="nvarchar(max)" />
-          <Property Name="SmtpPort" Type="nchar" MaxLength="10" />
-        </EntityType>-->
+          <Property Name="SmtpPort" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="Match">
           <Key>
             <PropertyRef Name="MatchID" />
@@ -45,6 +46,14 @@ warning 6013: The table/view 'Football.dbo.Config' does not have a primary key d
           </Key>
           <Property Name="TeamID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TeamName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PlayerStats">
+          <Key>
+            <PropertyRef Name="PlayerID" />
+          </Key>
+          <Property Name="PlayerName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MatchWins" Type="int" />
+          <Property Name="PlayerID" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_PlayerMatch_Match">
           <End Role="Match" Type="Self.Match" Multiplicity="0..1" />
@@ -83,10 +92,18 @@ warning 6013: The table/view 'Football.dbo.Config' does not have a primary key d
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="FootballModelStoreContainer">
+          <EntitySet Name="Config" EntityType="Self.Config" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Match" EntityType="Self.Match" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Player" EntityType="Self.Player" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayerMatch" EntityType="Self.PlayerMatch" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Team" EntityType="Self.Team" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlayerStats" EntityType="Self.PlayerStats" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PlayerStats].[PlayerName] AS [PlayerName], 
+    [PlayerStats].[MatchWins] AS [MatchWins], 
+    [PlayerStats].[PlayerID] AS [PlayerID]
+    FROM [dbo].[PlayerStats] AS [PlayerStats]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_PlayerMatch_Match" Association="Self.FK_PlayerMatch_Match">
             <End Role="Match" EntitySet="Match" />
             <End Role="PlayerMatch" EntitySet="PlayerMatch" />
@@ -100,8 +117,7 @@ warning 6013: The table/view 'Football.dbo.Config' does not have a primary key d
             <End Role="PlayerMatch" EntitySet="PlayerMatch" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FootballModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -110,7 +126,7 @@ warning 6013: The table/view 'Football.dbo.Config' does not have a primary key d
             <PropertyRef Name="MatchID" />
           </Key>
           <Property Name="MatchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MatchDate" Type="DateTime" />
+          <Property Name="MatchDate" Type="DateTime" Precision="0" />
           <Property Name="MatchWinner" Type="Int32" />
           <NavigationProperty Name="PlayerMatches" Relationship="Self.FK_PlayerMatch_Match" FromRole="Match" ToRole="PlayerMatch" />
         </EntityType>
@@ -197,7 +213,26 @@ warning 6013: The table/view 'Football.dbo.Config' does not have a primary key d
             <End Role="Team" EntitySet="Teams" />
             <End Role="PlayerMatch" EntitySet="PlayerMatches" />
           </AssociationSet>
+          <EntitySet Name="Configs" EntityType="FootballModel.Config" />
+          <EntitySet Name="PlayerStats" EntityType="FootballModel.PlayerStat" />
         </EntityContainer>
+        <EntityType Name="Config">
+          <Key>
+            <PropertyRef Name="SmtpPort" />
+          </Key>
+          <Property Name="SmtpServer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SmtpAgentSine" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SmtpAgentDutyCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SmtpPort" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PlayerStat">
+          <Key>
+            <PropertyRef Name="PlayerID" />
+          </Key>
+          <Property Name="PlayerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MatchWins" Type="Int32" />
+          <Property Name="PlayerID" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -238,6 +273,25 @@ warning 6013: The table/view 'Football.dbo.Config' does not have a primary key d
               <MappingFragment StoreEntitySet="Team">
                 <ScalarProperty Name="TeamID" ColumnName="TeamID" />
                 <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Configs">
+            <EntityTypeMapping TypeName="FootballModel.Config">
+              <MappingFragment StoreEntitySet="Config">
+                <ScalarProperty Name="SmtpPort" ColumnName="SmtpPort" />
+                <ScalarProperty Name="SmtpAgentDutyCode" ColumnName="SmtpAgentDutyCode" />
+                <ScalarProperty Name="SmtpAgentSine" ColumnName="SmtpAgentSine" />
+                <ScalarProperty Name="SmtpServer" ColumnName="SmtpServer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlayerStats">
+            <EntityTypeMapping TypeName="FootballModel.PlayerStat">
+              <MappingFragment StoreEntitySet="PlayerStats">
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="MatchWins" ColumnName="MatchWins" />
+                <ScalarProperty Name="PlayerName" ColumnName="PlayerName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -29,5 +29,7 @@ namespace FootballManagerEF.Models
         public virtual DbSet<Player> Players { get; set; }
         public virtual DbSet<PlayerMatch> PlayerMatches { get; set; }
         public virtual DbSet<Team> Teams { get; set; }
+        public virtual DbSet<Config> Configs { get; set; }
+        public virtual DbSet<PlayerStat> PlayerStats { get; set; }
     }
 }

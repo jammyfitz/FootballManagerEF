@@ -63,6 +63,6 @@
         <Button x:Name="btn_Update" DataContext="{Binding ButtonViewModel}" Content="Update" Command="{Binding UpdateCommand}" HorizontalAlignment="Left" Height="20" Margin="313,30,0,0" Width="68" FontFamily="Aharoni" VerticalAlignment="Top" FontSize="11" RenderTransformOrigin="0.5,0.64" />
         <Label x:Name="lb_MatchWinner" Content="Winner" HorizontalAlignment="Left" Height="24" Margin="117,278,0,0" VerticalAlignment="Top" Width="61" FontFamily="Aharoni" RenderTransformOrigin="0.498,0.83"/>
         <ComboBox x:Name="cb_MatchWinner" ItemsSource="{Binding Teams}" SelectedValue="{Binding SelectedMatch.MatchWinner, Mode=TwoWay}" SelectedValuePath="TeamID" DisplayMemberPath="TeamName" HorizontalAlignment="Left" Height="27" Margin="177,275,0,0" VerticalAlignment="Top" Width="120" />
-        <Button x:Name="btn_SendEmail" Content="Send Email" HorizontalAlignment="Left" Height="20" Margin="313,60,0,0" VerticalAlignment="Top" Width="81" FontFamily="Aharoni" FontSize="11"/>
+        <Button x:Name="btn_SendEmail" DataContext="{Binding ButtonViewModel}" Content="Send Email" Command="{Binding SendEmailCommand}" HorizontalAlignment="Left" Height="20" Margin="313,60,0,0" VerticalAlignment="Top" Width="81" FontFamily="Aharoni" FontSize="11"/>
     </Grid>
 </Window>

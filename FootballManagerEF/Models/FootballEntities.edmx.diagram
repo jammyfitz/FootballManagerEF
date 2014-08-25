@@ -12,6 +12,8 @@
         <AssociationConnector Association="FootballModel.FK_PlayerMatch_Match" ManuallyRouted="false" />
         <AssociationConnector Association="FootballModel.FK_PlayerMatch_Player" ManuallyRouted="false" />
         <AssociationConnector Association="FootballModel.FK_PlayerMatch_Team" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FootballModel.Config" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="FootballModel.PlayerStat" Width="1.5" PointX="0.75" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

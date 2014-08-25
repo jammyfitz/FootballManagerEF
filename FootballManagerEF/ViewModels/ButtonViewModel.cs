@@ -52,6 +52,11 @@ namespace FootballManagerEF.ViewModels
                 _matchValidatorService.SendErrorToUser();
         }
 
+        public void SendEmailButtonClicked()
+        {
+            throw new NotImplementedException();
+        }
+
         private void SaveDataGrid()
         {
             List<PlayerMatch> playerMatchesToInsert = GetPlayerMatchesToInsert();
@@ -91,6 +96,15 @@ namespace FootballManagerEF.ViewModels
             }
         }
         private ICommand _updateCommand;
+
+        public ICommand SendEmailCommand
+        {
+            get
+            {
+                return _sendEmailCommand ?? (_sendEmailCommand = new CommandHandler(() => SendEmailButtonClicked(), _canExecute));
+            }
+        }
+        private ICommand _sendEmailCommand;
         #endregion
     }
 }
