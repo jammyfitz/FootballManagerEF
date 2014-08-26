@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FootballManagerEF.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace FootballManagerEF.Interfaces
 {
-    public interface ITeam
+    public interface IPlayerStatsRepository : IDisposable
     {
-        int TeamID { get; set; }
-        string TeamName { get; set; }
+        List<PlayerStat> GetPlayerStats();
     }
 }

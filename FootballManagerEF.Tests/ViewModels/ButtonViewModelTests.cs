@@ -22,6 +22,7 @@ namespace FootballManagerEF.Tests.ViewModels
         FakePlayerMatchRepository fakePlayerMatchRepo;
         MatchValidatorService matchValidatorService;
         ButtonViewModel buttonViewModel;
+        FakeMailerService fakeMailerService;
 
         [TestFixtureSetUp]
         public void Init()
@@ -30,7 +31,8 @@ namespace FootballManagerEF.Tests.ViewModels
             fakePlayerMatchRepo = new FakePlayerMatchRepository();
             playerMatchViewModel = new PlayerMatchViewModel(fakeFootballRepo);
             matchValidatorService = new MatchValidatorService(new PlayerMatchViewModel(fakeFootballRepo), new FakeDialogService());
-            buttonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, matchValidatorService);
+            fakeMailerService = new FakeMailerService();
+            buttonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, matchValidatorService, fakeMailerService);
         }
 
         [Test]
@@ -51,7 +53,7 @@ namespace FootballManagerEF.Tests.ViewModels
         {
             //Arrange 
             var mockFootballRepo = MockRepository.GenerateMock<IFootballRepository>();
-            var mockButtonViewModel = new ButtonViewModel(mockFootballRepo, new PlayerMatchViewModel(mockFootballRepo), matchValidatorService);
+            var mockButtonViewModel = new ButtonViewModel(mockFootballRepo, new PlayerMatchViewModel(mockFootballRepo), matchValidatorService, fakeMailerService);
             mockButtonViewModel.PlayerMatches = fakePlayerMatchRepo.GetTenPlayerMatches(1);
             mockFootballRepo.Stub(x => x.Save());
 
@@ -68,7 +70,7 @@ namespace FootballManagerEF.Tests.ViewModels
             //Arrange 
 
             var mockMatchValidatorService = MockRepository.GenerateMock<IMatchValidatorService>();
-            var mockButtonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, mockMatchValidatorService);
+            var mockButtonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, mockMatchValidatorService, fakeMailerService);
             mockMatchValidatorService.Stub(x => x.DataGridIsValid()).Return(false);
 
             //Act

@@ -15,6 +15,8 @@ namespace FootballManagerEF.Repositories
         private IPlayerMatchRepository playerMatchRepository;
         private IPlayerRepository playerRepository;
         private ITeamRepository teamRepository;
+        private IConfigRepository configRepository;
+        private IPlayerStatsRepository playerStatsRepository;
         private FootballEntities context;
 
         public FootballRepository(FootballEntities context)
@@ -24,6 +26,8 @@ namespace FootballManagerEF.Repositories
             playerMatchRepository = new PlayerMatchRepository(context);
             playerRepository = new PlayerRepository(context);
             teamRepository = new TeamRepository(context);
+            configRepository = new ConfigRepository(context);
+            playerStatsRepository = new PlayerStatsRepository(context);
         }
 
         public FootballRepository()
@@ -32,6 +36,13 @@ namespace FootballManagerEF.Repositories
             playerMatchRepository = new FakePlayerMatchRepository();
             playerRepository = new FakePlayerRepository();
             teamRepository = new FakeTeamRepository();
+            configRepository = new FakeConfigRepository();
+            playerStatsRepository = new FakePlayerStatsRepository();
+        }
+
+        public void Save()
+        {
+            context.SaveChanges();
         }
 
         #region Match Repository
@@ -61,6 +72,11 @@ namespace FootballManagerEF.Repositories
         {
             return playerMatchRepository.InsertPlayerMatches(playerMatches, matchId);
         }
+
+        public List<PlayerMatch> GetFiveFilledAndFiveEmptyPlayerMatches()
+        {
+            return playerMatchRepository.GetFiveFilledAndFiveEmptyPlayerMatches();
+        }
         #endregion
 
         #region Player Repository
@@ -87,10 +103,20 @@ namespace FootballManagerEF.Repositories
         }
         #endregion
 
-        public void Save()
+        #region Config Repository
+        public Config GetConfig()
         {
-            context.SaveChanges();
+            return configRepository.GetConfig();
         }
+        #endregion
+
+        #region PlayerStats Repository
+        public List<PlayerStat> GetPlayerStats()
+        {
+            return playerStatsRepository.GetPlayerStats();
+        }
+
+        #endregion
 
         #region IDisposable Members
         private bool disposed = false;
@@ -113,10 +139,5 @@ namespace FootballManagerEF.Repositories
             GC.SuppressFinalize(this);
         }
         #endregion
-
-        public List<PlayerMatch> GetFiveFilledAndFiveEmptyPlayerMatches()
-        {
-            return playerMatchRepository.GetFiveFilledAndFiveEmptyPlayerMatches();
-        }
     }
 }

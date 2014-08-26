@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace FootballManagerEF.Interfaces
 {
-    public interface IFootballRepository : IMatchRepository, IPlayerMatchRepository, IPlayerRepository, ITeamRepository, IDisposable
+    public interface IFootballRepository : IMatchRepository, IPlayerMatchRepository, IPlayerRepository, ITeamRepository, IConfigRepository, IPlayerStatsRepository, IDisposable
     {
         List<Match> GetMatches();
         List<PlayerMatch> GetPlayerMatches(int matchId);
         List<Player> GetPlayers();
         List<Team> GetTeams();
+        Config GetConfig();
+        List<PlayerStat> GetPlayerStats();
         Match GetMatchByID(int matchId);
         Player GetPlayerByID(int playerId);
         Team GetTeamByID(int teamId);

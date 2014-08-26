@@ -65,8 +65,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Handlers\CommandHandler.cs" />
+    <Compile Include="Interfaces\IConfigRepository.cs" />
+    <Compile Include="Interfaces\IMailerService.cs" />
     <Compile Include="Interfaces\IDialogService.cs" />
     <Compile Include="Interfaces\IFootballRepository.cs" />
+    <Compile Include="Interfaces\IPlayerStatRepository.cs" />
     <Compile Include="Interfaces\IMatchValidatorService.cs" />
     <Compile Include="Interfaces\IPlayerMatchRepository.cs" />
     <Compile Include="Interfaces\IPlayerMatchViewModel.cs" />
@@ -78,15 +81,22 @@
     <Compile Include="Models\PlayerStat.cs">
       <DependentUpon>FootballEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\FakeConfigRepository.cs" />
+    <Compile Include="Repositories\FakePlayerStatsRepository.cs" />
     <Compile Include="Repositories\FakePlayerMatchRepository.cs" />
     <Compile Include="Repositories\FakePlayerRepository.cs" />
     <Compile Include="Repositories\FakeTeamRepository.cs" />
     <Compile Include="Repositories\FootballRepository.cs" />
+    <Compile Include="Repositories\ConfigRepository.cs" />
+    <Compile Include="Repositories\PlayerStatsRepository.cs" />
     <Compile Include="Repositories\PlayerMatchRepository.cs" />
     <Compile Include="Repositories\PlayerRepository.cs" />
     <Compile Include="Repositories\TeamRepository.cs" />
+    <Compile Include="Services\FakeMailerService.cs" />
+    <Compile Include="Services\MailerService.cs" />
     <Compile Include="Services\FakeDialogService.cs" />
     <Compile Include="Services\DialogService.cs" />
+    <Compile Include="Services\StringCipherService.cs" />
     <Compile Include="ViewModels\ButtonViewModel.cs" />
     <Compile Include="Services\MatchValidatorService.cs" />
     <Compile Include="Services\FakeMatchValidatorService.cs" />
@@ -96,10 +106,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FootballEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\IMatch.cs" />
     <Compile Include="Interfaces\IMatchRepository.cs" />
-    <Compile Include="Interfaces\IPlayer.cs" />
-    <Compile Include="Interfaces\ITeam.cs" />
     <Compile Include="Models\Match.cs">
       <DependentUpon>FootballEntities.tt</DependentUpon>
     </Compile>

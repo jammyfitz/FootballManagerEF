@@ -34,7 +34,7 @@ namespace FootballManagerEF.ViewModels
             set { _playerMatchViewModel.PlayerMatches = value; RaisePropertyChanged("PlayerMatches"); }
         }
 
-        public ButtonViewModel(IFootballRepository footballRepository, IPlayerMatchViewModel playerMatchViewModel, IMatchValidatorService matchValidatorService)
+        public ButtonViewModel(IFootballRepository footballRepository, IPlayerMatchViewModel playerMatchViewModel, IMatchValidatorService matchValidatorService, IMailerService mailerService)
         {
             _footballRepository = footballRepository;
             _playerMatchViewModel = playerMatchViewModel;
@@ -54,7 +54,10 @@ namespace FootballManagerEF.ViewModels
 
         public void SendEmailButtonClicked()
         {
-            throw new NotImplementedException();
+            //DataView rawData = footballDataSet.PlayerStats.DefaultView;
+            //string formattedData = FootballHelper.FormatStatsDataToText(rawData);
+            //SendEmail(formattedData);
+            //MessageBox.Show("Your e-mail has been sent!");
         }
 
         private void SaveDataGrid()

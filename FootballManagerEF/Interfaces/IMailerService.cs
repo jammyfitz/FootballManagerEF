@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace FootballManagerEF.Interfaces
 {
-    public interface IMatch
+    public interface IMailerService
     {
-        int MatchID { get; set; }
-        Nullable<System.DateTime> MatchDate { get; set; }
-        Nullable<int> MatchWinner { get; set; }
+        bool SendEmail(string message);
     }
 }

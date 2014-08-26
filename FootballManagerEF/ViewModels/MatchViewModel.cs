@@ -63,7 +63,7 @@ namespace FootballManagerEF.ViewModels
         {
             _footballRepository = new FootballRepository(new FootballEntities());
             _playerMatchViewModel = new PlayerMatchViewModel(_footballRepository);
-            ButtonViewModel = new ButtonViewModel(_footballRepository, _playerMatchViewModel, new MatchValidatorService(_playerMatchViewModel, new DialogService()));
+            ButtonViewModel = new ButtonViewModel(_footballRepository, _playerMatchViewModel, new MatchValidatorService(_playerMatchViewModel, new DialogService()), new MailerService(_footballRepository));
             _matches = GetMatches();
             _teams = GetTeams();
         }
