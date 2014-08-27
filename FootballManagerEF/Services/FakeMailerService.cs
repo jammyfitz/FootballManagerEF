@@ -10,7 +10,7 @@ namespace FootballManagerEF.Services
 {
     public class FakeMailerService : IMailerService
     {
-        public bool SendEmail(string message)
+        public bool SendEmail()
         {
             return true;
         }

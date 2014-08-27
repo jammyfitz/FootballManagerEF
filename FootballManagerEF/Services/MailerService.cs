@@ -21,7 +21,7 @@ namespace FootballManagerEF.Services
             _config = footballRepository.GetConfig();
         }
 
-        public bool SendEmail(string message)
+        public bool SendEmail()
         {
             SmtpClient SmtpServer = new SmtpClient(_config.SmtpServer.ToString());
             var mail = new MailMessage();
@@ -40,7 +40,7 @@ namespace FootballManagerEF.Services
         private string GetEmailBody()
         {
             // TODO: Implement StringBuilder, or at least investigate
-            string body = "***MoleInTheBarn v1.0***\n";
+            string body = "***MoleInTheBarn v1.2***\n";
 
             foreach(PlayerStat playerStat in _playerStats)
             {

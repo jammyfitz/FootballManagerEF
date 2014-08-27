@@ -30,7 +30,7 @@ namespace FootballManagerEF.Tests.ViewModels
             fakeFootballRepo = new FootballRepository();
             fakePlayerMatchRepo = new FakePlayerMatchRepository();
             playerMatchViewModel = new PlayerMatchViewModel(fakeFootballRepo);
-            matchValidatorService = new MatchValidatorService(new PlayerMatchViewModel(fakeFootballRepo), new FakeDialogService());
+            matchValidatorService = new MatchValidatorService(playerMatchViewModel, new FakeDialogService());
             fakeMailerService = new FakeMailerService();
             buttonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, matchValidatorService, fakeMailerService);
         }

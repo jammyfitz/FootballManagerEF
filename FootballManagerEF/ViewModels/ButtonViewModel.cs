@@ -19,6 +19,7 @@ namespace FootballManagerEF.ViewModels
         private IFootballRepository _footballRepository;
         private IPlayerMatchViewModel _playerMatchViewModel;
         private IMatchValidatorService _matchValidatorService;
+        private IMailerService _mailerService;
 
         private Match _selectedMatch;
 
@@ -41,6 +42,7 @@ namespace FootballManagerEF.ViewModels
             _matchValidatorService = matchValidatorService;
             _matchValidatorService.PlayerMatches = _playerMatchViewModel.PlayerMatches;
             _selectedMatch = new Match();
+            _mailerService = mailerService;
             _canExecute = true;
         }
 
@@ -54,6 +56,7 @@ namespace FootballManagerEF.ViewModels
 
         public void SendEmailButtonClicked()
         {
+            _mailerService.SendEmail();
             //DataView rawData = footballDataSet.PlayerStats.DefaultView;
             //string formattedData = FootballHelper.FormatStatsDataToText(rawData);
             //SendEmail(formattedData);
