@@ -21,6 +21,9 @@ namespace FootballManagerEF.ViewModels
         private List<Team> _teams;
         private Match _selectedMatch;
         private IPlayerMatchViewModel _playerMatchViewModel;
+        private DialogService _dialogService;
+        private MatchValidatorService _matchValidatorService;
+        private MailerService _mailerService;
 
         public List<Match> Matches
         {
@@ -63,7 +66,10 @@ namespace FootballManagerEF.ViewModels
         {
             _footballRepository = new FootballRepository(new FootballEntities());
             _playerMatchViewModel = new PlayerMatchViewModel(_footballRepository);
-            ButtonViewModel = new ButtonViewModel(_footballRepository, _playerMatchViewModel, new MatchValidatorService(_playerMatchViewModel, new DialogService()), new MailerService(_footballRepository));
+            _dialogService = new DialogService();
+            _matchValidatorService = new MatchValidatorService(_playerMatchViewModel, _dialogService);
+            _mailerService = new MailerService(_footballRepository, _dialogService);
+            ButtonViewModel = new ButtonViewModel(_footballRepository, _playerMatchViewModel, _matchValidatorService, _mailerService);
             _matches = GetMatches();
             _teams = GetTeams();
         }

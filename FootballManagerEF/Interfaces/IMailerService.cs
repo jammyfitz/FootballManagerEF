@@ -9,5 +9,6 @@ namespace FootballManagerEF.Interfaces
     public interface IMailerService
     {
         bool SendEmail();
+        bool SendOKMessageToUser();
     }
 }

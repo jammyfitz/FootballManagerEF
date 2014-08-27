@@ -144,5 +144,20 @@ namespace FootballManagerEF.Tests.ViewModels
             //Assert
             Assert.That(matchValidatorService.ErrorMessage, Is.EqualTo("One of the teams has more than 5 players."));
         }
+
+        [Test]
+        public void ButtonViewModel_WhenSendEmailIsClickedAndEmailHasBeenSentReturnMessageToUser()
+        {
+            //Arrange 
+            var mockMailerService = MockRepository.GenerateMock<IMailerService>();
+            var mockButtonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, matchValidatorService, mockMailerService);
+            mockMailerService.Stub(x => x.SendEmail()).Return(true);
+
+            //Act
+            mockButtonViewModel.SendEmailButtonClicked();
+
+            //Assert
+            mockMailerService.AssertWasCalled(x => x.SendOKMessageToUser());
+        }
     }
 }

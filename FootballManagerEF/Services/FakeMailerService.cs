@@ -14,5 +14,10 @@ namespace FootballManagerEF.Services
         {
             return true;
         }
+
+        public bool SendOKMessageToUser()
+        {
+            return true;
+        }
     }
 }

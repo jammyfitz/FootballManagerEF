@@ -14,11 +14,13 @@ namespace FootballManagerEF.Services
     {
         private List<PlayerStat> _playerStats;
         private Config _config;
+        private IDialogService _dialogService;
 
-        public MailerService(IFootballRepository footballRepository)
+        public MailerService(IFootballRepository footballRepository, IDialogService dialogService)
         {
             _playerStats = footballRepository.GetPlayerStats();
             _config = footballRepository.GetConfig();
+            _dialogService = dialogService;
         }
 
         public bool SendEmail()
@@ -34,6 +36,12 @@ namespace FootballManagerEF.Services
             SmtpServer.Credentials = new System.Net.NetworkCredential(_config.SmtpAgentSine.ToString(), GetDecryptedAgentDutyCode());
             SmtpServer.EnableSsl = true;
             SmtpServer.Send(mail);
+            return true;
+        }
+
+        public bool SendOKMessageToUser()
+        {
+            MessageBox.Show("E-mail sent OK!");
             return true;
         }
 

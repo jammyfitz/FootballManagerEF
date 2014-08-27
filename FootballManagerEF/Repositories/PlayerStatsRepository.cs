@@ -20,15 +20,16 @@ namespace FootballManagerEF.Repositories
 
         public List<PlayerStat> GetPlayerStats()
         {
-            var result = from playerstats in context.PlayerStats
-                         select playerstats;
-
-            return result.ToList();
+            return GetPlayerStatsByMatchWinsDesc();
         }
 
-        public List<Match> GetMatchesByDateAsc()
+        public List<PlayerStat> GetPlayerStatsByMatchWinsDesc()
         {
-            return context.Matches.OrderBy(x => x.MatchDate).ToList();
+            var result = from playerStats in context.PlayerStats
+                         orderby playerStats.MatchWins descending
+                         select playerStats;
+
+            return result.ToList();
         }
 
         public List<Match> GetMatchesByDateAscNotOlderThanTwoWeeks()

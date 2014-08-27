@@ -56,11 +56,8 @@ namespace FootballManagerEF.ViewModels
 
         public void SendEmailButtonClicked()
         {
-            _mailerService.SendEmail();
-            //DataView rawData = footballDataSet.PlayerStats.DefaultView;
-            //string formattedData = FootballHelper.FormatStatsDataToText(rawData);
-            //SendEmail(formattedData);
-            //MessageBox.Show("Your e-mail has been sent!");
+            if (_mailerService.SendEmail())
+                _mailerService.SendOKMessageToUser();
         }
 
         private void SaveDataGrid()
