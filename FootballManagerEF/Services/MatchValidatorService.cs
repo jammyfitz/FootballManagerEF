@@ -48,16 +48,18 @@ namespace FootballManagerEF.Services
 
         public string GetErrorMessageOnUpdate()
         {
+            string errorMessage = string.Empty;
+
             if (GridRowIncomplete())
-                return "Either the team or the player is missing for one of the entries.";
+                errorMessage = "Either the team or the player is missing for one of the entries.";
 
             if (PlayerAppearsMoreThanOnce())
-                return "One of the selected players appears more than once for this match.";
+                errorMessage = "One of the selected players appears more than once for this match.";
 
             if (MoreThanMaxPlayersInATeam())
-                return "One of the teams has more than 5 players.";
+                errorMessage = "One of the teams has more than 5 players.";
 
-            return string.Empty;
+            return errorMessage;
         }
 
         private bool MoreThanMaxPlayersInATeam()

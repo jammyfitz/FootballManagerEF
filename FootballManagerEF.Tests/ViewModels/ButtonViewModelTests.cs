@@ -159,5 +159,20 @@ namespace FootballManagerEF.Tests.ViewModels
             //Assert
             mockMailerService.AssertWasCalled(x => x.SendOKMessageToUser());
         }
+
+        [Test]
+        public void ButtonViewModel_WhenSendEmailIsClickedAndEmailHasntBeenSentNoMessageToUser()
+        {
+            //Arrange 
+            var mockMailerService = MockRepository.GenerateMock<IMailerService>();
+            var mockButtonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, matchValidatorService, mockMailerService);
+            mockMailerService.Stub(x => x.SendEmail()).Return(false);
+
+            //Act
+            mockButtonViewModel.SendEmailButtonClicked();
+
+            //Assert
+            mockMailerService.AssertWasNotCalled(x => x.SendOKMessageToUser());
+        }
     }
 }

@@ -14,13 +14,11 @@ namespace FootballManagerEF.Services
     {
         private List<PlayerStat> _playerStats;
         private Config _config;
-        private IDialogService _dialogService;
 
-        public MailerService(IFootballRepository footballRepository, IDialogService dialogService)
+        public MailerService(IFootballRepository footballRepository)
         {
             _playerStats = footballRepository.GetPlayerStats();
             _config = footballRepository.GetConfig();
-            _dialogService = dialogService;
         }
 
         public bool SendEmail()
@@ -47,15 +45,12 @@ namespace FootballManagerEF.Services
 
         private string GetEmailBody()
         {
-            // TODO: Implement StringBuilder, or at least investigate
-            string body = "***MoleInTheBarn v1.2***\n";
+            StringBuilder body = new StringBuilder("***MoleInTheBarn v1.2***\n");
 
             foreach(PlayerStat playerStat in _playerStats)
-            {
-                body += WritePlayerStatLine(playerStat.PlayerName, playerStat.MatchWins.ToString());
-            }
+                body.Append(WritePlayerStatLine(playerStat.PlayerName, playerStat.MatchWins.ToString()));
 
-            return body;
+            return body.ToString();
         }
 
         private static string WritePlayerStatLine(string playerName, string matchWins)

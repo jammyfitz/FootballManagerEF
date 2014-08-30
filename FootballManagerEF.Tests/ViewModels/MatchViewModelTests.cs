@@ -26,5 +26,19 @@ namespace FootballManagerEF.Tests.ViewModels
             //Assert
             Assert.That(result.Count, Is.GreaterThan(0));
         }
+
+        [Test]
+        public void MatchViewModel_WhenGetTeamsIsCalledReturnsListOfTeams()
+        {
+            //Arrange 
+            var fakeFootballRepo = new FootballRepository();
+            var matchViewModel = new MatchViewModel(fakeFootballRepo);
+
+            //Act
+            var result = matchViewModel.GetTeams();
+
+            //Assert
+            Assert.That(result.Count, Is.GreaterThan(0));
+        }
     }
 }

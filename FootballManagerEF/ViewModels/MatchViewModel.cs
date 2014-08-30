@@ -68,7 +68,7 @@ namespace FootballManagerEF.ViewModels
             _playerMatchViewModel = new PlayerMatchViewModel(_footballRepository);
             _dialogService = new DialogService();
             _matchValidatorService = new MatchValidatorService(_playerMatchViewModel, _dialogService);
-            _mailerService = new MailerService(_footballRepository, _dialogService);
+            _mailerService = new MailerService(_footballRepository);
             ButtonViewModel = new ButtonViewModel(_footballRepository, _playerMatchViewModel, _matchValidatorService, _mailerService);
             _matches = GetMatches();
             _teams = GetTeams();
