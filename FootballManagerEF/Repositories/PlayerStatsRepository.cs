@@ -32,39 +32,6 @@ namespace FootballManagerEF.Repositories
             return result.ToList();
         }
 
-        public List<Match> GetMatchesByDateAscNotOlderThanTwoWeeks()
-        {
-            DateTime twoWeeksAgo = Utils.TwoWeeksAgo();
-
-            var result = from matches in context.Matches
-                         where (matches.MatchDate > twoWeeksAgo)
-                         orderby matches.MatchDate ascending
-                         select matches;
-
-            return result.ToList();
-        }
-
-        public Match GetMatchByID(int id)
-        {
-            return context.Matches.Find(id);
-        }
-
-        public void InsertMatch(Match match)
-        {
-            context.Matches.Add(match);
-        }
-
-        public void DeleteMatch(int matchID)
-        {
-            Match match = context.Matches.Find(matchID);
-            context.Matches.Remove(match);
-        }
-
-        public void UpdateMatch(Match match)
-        {
-            context.Entry(match).State = EntityState.Modified;
-        }
-
         public void Save()
         {
             context.SaveChanges();

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:FootballManagerEF.Views" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ViewModels="clr-namespace:FootballManagerEF.ViewModels" mc:Ignorable="d" x:Name="wn_MainWindow"
         x:Class="FootballManagerEF.Views.MainWindow"
-        Title="Football ManagerEF v1.0" Height="366.4" Width="421.8" ResizeMode="NoResize" Icon="../Resources/moleinthebarn.ico" >
+        Title="Football ManagerEF v1.2" Height="366.4" Width="421.8" ResizeMode="NoResize" Icon="../Resources/moleinthebarn.ico" >
     <Window.Resources>
         <Style TargetType="{x:Type DataGridCell}">
             <EventSetter Event="UIElement.PreviewMouseLeftButtonDown" Handler="DataGridCell_PreviewMouseLeftButtonDown"/>

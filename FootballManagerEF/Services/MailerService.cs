@@ -1,5 +1,6 @@
 ﻿using FootballManagerEF.Interfaces;
 using FootballManagerEF.Models;
+using FootballManagerEF.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,15 +15,19 @@ namespace FootballManagerEF.Services
     {
         private List<PlayerStat> _playerStats;
         private Config _config;
+        private IFootballRepository _footballRepository;
 
-        public MailerService(IFootballRepository footballRepository)
+        public MailerService()
         {
-            _playerStats = footballRepository.GetPlayerStats();
-            _config = footballRepository.GetConfig();
+            _footballRepository = new FootballRepository(new FootballEntities());
+            _config = _footballRepository.GetConfig();
         }
 
         public bool SendEmail()
         {
+            _footballRepository = new FootballRepository(new FootballEntities());
+            GetPlayerStats();
+
             SmtpClient SmtpServer = new SmtpClient(_config.SmtpServer.ToString());
             var mail = new MailMessage();
             mail.From = new MailAddress(_config.SmtpAgentSine.ToString());
@@ -66,6 +71,11 @@ namespace FootballManagerEF.Services
         private string Decrypt(string inputString)
         {
             return StringCipherService.Decrypt(inputString, "something");
+        }
+
+        private void GetPlayerStats()
+        {
+            _playerStats = _footballRepository.GetPlayerStats();
         }
     }
 }

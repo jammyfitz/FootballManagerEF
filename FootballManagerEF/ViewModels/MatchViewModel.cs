@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Mvc;
 using System.Windows.Controls;
 using FootballManagerEF.Services;
 
@@ -68,15 +67,21 @@ namespace FootballManagerEF.ViewModels
             _playerMatchViewModel = new PlayerMatchViewModel(_footballRepository);
             _dialogService = new DialogService();
             _matchValidatorService = new MatchValidatorService(_playerMatchViewModel, _dialogService);
-            _mailerService = new MailerService(_footballRepository);
+            _mailerService = new MailerService();
             ButtonViewModel = new ButtonViewModel(_footballRepository, _playerMatchViewModel, _matchValidatorService, _mailerService);
-            _matches = GetMatches();
-            _teams = GetTeams();
+            InitialiseMatchesAndTeams();
+        }
+
+        private void InitialiseMatchesAndTeams()
+        {
+            Matches = GetMatches();
+            Teams = GetTeams();
         }
 
         public MatchViewModel(IFootballRepository footballRepository)
         {
             _footballRepository = footballRepository;
+            InitialiseMatchesAndTeams();
         }
 
         public List<Match> GetMatches()
