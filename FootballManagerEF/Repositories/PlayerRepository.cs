@@ -20,12 +20,12 @@ namespace FootballManagerEF.Repositories
 
         public List<Player> GetPlayers()
         {
-            return GetPlayersByNameAsc();
+            return GetActivePlayersByNameAsc();
         }
 
-        public List<Player> GetPlayersByNameAsc()
+        public List<Player> GetActivePlayersByNameAsc()
         {
-            return context.Players.OrderBy(x => x.PlayerName).ToList();
+            return context.Players.Where(x => x.Active == true).OrderBy(x => x.PlayerName).ToList();
         }
 
         public Player GetPlayerByID(int playerId)

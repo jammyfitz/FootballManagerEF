@@ -23,6 +23,7 @@ namespace FootballManagerEF.Models
         public string PlayerName { get; set; }
         public string EmailAddress { get; set; }
         public string Mobile { get; set; }
+        public Nullable<bool> Active { get; set; }
     
         public virtual ICollection<PlayerMatch> PlayerMatches { get; set; }
     }

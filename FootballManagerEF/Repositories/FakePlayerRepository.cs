@@ -17,17 +17,20 @@ namespace FootballManagerEF.Repositories
               new Player
               { 
                   PlayerID = 1,
-                  PlayerName = "Jamie"
+                  PlayerName = "Jamie",
+                  Active = true
               },
               new Player
               { 
                   PlayerID = 2,
-                  PlayerName = "Mike"
+                  PlayerName = "Mike",
+                  Active = true
               },
               new Player
               { 
                   PlayerID = 3,
-                  PlayerName = "Caff"
+                  PlayerName = "Caff",
+                  Active = true
               }
            };
         }

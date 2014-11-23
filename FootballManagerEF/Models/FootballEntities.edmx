@@ -30,6 +30,7 @@
           <Property Name="PlayerName" Type="nvarchar" MaxLength="50" />
           <Property Name="EmailAddress" Type="nvarchar(max)" />
           <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
+          <Property Name="Active" Type="bit" />
         </EntityType>
         <EntityType Name="PlayerMatch">
           <Key>
@@ -47,6 +48,8 @@
           <Property Name="TeamID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TeamName" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Football.dbo.PlayerStats' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="PlayerStats">
           <Key>
             <PropertyRef Name="PlayerID" />
@@ -139,6 +142,7 @@
           <Property Name="EmailAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PlayerMatches" Relationship="Self.FK_PlayerMatch_Player" FromRole="Player" ToRole="PlayerMatch" />
+          <Property Name="Active" Type="Boolean" />
         </EntityType>
         <EntityType Name="PlayerMatch">
           <Key>
@@ -251,6 +255,7 @@
           <EntitySetMapping Name="Players">
             <EntityTypeMapping TypeName="FootballModel.Player">
               <MappingFragment StoreEntitySet="Player">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
                 <ScalarProperty Name="PlayerName" ColumnName="PlayerName" />
                 <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
