@@ -3,13 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:FootballManagerEF.Views" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ViewModels="clr-namespace:FootballManagerEF.ViewModels" mc:Ignorable="d" x:Name="wn_MainWindow"
         x:Class="FootballManagerEF.Views.MainWindow"
-        Title="Football ManagerEF v1.2" Height="366.4" Width="421.8" ResizeMode="NoResize" Icon="../Resources/moleinthebarn.ico" >
+        Title="Football ManagerEF v1.2" Height="420.4" Width="538.8" ResizeMode="NoResize" Icon="../Resources/moleinthebarn.ico" >
     <Window.Resources>
         <Style TargetType="{x:Type DataGridCell}">
             <EventSetter Event="UIElement.PreviewMouseLeftButtonDown" Handler="DataGridCell_PreviewMouseLeftButtonDown"/>
         </Style>
     </Window.Resources>
-    <Grid Margin="0,0,0,-0.6" Height="339" VerticalAlignment="Top" HorizontalAlignment="Left" Width="416" >
+    <Grid Height="392" VerticalAlignment="Top" HorizontalAlignment="Left" Width="539" Margin="0,0,-6,0" >
         <Grid.OpacityMask>
             <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HighlightColorKey}}" Opacity="0.8"/>
         </Grid.OpacityMask>
@@ -24,45 +24,57 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="0"/>
         </Grid.ColumnDefinitions>
-        <Label x:Name="lbl_Matches" Content="Matches" HorizontalAlignment="Left" Height="19" Margin="7,9,0,0" VerticalAlignment="Top" Width="79" FontFamily="Aharoni"/>
-        <ListBox x:Name="lb_Matches" HorizontalAlignment="Left" Height="242" Margin="10,28,0,0" VerticalAlignment="Top" Width="91" 
+        <TabControl Margin="10,10,48,0" Height="355" VerticalAlignment="Top">
+
+            <TabItem x:Name="tb_Matches" Header="Matches" Margin="-2,-2,-4,0">
+                <Canvas Margin="0,0,-115,-30" RenderTransformOrigin="0.512,0.51">
+                    <Label x:Name="lbl_Matches" Content="Matches" HorizontalAlignment="Left" Height="19" Margin="7,9,0,0" VerticalAlignment="Top" Width="79" FontFamily="Aharoni"/>
+                    <ListBox x:Name="lb_Matches" HorizontalAlignment="Left" Height="242" Margin="10,28,0,0" VerticalAlignment="Top" Width="91" 
                  DisplayMemberPath="MatchDate" ItemStringFormat="yyyy-MM-dd" 
                  ItemsSource="{Binding Matches}"  
                  SelectedValue="{Binding SelectedMatch, Mode=TwoWay}"/>
-        <Label x:Name="lbl_Selection" Content="Selection" HorizontalAlignment="Left" Height="20" Margin="117,8,0,0" VerticalAlignment="Top" Width="79" FontFamily="Aharoni"/>
+                    <Label x:Name="lbl_Selection" Content="Selection" HorizontalAlignment="Left" Height="20" Margin="117,8,0,0" VerticalAlignment="Top" Width="79" FontFamily="Aharoni"/>
 
-        <DataGrid Name="dg_PlayerMatch" ItemsSource="{Binding PlayerMatchViewModel.PlayerMatches}" AutoGenerateColumns="False" Height="242" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Margin="117,28,0,0" GridLinesVisibility="None" CanUserAddRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" >
-            <DataGrid.Columns>
-                <DataGridComboBoxColumn x:Name="cb_Player" Header="Player" Width="90" SelectedValueBinding="{Binding PlayerID}" SelectedValuePath="PlayerID" DisplayMemberPath="PlayerName" SortMemberPath="PlayerName" SortDirection="Ascending">
-                    <DataGridComboBoxColumn.ElementStyle>
-                        <Style TargetType="ComboBox">
-                            <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.PlayerMatchViewModel.Players}"/>
-                        </Style>
-                    </DataGridComboBoxColumn.ElementStyle>
-                    <DataGridComboBoxColumn.EditingElementStyle>
-                        <Style TargetType="ComboBox">
-                            <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.PlayerMatchViewModel.Players}"/>
-                        </Style>
-                    </DataGridComboBoxColumn.EditingElementStyle>
-                </DataGridComboBoxColumn>
-                <DataGridComboBoxColumn x:Name="cb_Team" Header="Team" Width="70" SelectedValueBinding="{Binding TeamID}" SelectedValuePath="TeamID" DisplayMemberPath="TeamName" SortMemberPath="TeamName" SortDirection="Ascending">
-                    <DataGridComboBoxColumn.ElementStyle>
-                        <Style TargetType="ComboBox">
-                            <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.PlayerMatchViewModel.Teams}"/>
-                        </Style>
-                    </DataGridComboBoxColumn.ElementStyle>
-                    <DataGridComboBoxColumn.EditingElementStyle>
-                        <Style TargetType="ComboBox">
-                            <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.PlayerMatchViewModel.Teams}"/>
-                        </Style>
-                    </DataGridComboBoxColumn.EditingElementStyle>
-                </DataGridComboBoxColumn>
-               
-            </DataGrid.Columns>
-        </DataGrid>
-        <Button x:Name="btn_Update" DataContext="{Binding ButtonViewModel}" Content="Update" Command="{Binding UpdateCommand}" HorizontalAlignment="Left" Height="20" Margin="313,30,0,0" Width="68" FontFamily="Aharoni" VerticalAlignment="Top" FontSize="11" RenderTransformOrigin="0.5,0.64" />
-        <Label x:Name="lb_MatchWinner" Content="Winner" HorizontalAlignment="Left" Height="24" Margin="117,278,0,0" VerticalAlignment="Top" Width="61" FontFamily="Aharoni" RenderTransformOrigin="0.498,0.83"/>
-        <ComboBox x:Name="cb_MatchWinner" ItemsSource="{Binding Teams}" SelectedValue="{Binding SelectedMatch.MatchWinner, Mode=TwoWay}" SelectedValuePath="TeamID" DisplayMemberPath="TeamName" HorizontalAlignment="Left" Height="27" Margin="177,275,0,0" VerticalAlignment="Top" Width="120" />
-        <Button x:Name="btn_SendEmail" DataContext="{Binding ButtonViewModel}" Content="Send Email" Command="{Binding SendEmailCommand}" HorizontalAlignment="Left" Height="20" Margin="313,60,0,0" VerticalAlignment="Top" Width="81" FontFamily="Aharoni" FontSize="11"/>
+                    <DataGrid Name="dg_PlayerMatch" ItemsSource="{Binding PlayerMatchViewModel.PlayerMatches}" AutoGenerateColumns="False" Height="242" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Margin="117,28,0,0" GridLinesVisibility="None" CanUserAddRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" >
+                        <DataGrid.Columns>
+                            <DataGridComboBoxColumn x:Name="cb_Player" Header="Player" Width="90" SelectedValueBinding="{Binding PlayerID}" SelectedValuePath="PlayerID" DisplayMemberPath="PlayerName" SortMemberPath="PlayerName" SortDirection="Ascending">
+                                <DataGridComboBoxColumn.ElementStyle>
+                                    <Style TargetType="ComboBox">
+                                        <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.PlayerMatchViewModel.Players}"/>
+                                    </Style>
+                                </DataGridComboBoxColumn.ElementStyle>
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="ComboBox">
+                                        <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.PlayerMatchViewModel.Players}"/>
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+                            </DataGridComboBoxColumn>
+                            <DataGridComboBoxColumn x:Name="cb_Team" Header="Team" Width="70" SelectedValueBinding="{Binding TeamID}" SelectedValuePath="TeamID" DisplayMemberPath="TeamName" SortMemberPath="TeamName" SortDirection="Ascending">
+                                <DataGridComboBoxColumn.ElementStyle>
+                                    <Style TargetType="ComboBox">
+                                        <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.PlayerMatchViewModel.Teams}"/>
+                                    </Style>
+                                </DataGridComboBoxColumn.ElementStyle>
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="ComboBox">
+                                        <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.PlayerMatchViewModel.Teams}"/>
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+                            </DataGridComboBoxColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button x:Name="btn_Update" DataContext="{Binding ButtonViewModel}" Content="Update" Command="{Binding UpdateCommand}" HorizontalAlignment="Left" Height="20" Margin="313,30,0,0" Width="68" FontFamily="Aharoni" VerticalAlignment="Top" FontSize="11" RenderTransformOrigin="0.5,0.64" />
+                    <Label x:Name="lb_MatchWinner" Content="Winner" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="61" FontFamily="Aharoni" RenderTransformOrigin="0.498,0.83" Canvas.Left="124" Canvas.Top="278"/>
+                    <ComboBox x:Name="cb_MatchWinner" ItemsSource="{Binding Teams}" SelectedValue="{Binding SelectedMatch.MatchWinner, Mode=TwoWay}" SelectedValuePath="TeamID" DisplayMemberPath="TeamName" HorizontalAlignment="Left" Height="27" Margin="177,275,0,0" VerticalAlignment="Top" Width="120" />
+                    <Button x:Name="btn_SendEmail" DataContext="{Binding ButtonViewModel}" Content="Send Email" Command="{Binding SendEmailCommand}" HorizontalAlignment="Left" Height="20" Margin="313,60,0,0" VerticalAlignment="Top" Width="81" FontFamily="Aharoni" FontSize="11"/>
+                </Canvas>
+            </TabItem>
+            <TabItem x:Name="tb_Players" Header="Players">
+                <Label x:Name="lb_test2" Content="Winner2" HorizontalAlignment="Left" Height="24" Margin="117,278,0,0" VerticalAlignment="Top" Width="61" FontFamily="Aharoni" RenderTransformOrigin="0.498,0.83"/>
+            </TabItem>
+
+
+        </TabControl>
     </Grid>
 </Window>
