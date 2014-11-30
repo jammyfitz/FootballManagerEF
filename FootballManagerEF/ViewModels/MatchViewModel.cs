@@ -20,6 +20,7 @@ namespace FootballManagerEF.ViewModels
         private List<Team> _teams;
         private Match _selectedMatch;
         private IPlayerMatchViewModel _playerMatchViewModel;
+        private PlayerViewModel _playerViewModel;
         private DialogService _dialogService;
         private MatchValidatorService _matchValidatorService;
         private MailerService _mailerService;
@@ -59,12 +60,23 @@ namespace FootballManagerEF.ViewModels
             }
         }
 
+        public PlayerViewModel PlayerViewModel
+        {
+            get { return _playerViewModel; }
+            set
+            {
+                _playerViewModel = value;
+                RaisePropertyChanged("PlayerViewModel");
+            }
+        }
+
         public ButtonViewModel ButtonViewModel { get; set; }
 
         public MatchViewModel()
         {
             _footballRepository = new FootballRepository(new FootballEntities());
             _playerMatchViewModel = new PlayerMatchViewModel(_footballRepository);
+            _playerViewModel = new PlayerViewModel(_footballRepository);
             _dialogService = new DialogService();
             _matchValidatorService = new MatchValidatorService(_playerMatchViewModel, _dialogService);
             _mailerService = new MailerService();

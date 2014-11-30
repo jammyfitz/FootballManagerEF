@@ -55,7 +55,7 @@ namespace FootballManagerEF.ViewModels
         {
             _footballRepository = footballRepository;
             _playerMatches = new List<PlayerMatch>();
-            _players = GetPlayers();
+            _players = GetActivePlayers();
             _teams = GetTeams();
         }
 
@@ -64,9 +64,9 @@ namespace FootballManagerEF.ViewModels
             return _footballRepository.GetPlayerMatches(matchId);
         }
 
-        public List<Player> GetPlayers()
+        public List<Player> GetActivePlayers()
         {
-            return _footballRepository.GetPlayers();
+            return _footballRepository.GetActivePlayers();
         }
 
         public List<Team> GetTeams()

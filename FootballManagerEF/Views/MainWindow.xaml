@@ -83,7 +83,18 @@
                         <TextBlock Text=" Players" />
                     </StackPanel>
                 </TabItem.Header>
+                <Canvas>
+                    <Label x:Name="lbl_Players" Content="Players" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="79" FontFamily="Aharoni" Canvas.Left="3"/>
+                    <DataGrid Name="dg_Players" ItemsSource="{Binding PlayerViewModel.Players}" AutoGenerateColumns="False" Height="292" Canvas.Left="10" Canvas.Top="25" Width="455" GridLinesVisibility="None">
+                      <DataGrid.Columns>
+                            <DataGridTextColumn Header="PlayerID" Binding="{Binding PlayerID}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding PlayerName}" Width="280"/>
+                            <DataGridTextColumn Header="Active" Binding="{Binding Active}" Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Canvas>
             </TabItem>
+
         </TabControl>
     </Grid>
 </Window>

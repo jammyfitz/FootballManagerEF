@@ -80,9 +80,14 @@ namespace FootballManagerEF.Repositories
         #endregion
 
         #region Player Repository
-        public List<Player> GetPlayers()
+        public List<Player> GetAllPlayers()
         {
-            return playerRepository.GetPlayers();
+            return playerRepository.GetAllPlayers();
+        }
+
+        public List<Player> GetActivePlayers()
+        {
+            return playerRepository.GetActivePlayers();
         }
 
         public Player GetPlayerByID(int playerId)

@@ -10,7 +10,32 @@ namespace FootballManagerEF.Repositories
 {
     public class FakePlayerRepository : IPlayerRepository
     {
-        public List<Player> GetPlayers()
+        public List<Player> GetAllPlayers()
+        {
+            return new List<Player> 
+           { 
+              new Player
+              { 
+                  PlayerID = 1,
+                  PlayerName = "Jamie",
+                  Active = true
+              },
+              new Player
+              { 
+                  PlayerID = 2,
+                  PlayerName = "Mike",
+                  Active = true
+              },
+              new Player
+              { 
+                  PlayerID = 3,
+                  PlayerName = "Caff",
+                  Active = true
+              }
+           };
+        }
+
+        public List<Player> GetActivePlayers()
         {
             return new List<Player> 
            { 

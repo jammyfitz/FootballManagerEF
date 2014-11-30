@@ -10,7 +10,7 @@ namespace FootballManagerEF.Interfaces
     public interface IPlayerMatchViewModel
     {
         List<PlayerMatch> GetPlayerMatches(int matchId);
-        List<Player> GetPlayers();
+        List<Player> GetActivePlayers();
         List<Team> GetTeams();
         List<PlayerMatch> PlayerMatches{ get; set;}
     }

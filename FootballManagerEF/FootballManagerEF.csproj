@@ -72,6 +72,7 @@
     <Compile Include="Interfaces\IMailerService.cs" />
     <Compile Include="Interfaces\IDialogService.cs" />
     <Compile Include="Interfaces\IFootballRepository.cs" />
+    <Compile Include="Interfaces\IPlayerViewModel.cs" />
     <Compile Include="Interfaces\IPlayerStatRepository.cs" />
     <Compile Include="Interfaces\IMatchValidatorService.cs" />
     <Compile Include="Interfaces\IPlayerMatchRepository.cs" />
@@ -144,6 +145,7 @@
       <DependentUpon>FootballEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\PlayerMatchViewModel.cs" />
+    <Compile Include="ViewModels\PlayerViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

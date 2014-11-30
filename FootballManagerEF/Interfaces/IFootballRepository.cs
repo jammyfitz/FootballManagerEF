@@ -11,7 +11,8 @@ namespace FootballManagerEF.Interfaces
     {
         List<Match> GetMatches();
         List<PlayerMatch> GetPlayerMatches(int matchId);
-        List<Player> GetPlayers();
+        List<Player> GetAllPlayers();
+        List<Player> GetActivePlayers();
         List<Team> GetTeams();
         Config GetConfig();
         List<PlayerStat> GetPlayerStats();

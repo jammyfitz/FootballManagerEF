@@ -9,7 +9,8 @@ namespace FootballManagerEF.Interfaces
 {
     public interface IPlayerRepository : IDisposable
     {
-        List<Player> GetPlayers();
+        List<Player> GetAllPlayers();
+        List<Player> GetActivePlayers();
         Player GetPlayerByID(int playerId);
         void Save();
     }
