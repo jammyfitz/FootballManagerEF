@@ -190,7 +190,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Resources\FootballEFDBBackup" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -207,6 +206,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="moleinthebarn.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\football.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
