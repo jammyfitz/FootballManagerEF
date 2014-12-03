@@ -1,4 +1,5 @@
-﻿using FootballManagerEF.Interfaces;
+﻿using FootballManagerEF.Handlers;
+using FootballManagerEF.Interfaces;
 using FootballManagerEF.Models;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace FootballManagerEF.ViewModels
 {
@@ -14,6 +16,7 @@ namespace FootballManagerEF.ViewModels
     {
         private IFootballRepository _footballRepository;
         private List<Player> _players;
+        private IPlayerValidatorService _playerValidatorService;
 
         public List<Player> Players
         {
@@ -26,10 +29,13 @@ namespace FootballManagerEF.ViewModels
             }
         }
 
-        public PlayerViewModel(IFootballRepository footballRepository)
+        public PlayerViewModel(IFootballRepository footballRepository, IPlayerValidatorService playerValidatorService)
         {
             _footballRepository = footballRepository;
             _players = GetAllPlayers();
+            _playerValidatorService = playerValidatorService;
+            _playerValidatorService.Players = _players;
+            _canExecute = true;
         }
 
         public List<Player> GetAllPlayers()
@@ -37,19 +43,17 @@ namespace FootballManagerEF.ViewModels
             return _footballRepository.GetAllPlayers();
         }
 
-        private void dg_Players_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        public void UpdateButtonClicked()
         {
+            if (_playerValidatorService.DataGridIsValid())
+                SaveDataGrid();
+            else
+                _playerValidatorService.SendErrorToUser();
+        }
 
-            // Only act on Commit
-            if (e.EditAction == DataGridEditAction.Commit)
-            {
-
-                Player editedPlayer = e.Row.DataContext as Player;
-
-                //_footballRepository.Save();
-
-            }
-
+        private void SaveDataGrid()
+        {
+            // TODO
         }
 
         #region INotifyPropertyChanged Members
@@ -66,6 +70,19 @@ namespace FootballManagerEF.ViewModels
             }
         }
 
+        #endregion
+
+        #region ICommand Members
+        private bool _canExecute;
+
+        public ICommand UpdatePlayersCommand
+        {
+            get
+            {
+                return _updateCommand ?? (_updateCommand = new CommandHandler(() => UpdateButtonClicked(), _canExecute));
+            }
+        }
+        private ICommand _updateCommand;
         #endregion
     }
 }

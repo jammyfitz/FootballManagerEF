@@ -70,7 +70,7 @@
 
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button x:Name="btn_Update" DataContext="{Binding ButtonViewModel}" Content="Update" Command="{Binding UpdateCommand}" HorizontalAlignment="Center" Height="20" Width="68" FontFamily="Aharoni" VerticalAlignment="Center" FontSize="11" RenderTransformOrigin="0.5,0.64" Canvas.Left="313" Canvas.Top="28" />
+                    <Button x:Name="btn_UpdatePlayerMatches" DataContext="{Binding ButtonViewModel}" Content="Update" Command="{Binding UpdateCommand}" HorizontalAlignment="Center" Height="20" Width="68" FontFamily="Aharoni" VerticalAlignment="Center" FontSize="11" RenderTransformOrigin="0.5,0.64" Canvas.Left="313" Canvas.Top="28" />
                     <Label x:Name="lb_MatchWinner" Content="Winner" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="61" FontFamily="Aharoni" RenderTransformOrigin="0.498,0.83" Canvas.Left="122" Canvas.Top="275"/>
                     <ComboBox x:Name="cb_MatchWinner" ItemsSource="{Binding Teams}" SelectedValue="{Binding SelectedMatch.MatchWinner, Mode=TwoWay}" SelectedValuePath="TeamID" DisplayMemberPath="TeamName" HorizontalAlignment="Left" Height="22" VerticalAlignment="Top" Width="120" Canvas.Left="177" Canvas.Top="275" />
                     <Button x:Name="btn_SendEmail" DataContext="{Binding ButtonViewModel}" Content="Send Email" Command="{Binding SendEmailCommand}" HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Width="81" FontFamily="Aharoni" FontSize="11" Canvas.Left="313" Canvas.Top="58"/>
@@ -85,16 +85,17 @@
                 </TabItem.Header>
                 <Canvas>
                     <Label x:Name="lbl_Players" Content="Players" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="79" FontFamily="Aharoni" Canvas.Left="3"/>
-                    <DataGrid Name="dg_Players" ItemsSource="{Binding PlayerViewModel.Players}" AutoGenerateColumns="False" Height="292" Canvas.Left="10" Canvas.Top="25" Width="455" GridLinesVisibility="None">
+                    <DataGrid Name="dg_Players" ItemsSource="{Binding PlayerViewModel.Players, Mode=TwoWay}" AutoGenerateColumns="False" Height="264" Canvas.Left="10" Canvas.Top="25" Width="455" GridLinesVisibility="None">
                       <DataGrid.Columns>
-                            <DataGridTextColumn Header="PlayerID" Binding="{Binding PlayerID}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Name" Binding="{Binding PlayerName}" Width="280"/>
-                            <DataGridTextColumn Header="Active" Binding="{Binding Active}" Width="100"/>
+                            <DataGridTextColumn Header="PlayerID" Binding="{Binding PlayerID, Mode=TwoWay}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding PlayerName, Mode=TwoWay}" Width="280"/>
+                            <DataGridTextColumn Header="Active" Binding="{Binding Active, Mode=TwoWay}" Width="100" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Canvas>
             </TabItem>
 
         </TabControl>
+        <Button x:Name="btn_UpdatePlayers" DataContext="{Binding PlayerViewModel}" Content="Update" Command="{Binding UpdatePlayersCommand}" HorizontalAlignment="Center" Height="20" Width="68" FontFamily="Aharoni" VerticalAlignment="Center" FontSize="11" RenderTransformOrigin="0.5,0.64" Margin="23,308,448,64" />
     </Grid>
 </Window>

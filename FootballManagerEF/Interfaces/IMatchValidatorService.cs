@@ -7,10 +7,8 @@ using System.Text;
 
 namespace FootballManagerEF.Interfaces
 {
-    public interface IMatchValidatorService
+    public interface IMatchValidatorService : IValidatorService
     {
-        bool DataGridIsValid();
-        bool SendErrorToUser();
         List<PlayerMatch> PlayerMatches { get; set; }
     }
 }
