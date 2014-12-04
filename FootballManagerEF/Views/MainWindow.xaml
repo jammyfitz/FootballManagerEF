@@ -89,7 +89,7 @@
                       <DataGrid.Columns>
                             <DataGridTextColumn Header="PlayerID" Binding="{Binding PlayerID, Mode=TwoWay}" IsReadOnly="True"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding PlayerName, Mode=TwoWay}" Width="280"/>
-                            <DataGridTextColumn Header="Active" Binding="{Binding Active, Mode=TwoWay}" Width="100" />
+                            <DataGridTextColumn Header="Active" Binding="{Binding Active, Mode=TwoWay}" Width="80" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Canvas>

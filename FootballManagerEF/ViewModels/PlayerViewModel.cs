@@ -53,7 +53,7 @@ namespace FootballManagerEF.ViewModels
 
         private void SaveDataGrid()
         {
-            // TODO
+            _footballRepository.Save();
         }
 
         #region INotifyPropertyChanged Members
