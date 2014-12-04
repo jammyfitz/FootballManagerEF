@@ -12,6 +12,7 @@ namespace FootballManagerEF.Interfaces
         List<Player> GetAllPlayers();
         List<Player> GetActivePlayers();
         Player GetPlayerByID(int playerId);
+        bool InsertPlayers(List<Player> players);
         void Save();
     }
 }

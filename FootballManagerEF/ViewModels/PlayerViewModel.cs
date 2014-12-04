@@ -53,7 +53,15 @@ namespace FootballManagerEF.ViewModels
 
         private void SaveDataGrid()
         {
+            List<Player> playersToInsert = GetPlayersToInsert();
+
+            _footballRepository.InsertPlayers(playersToInsert);
             _footballRepository.Save();
+        }
+
+        public List<Player> GetPlayersToInsert()
+        {
+            return Players.Where(x => x.PlayerID == 0).ToList();
         }
 
         #region INotifyPropertyChanged Members

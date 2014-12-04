@@ -136,6 +136,11 @@ namespace FootballManagerEF.Repositories
            };
         }
 
+        public bool InsertPlayers(List<Player> players)
+        {
+            return true;
+        }
+
         public void Save()
         {
             throw new NotImplementedException();

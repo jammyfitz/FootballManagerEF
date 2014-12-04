@@ -94,6 +94,11 @@ namespace FootballManagerEF.Repositories
         {
             return playerRepository.GetPlayerByID(playerId);
         }
+
+        public bool InsertPlayers(List<Player> players)
+        {
+            return playerRepository.InsertPlayers(players);
+        }
         #endregion
 
         #region Team Repository

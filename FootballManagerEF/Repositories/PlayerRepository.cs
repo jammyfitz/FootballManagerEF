@@ -33,6 +33,14 @@ namespace FootballManagerEF.Repositories
             return context.Players.Find(playerId);
         }
 
+        public bool InsertPlayers(List<Player> players)
+        {
+            foreach (Player player in players)
+                context.Players.Add(player);
+
+            return true;
+        }
+
         public void Save()
         {
             context.SaveChanges();
