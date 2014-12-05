@@ -41,32 +41,30 @@ namespace FootballManagerEF.Services
 
         public string GetErrorMessageOnUpdate()
         {
-            string errorMessage = string.Empty;
-
             if (GridRowIncomplete())
-                errorMessage = "Either the player or the active field is missing for one of the entries.";
+                return "Either the player or the active field is missing for one of the entries.";
 
             if (PlayerAppearsMoreThanOnce())
-                errorMessage = "One of the players with that name already exists.";
+                return "One of the players with that name already exists.";
 
             if (PlayersHaveNonAlphaCharacters())
-                errorMessage = "One of the players has Non-Alphabetic characters.";
+                return "One of the players has Non-Alphabetic characters.";
 
-            return errorMessage;
+            return string.Empty;
         }
 
         private bool GridRowIncomplete()
         {
-            if (RowsHavePlayerButNoActiveFlag())
+            if (RowsHavePlayerNameButNoActiveFlag())
                 return true;
 
-            if (RowsHaveActiveFlagButNoPlayer())
+            if (RowsHaveActiveFlagButNoPlayerName())
                 return true;
 
             return false;
         }
 
-        private bool RowsHavePlayerButNoActiveFlag()
+        private bool RowsHavePlayerNameButNoActiveFlag()
         {
             if (Players.Where(x => x.PlayerName != null && x.Active == null).Count() > 0)
                 return true;
@@ -74,7 +72,7 @@ namespace FootballManagerEF.Services
             return false;
         }
 
-        private bool RowsHaveActiveFlagButNoPlayer()
+        private bool RowsHaveActiveFlagButNoPlayerName()
         {
             if (Players.Where(x => x.PlayerName == null && x.Active != null).Count() > 0)
                 return true;

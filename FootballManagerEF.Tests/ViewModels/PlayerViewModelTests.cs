@@ -32,13 +32,14 @@ namespace FootballManagerEF.Tests.ViewModels
         }
 
         [Test]
-        [Ignore]
         public void PlayerViewModel_WhenUpdateButtonClickedAndDataGridIsValidSaveWasCalledOnFootballRepository()
         {
             //Arrange 
             var mockFootballRepo = MockRepository.GenerateMock<IFootballRepository>();
-            var mockPlayerViewModel = new PlayerViewModel(mockFootballRepo, playerValidatorService);
+            var mockPlayerValidatorService = MockRepository.GenerateMock<IPlayerValidatorService>();
+            var mockPlayerViewModel = new PlayerViewModel(mockFootballRepo, mockPlayerValidatorService);
             mockPlayerViewModel.Players = fakePlayerRepo.GetTenValidPlayers();
+            mockPlayerValidatorService.Stub(x => x.DataGridIsValid()).Return(true);
             mockFootballRepo.Stub(x => x.Save());
 
             //Act
@@ -54,7 +55,7 @@ namespace FootballManagerEF.Tests.ViewModels
             //Arrange
             var mockFootballRepo = MockRepository.GenerateMock<IFootballRepository>();
             var mockPlayerValidatorService = MockRepository.GenerateMock<IPlayerValidatorService>();
-            var mockPlayerViewModel = new PlayerViewModel(mockFootballRepo, playerValidatorService);
+            var mockPlayerViewModel = new PlayerViewModel(mockFootballRepo, mockPlayerValidatorService);
             mockPlayerValidatorService.Stub(x => x.DataGridIsValid()).Return(false);
 
             //Act
@@ -64,5 +65,56 @@ namespace FootballManagerEF.Tests.ViewModels
             mockPlayerValidatorService.AssertWasCalled(x => x.SendErrorToUser());
         }
 
+        [Test]
+        public void PlayerViewModel_WhenDataGridIsValidIsCalledAndGridRowHasPlayerNameAndNoActiveFlagReturnExpectedError()
+        {
+            //Arrange 
+            playerValidatorService.Players = fakePlayerRepo.GetPlayersWithPlayerNameAndNoActiveFlag();
+
+            //Act
+            playerViewModel.UpdateButtonClicked();
+
+            //Assert
+            Assert.That(playerValidatorService.ErrorMessage, Is.EqualTo("Either the player or the active field is missing for one of the entries."));
+        }
+
+        [Test]
+        public void PlayerViewModel_WhenDataGridIsValidIsCalledAndGridRowHasActiveFlagAndNoPlayerNameReturnExpectedError()
+        {
+            //Arrange 
+            playerValidatorService.Players = fakePlayerRepo.GetPlayersWithActiveFlagAndNoPlayerName();
+
+            //Act
+            playerViewModel.UpdateButtonClicked();
+
+            //Assert
+            Assert.That(playerValidatorService.ErrorMessage, Is.EqualTo("Either the player or the active field is missing for one of the entries."));
+        }
+
+        [Test]
+        public void PlayerViewModel_WhenUpdateButtonIsClickedAndPlayerAppearsMoreThanOnceReturnExpectedError()
+        {
+            //Arrange 
+            playerValidatorService.Players = fakePlayerRepo.GetPlayersWithDuplicatePlayer();
+
+            //Act
+            playerViewModel.UpdateButtonClicked();
+
+            //Assert
+            Assert.That(playerValidatorService.ErrorMessage, Is.EqualTo("One of the players with that name already exists."));
+        }
+
+        [Test]
+        public void PlayerViewModel_WhenUpdateButtonIsClickedAndPlayerHasNonAlphaCharactersReturnExpectedError()
+        {
+            //Arrange 
+            playerValidatorService.Players = fakePlayerRepo.GetPlayersWithNonAlphaCharacters();
+
+            //Act
+            playerViewModel.UpdateButtonClicked();
+
+            //Assert
+            Assert.That(playerValidatorService.ErrorMessage, Is.EqualTo("One of the players has Non-Alphabetic characters."));
+        }
     }
 }

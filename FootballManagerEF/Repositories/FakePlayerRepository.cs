@@ -136,6 +136,104 @@ namespace FootballManagerEF.Repositories
            };
         }
 
+        public List<Player> GetPlayersWithPlayerNameAndNoActiveFlag()
+        {
+            return new List<Player> 
+            { 
+                new Player
+                { 
+                    PlayerID = 1,
+                    PlayerName = "Jamie",
+                },
+                new Player
+                { 
+                    PlayerID = 2,
+                    PlayerName = "Mike",
+                    Active = true
+                },
+                new Player
+                { 
+                    PlayerID = 3,
+                    PlayerName = "Caff",
+                    Active = true
+                },
+            };
+        }
+
+        public List<Player> GetPlayersWithActiveFlagAndNoPlayerName()
+        {
+            return new List<Player> 
+            { 
+                new Player
+                { 
+                    PlayerID = 1,
+                    PlayerName = "Jamie",
+                    Active = true
+                },
+                new Player
+                { 
+                    PlayerID = 2,
+                    Active = true
+                },
+                new Player
+                { 
+                    PlayerID = 3,
+                    PlayerName = "Caff",
+                    Active = true
+                },
+            };
+        }
+
+        public List<Player> GetPlayersWithDuplicatePlayer()
+        {
+            return new List<Player> 
+            { 
+                new Player
+                { 
+                    PlayerID = 1,
+                    PlayerName = "Jamie",
+                    Active = true
+                },
+                new Player
+                { 
+                    PlayerID = 2,
+                    PlayerName = "Jamie",
+                    Active = true
+                },
+                new Player
+                { 
+                    PlayerID = 3,
+                    PlayerName = "Caff",
+                    Active = true
+                },
+            };
+        }
+
+        public List<Player> GetPlayersWithNonAlphaCharacters()
+        {
+            return new List<Player> 
+            { 
+                new Player
+                { 
+                    PlayerID = 1,
+                    PlayerName = "Jamie",
+                    Active = true
+                },
+                new Player
+                { 
+                    PlayerID = 2,
+                    PlayerName = "Mike",
+                    Active = true
+                },
+                new Player
+                { 
+                    PlayerID = 3,
+                    PlayerName = "Caff3",
+                    Active = true
+                },
+            };
+        }
+
         public bool InsertPlayers(List<Player> players)
         {
             return true;
