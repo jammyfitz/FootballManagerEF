@@ -17,7 +17,7 @@ namespace FootballManagerEF.ViewModels
     {
         private IFootballRepository _footballRepository;
         private List<Match> _matches;
-        private List<Team> _teams;
+        private ObservableCollection<Team> _teams;
         private Match _selectedMatch;
         private IPlayerMatchViewModel _playerMatchViewModel;
         private IPlayerViewModel _playerViewModel;
@@ -32,7 +32,7 @@ namespace FootballManagerEF.ViewModels
             set { _matches = value; }
         }
 
-        public List<Team> Teams
+        public ObservableCollection<Team> Teams
         {
             get { return _teams; }
             set { _teams = value; }
@@ -47,6 +47,8 @@ namespace FootballManagerEF.ViewModels
                 _selectedMatch = value;
                 RaisePropertyChanged("SelectedMatch");
                 PlayerMatchViewModel.PlayerMatches = _footballRepository.GetTenPlayerMatches(_selectedMatch.MatchID);
+                // TODO: This is going to the database everytime you click on a match
+                PlayerMatchViewModel.Players = _footballRepository.GetActivePlayers();
                 ButtonViewModel.SelectedMatch = _selectedMatch;
             }
         }
@@ -103,7 +105,7 @@ namespace FootballManagerEF.ViewModels
             return _footballRepository.GetMatches();
         }
 
-        public List<Team> GetTeams()
+        public ObservableCollection<Team> GetTeams()
         {
             return _footballRepository.GetTeams();
         }

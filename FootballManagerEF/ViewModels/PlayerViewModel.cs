@@ -46,7 +46,10 @@ namespace FootballManagerEF.ViewModels
         public void UpdateButtonClicked()
         {
             if (_playerValidatorService.DataGridIsValid())
+            {
                 SaveDataGrid();
+                //_playerValidatorService.Players = _footballRepository.GetActivePlayers();
+            }
             else
                 _playerValidatorService.SendErrorToUser();
         }

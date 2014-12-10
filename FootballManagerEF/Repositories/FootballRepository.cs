@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace FootballManagerEF.Repositories
 {
@@ -38,6 +39,12 @@ namespace FootballManagerEF.Repositories
             teamRepository = new FakeTeamRepository();
             configRepository = new FakeConfigRepository();
             playerStatsRepository = new FakePlayerStatsRepository();
+        }
+
+        public void Refresh()
+        {
+            context.Dispose();
+            context = new FootballEntities();
         }
 
         public void Save()
@@ -85,7 +92,7 @@ namespace FootballManagerEF.Repositories
             return playerRepository.GetAllPlayers();
         }
 
-        public List<Player> GetActivePlayers()
+        public ObservableCollection<Player> GetActivePlayers()
         {
             return playerRepository.GetActivePlayers();
         }
@@ -102,7 +109,7 @@ namespace FootballManagerEF.Repositories
         #endregion
 
         #region Team Repository
-        public List<Team> GetTeams()
+        public ObservableCollection<Team> GetTeams()
         {
             return teamRepository.GetTeams();
         }

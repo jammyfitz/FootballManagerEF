@@ -15,8 +15,8 @@ namespace FootballManagerEF.ViewModels
     {
         private IFootballRepository _footballRepository;
         private List<PlayerMatch> _playerMatches;
-        private List<Team> _teams;
-        private List<Player> _players;
+        private ObservableCollection<Team> _teams;
+        private ObservableCollection<Player> _players;
 
         public List<PlayerMatch> PlayerMatches
         {
@@ -29,7 +29,7 @@ namespace FootballManagerEF.ViewModels
             }
         }
 
-        public List<Team> Teams
+        public ObservableCollection<Team> Teams
         {
             get { return _teams; }
 
@@ -40,7 +40,7 @@ namespace FootballManagerEF.ViewModels
             }
         }     
 
-        public List<Player> Players
+        public ObservableCollection<Player> Players
         {
             get { return _players; }
 
@@ -64,12 +64,12 @@ namespace FootballManagerEF.ViewModels
             return _footballRepository.GetPlayerMatches(matchId);
         }
 
-        public List<Player> GetActivePlayers()
+        public ObservableCollection<Player> GetActivePlayers()
         {
             return _footballRepository.GetActivePlayers();
         }
 
-        public List<Team> GetTeams()
+        public ObservableCollection<Team> GetTeams()
         {
             return _footballRepository.GetTeams();
         }

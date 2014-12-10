@@ -5,14 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace FootballManagerEF.Repositories
 {
     public class FakeTeamRepository : ITeamRepository
     {
-        public List<Team> GetTeams()
+        public ObservableCollection<Team> GetTeams()
         {
-            return new List<Team> 
+            return new ObservableCollection<Team> 
            { 
               new Team
               { 

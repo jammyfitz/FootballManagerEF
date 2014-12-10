@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace FootballManagerEF.Repositories
 {
@@ -35,9 +36,9 @@ namespace FootballManagerEF.Repositories
            };
         }
 
-        public List<Player> GetActivePlayers()
+        public ObservableCollection<Player> GetActivePlayers()
         {
-            return new List<Player> 
+            return new ObservableCollection<Player> 
            { 
               new Player
               { 

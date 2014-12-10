@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace FootballManagerEF.Repositories
 {
@@ -18,9 +19,9 @@ namespace FootballManagerEF.Repositories
             this.context = context;
         }
 
-        public List<Player> GetActivePlayers()
+        public ObservableCollection<Player> GetActivePlayers()
         {
-            return context.Players.Where(x => x.Active == true).OrderBy(x => x.PlayerName).ToList();
+            return new ObservableCollection<Player>(context.Players.Where(x => x.Active == true).OrderBy(x => x.PlayerName).ToList());
         }
 
         public List<Player> GetAllPlayers()
