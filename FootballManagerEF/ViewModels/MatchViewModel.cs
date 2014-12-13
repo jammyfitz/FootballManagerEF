@@ -47,8 +47,6 @@ namespace FootballManagerEF.ViewModels
                 _selectedMatch = value;
                 RaisePropertyChanged("SelectedMatch");
                 PlayerMatchViewModel.PlayerMatches = _footballRepository.GetTenPlayerMatches(_selectedMatch.MatchID);
-                // TODO: This is going to the database everytime you click on a match
-                PlayerMatchViewModel.Players = _footballRepository.GetActivePlayers();
                 ButtonViewModel.SelectedMatch = _selectedMatch;
             }
         }
@@ -84,7 +82,7 @@ namespace FootballManagerEF.ViewModels
             _matchValidatorService = new MatchValidatorService(_playerMatchViewModel, _dialogService);
             _mailerService = new MailerService();
             ButtonViewModel = new ButtonViewModel(_footballRepository, _playerMatchViewModel, _matchValidatorService, _mailerService);
-            PlayerViewModel = new PlayerViewModel(_footballRepository, _playerValidatorService);
+            PlayerViewModel = new PlayerViewModel(_footballRepository, _playerMatchViewModel, _playerValidatorService);
             InitialiseMatchesAndTeams();
         }
 

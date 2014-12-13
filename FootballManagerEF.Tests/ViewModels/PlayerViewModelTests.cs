@@ -21,6 +21,7 @@ namespace FootballManagerEF.Tests.ViewModels
         PlayerViewModel playerViewModel;
         FakePlayerRepository fakePlayerRepo;
         PlayerValidatorService playerValidatorService;
+        PlayerMatchViewModel playerMatchViewModel;
 
         [TestFixtureSetUp]
         public void Init()
@@ -28,7 +29,8 @@ namespace FootballManagerEF.Tests.ViewModels
             fakeFootballRepo = new FootballRepository();
             fakePlayerRepo = new FakePlayerRepository();
             playerValidatorService = new PlayerValidatorService(new FakeDialogService());
-            playerViewModel = new PlayerViewModel(fakeFootballRepo, playerValidatorService);
+            playerMatchViewModel = new PlayerMatchViewModel(fakeFootballRepo);
+            playerViewModel = new PlayerViewModel(fakeFootballRepo, playerMatchViewModel, playerValidatorService);
         }
 
         [Test]
@@ -37,7 +39,8 @@ namespace FootballManagerEF.Tests.ViewModels
             //Arrange 
             var mockFootballRepo = MockRepository.GenerateMock<IFootballRepository>();
             var mockPlayerValidatorService = MockRepository.GenerateMock<IPlayerValidatorService>();
-            var mockPlayerViewModel = new PlayerViewModel(mockFootballRepo, mockPlayerValidatorService);
+            var mockPlayerMatchViewModel = MockRepository.GenerateMock<IPlayerMatchViewModel>();
+            var mockPlayerViewModel = new PlayerViewModel(mockFootballRepo, mockPlayerMatchViewModel, mockPlayerValidatorService);
             mockPlayerViewModel.Players = fakePlayerRepo.GetTenValidPlayers();
             mockPlayerValidatorService.Stub(x => x.DataGridIsValid()).Return(true);
             mockFootballRepo.Stub(x => x.Save());
@@ -55,7 +58,7 @@ namespace FootballManagerEF.Tests.ViewModels
             //Arrange
             var mockFootballRepo = MockRepository.GenerateMock<IFootballRepository>();
             var mockPlayerValidatorService = MockRepository.GenerateMock<IPlayerValidatorService>();
-            var mockPlayerViewModel = new PlayerViewModel(mockFootballRepo, mockPlayerValidatorService);
+            var mockPlayerViewModel = new PlayerViewModel(mockFootballRepo, playerMatchViewModel, mockPlayerValidatorService);
             mockPlayerValidatorService.Stub(x => x.DataGridIsValid()).Return(false);
 
             //Act

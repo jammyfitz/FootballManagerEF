@@ -17,6 +17,7 @@ namespace FootballManagerEF.ViewModels
         private IFootballRepository _footballRepository;
         private List<Player> _players;
         private IPlayerValidatorService _playerValidatorService;
+        private IPlayerMatchViewModel _playerMatchViewModel;
 
         public List<Player> Players
         {
@@ -29,9 +30,10 @@ namespace FootballManagerEF.ViewModels
             }
         }
 
-        public PlayerViewModel(IFootballRepository footballRepository, IPlayerValidatorService playerValidatorService)
+        public PlayerViewModel(IFootballRepository footballRepository, IPlayerMatchViewModel playerMatchViewModel, IPlayerValidatorService playerValidatorService)
         {
             _footballRepository = footballRepository;
+            _playerMatchViewModel = playerMatchViewModel;
             _players = GetAllPlayers();
             _playerValidatorService = playerValidatorService;
             _playerValidatorService.Players = _players;
@@ -48,10 +50,15 @@ namespace FootballManagerEF.ViewModels
             if (_playerValidatorService.DataGridIsValid())
             {
                 SaveDataGrid();
-                //_playerValidatorService.Players = _footballRepository.GetActivePlayers();
+                RefreshPlayersInView();
             }
             else
                 _playerValidatorService.SendErrorToUser();
+        }
+
+        private void RefreshPlayersInView()
+        {
+            _playerMatchViewModel.Players = _footballRepository.GetActivePlayers();
         }
 
         private void SaveDataGrid()
