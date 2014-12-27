@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
+  <TopNode>[0-1000]C:\Users\jammyfitz\Documents\Visual Studio 2013\Projects\FootballManagerEF\TestDriven\FootballManagerEF.nunit</TopNode>
+  <SelectedNode>[0-1008]FootballManagerEF.Tests.ViewModels.PlayerViewModelTests.PlayerViewModel_WhenDataGridIsValidIsCalledAndGridRowHasActiveFlagAndNoPlayerNameReturnExpectedError</SelectedNode>
+  <ExcludeCategories>false</ExcludeCategories>
+  <Nodes>
+    <Node UniqueName="[0-1000]C:\Users\jammyfitz\Documents\Visual Studio 2013\Projects\FootballManagerEF\TestDriven\FootballManagerEF.nunit" Expanded="true" />
+    <Node UniqueName="[0-1031]C:\Users\jammyfitz\Documents\Visual Studio 2013\Projects\FootballManagerEF\FootballManagerEF.Tests\bin\Debug\FootballManagerEF.Tests.dll" Expanded="true" />
+    <Node UniqueName="[0-1032]FootballManagerEF" Expanded="true" />
+    <Node UniqueName="[0-1033]FootballManagerEF.Tests" Expanded="true" />
+    <Node UniqueName="[0-1034]FootballManagerEF.Tests.Services" Expanded="true" />
+    <Node UniqueName="[0-1001]FootballManagerEF.Tests.Services.MatchValidatorServiceTests" Expanded="true" />
+    <Node UniqueName="[0-1035]FootballManagerEF.Tests.ViewModels" Expanded="true" />
+    <Node UniqueName="[0-1011]FootballManagerEF.Tests.ViewModels.ButtonViewModelTests" Expanded="true" />
+    <Node UniqueName="[0-1022]FootballManagerEF.Tests.ViewModels.MatchViewModelTests" Expanded="true" />
+    <Node UniqueName="[0-1025]FootballManagerEF.Tests.ViewModels.PlayerMatchViewModelTests" Expanded="true" />
+    <Node UniqueName="[0-1004]FootballManagerEF.Tests.ViewModels.PlayerViewModelTests" Expanded="true" />
+  </Nodes>
+</VisualState>
