@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace FootballManagerEF.Repositories
 {
@@ -18,17 +19,17 @@ namespace FootballManagerEF.Repositories
             this.context = context;
         }
 
-        public List<PlayerMatch> GetPlayerMatches(int matchId)
+        public ObservableCollection<PlayerMatch> GetPlayerMatches(int matchId)
         {
             var result = from playerMatches in context.PlayerMatches
                          where (playerMatches.MatchID == matchId)
                          orderby playerMatches.TeamID ascending
                          select playerMatches;
 
-            return result.ToList();
+            return new ObservableCollection<PlayerMatch>(result.ToList());
         }
 
-        public List<PlayerMatch> GetTenPlayerMatches(int matchId)
+        public ObservableCollection<PlayerMatch> GetTenPlayerMatches(int matchId)
         {
             var result = from playerMatches in context.PlayerMatches
                          where (playerMatches.MatchID == matchId)
@@ -37,10 +38,10 @@ namespace FootballManagerEF.Repositories
 
             int noOfBlankPlayersToAdd = 10 - result.Count();
 
-            return AddBlankPlayerMatches(result.ToList(), noOfBlankPlayersToAdd);
+            return new ObservableCollection<PlayerMatch>(AddBlankPlayerMatches(new ObservableCollection<PlayerMatch>(result.ToList()), noOfBlankPlayersToAdd));
         }
 
-        public bool InsertPlayerMatches(List<PlayerMatch> playerMatches, int matchId)
+        public bool InsertPlayerMatches(ObservableCollection<PlayerMatch> playerMatches, int matchId)
         {
             foreach (PlayerMatch playerMatch in playerMatches.Where(x => x.PlayerMatchID == 0))
             {
@@ -51,7 +52,7 @@ namespace FootballManagerEF.Repositories
            return true;
         }
 
-        public List<PlayerMatch> GetFiveFilledAndFiveEmptyPlayerMatches()
+        public ObservableCollection<PlayerMatch> GetFiveFilledAndFiveEmptyPlayerMatches()
         {
             throw new NotImplementedException();
         }
@@ -62,7 +63,7 @@ namespace FootballManagerEF.Repositories
         }
 
         #region Private Methods
-        private List<PlayerMatch> AddBlankPlayerMatches(List<PlayerMatch> playerMatchList, int noOfBlankPlayersToAdd)
+        private ObservableCollection<PlayerMatch> AddBlankPlayerMatches(ObservableCollection<PlayerMatch> playerMatchList, int noOfBlankPlayersToAdd)
         {
             while (noOfBlankPlayersToAdd != 0)
             {

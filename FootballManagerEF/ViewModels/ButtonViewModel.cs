@@ -5,6 +5,7 @@ using FootballManagerEF.Repositories;
 using FootballManagerEF.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -29,7 +30,7 @@ namespace FootballManagerEF.ViewModels
             set { _selectedMatch = value; RaisePropertyChanged("SelectedMatch"); }
         }
 
-        public List<PlayerMatch> PlayerMatches
+        public ObservableCollection<PlayerMatch> PlayerMatches
         {
             get { return _playerMatchViewModel.PlayerMatches; }
             set { _playerMatchViewModel.PlayerMatches = value; RaisePropertyChanged("PlayerMatches"); }
@@ -60,17 +61,31 @@ namespace FootballManagerEF.ViewModels
                 _mailerService.SendOKMessageToUser();
         }
 
+        public void AutoPickButtonClicked()
+        {
+            //PlayerMatch temp1 = PlayerMatches.ElementAt(0);
+            //PlayerMatch temp2 = PlayerMatches.ElementAt(1);
+
+            PlayerMatches.Move(0, 4);
+            PlayerMatches.Move(1, 5);
+
+            //ObservableCollection<PlayerMatch> changedPlayerMatches = PlayerMatches;
+
+            //PlayerMatches = changedPlayerMatches;
+            //RaisePropertyChanged("PlayerMatches");
+        }
+
         private void SaveDataGrid()
         {
-            List<PlayerMatch> playerMatchesToInsert = GetPlayerMatchesToInsert();
+            ObservableCollection<PlayerMatch> playerMatchesToInsert = GetPlayerMatchesToInsert();
 
             _footballRepository.InsertPlayerMatches(playerMatchesToInsert, SelectedMatch.MatchID);
             _footballRepository.Save();
         }
 
-        public List<PlayerMatch> GetPlayerMatchesToInsert()
+        public ObservableCollection<PlayerMatch> GetPlayerMatchesToInsert()
         {
-            return PlayerMatches.Where(x => (x.PlayerID & x.TeamID) != null).ToList();
+            return new ObservableCollection<PlayerMatch>(PlayerMatches.Where(x => (x.PlayerID & x.TeamID) != null).ToList());
         }
 
         #region INotifyPropertyChanged Members
@@ -108,6 +123,15 @@ namespace FootballManagerEF.ViewModels
             }
         }
         private ICommand _sendEmailCommand;
+
+        public ICommand AutoPickCommand
+        {
+            get
+            {
+                return _autoPickCommand ?? (_autoPickCommand = new CommandHandler(() => AutoPickButtonClicked(), _canExecute));
+            }
+        }
+        private ICommand _autoPickCommand;
         #endregion
     }
 }

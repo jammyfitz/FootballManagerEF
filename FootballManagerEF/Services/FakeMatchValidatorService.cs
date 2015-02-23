@@ -2,6 +2,7 @@
 using FootballManagerEF.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -11,7 +12,7 @@ namespace FootballManagerEF.ViewModels
     {
         private bool _validationResult;
 
-        public List<PlayerMatch> PlayerMatches { get; set; }
+        public ObservableCollection<PlayerMatch> PlayerMatches { get; set; }
 
         public FakeMatchValidatorService(bool validationResult)
         {

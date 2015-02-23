@@ -14,11 +14,11 @@ namespace FootballManagerEF.ViewModels
     public class PlayerMatchViewModel : IPlayerMatchViewModel, INotifyPropertyChanged
     {
         private IFootballRepository _footballRepository;
-        private List<PlayerMatch> _playerMatches;
+        private ObservableCollection<PlayerMatch> _playerMatches;
         private ObservableCollection<Team> _teams;
         private ObservableCollection<Player> _players;
 
-        public List<PlayerMatch> PlayerMatches
+        public ObservableCollection<PlayerMatch> PlayerMatches
         {
             get { return _playerMatches; }
 
@@ -54,12 +54,12 @@ namespace FootballManagerEF.ViewModels
         public PlayerMatchViewModel(IFootballRepository footballRepository)
         {
             _footballRepository = footballRepository;
-            _playerMatches = new List<PlayerMatch>();
+            _playerMatches = new ObservableCollection<PlayerMatch>();
             _players = GetActivePlayers();
             _teams = GetTeams();
         }
 
-        public List<PlayerMatch> GetPlayerMatches(int matchId)
+        public ObservableCollection<PlayerMatch> GetPlayerMatches(int matchId)
         {
             return _footballRepository.GetPlayerMatches(matchId);
         }

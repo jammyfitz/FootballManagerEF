@@ -65,22 +65,22 @@ namespace FootballManagerEF.Repositories
         #endregion
 
         #region PlayerMatch Repository
-        public List<PlayerMatch> GetPlayerMatches(int matchId)
+        public ObservableCollection<PlayerMatch> GetPlayerMatches(int matchId)
         {
             return playerMatchRepository.GetPlayerMatches(matchId);
         }
 
-        public List<PlayerMatch> GetTenPlayerMatches(int matchId)
+        public ObservableCollection<PlayerMatch> GetTenPlayerMatches(int matchId)
         {
             return playerMatchRepository.GetTenPlayerMatches(matchId);
         }
 
-        public bool InsertPlayerMatches(List<PlayerMatch> playerMatches, int matchId)
+        public bool InsertPlayerMatches(ObservableCollection<PlayerMatch> playerMatches, int matchId)
         {
             return playerMatchRepository.InsertPlayerMatches(playerMatches, matchId);
         }
 
-        public List<PlayerMatch> GetFiveFilledAndFiveEmptyPlayerMatches()
+        public ObservableCollection<PlayerMatch> GetFiveFilledAndFiveEmptyPlayerMatches()
         {
             return playerMatchRepository.GetFiveFilledAndFiveEmptyPlayerMatches();
         }

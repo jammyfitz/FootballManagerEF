@@ -2,6 +2,7 @@
 using FootballManagerEF.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -14,7 +15,7 @@ namespace FootballManagerEF.Services
 
         public string ErrorMessage { get; set; }
 
-        public List<PlayerMatch> PlayerMatches
+        public ObservableCollection<PlayerMatch> PlayerMatches
         {
             get { return _playerMatchViewModel.PlayerMatches; }
             set { _playerMatchViewModel.PlayerMatches = value; }

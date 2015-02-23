@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace FootballManagerEF.Repositories
 {
@@ -12,31 +13,31 @@ namespace FootballManagerEF.Repositories
     {
         public void Save() {}
 
-        public List<PlayerMatch> GetPlayerMatches(int matchId)
+        public ObservableCollection<PlayerMatch> GetPlayerMatches(int matchId)
         {
             return AddFivePlayerMatches();
         }
 
-        public List<PlayerMatch> GetTenPlayerMatches(int matchId)
+        public ObservableCollection<PlayerMatch> GetTenPlayerMatches(int matchId)
         {
             return GetFiveFilledAndFiveEmptyPlayerMatches();
         }
 
-        public bool InsertPlayerMatches(List<PlayerMatch> playerMatches, int matchId)
+        public bool InsertPlayerMatches(ObservableCollection<PlayerMatch> playerMatches, int matchId)
         {
             return true;
         }
 
-        public List<PlayerMatch> GetFiveFilledAndFiveEmptyPlayerMatches()
+        public ObservableCollection<PlayerMatch> GetFiveFilledAndFiveEmptyPlayerMatches()
         {
-            List<PlayerMatch> playerMatches = AddFivePlayerMatches();
+            ObservableCollection<PlayerMatch> playerMatches = AddFivePlayerMatches();
             AddFiveEmptyPlayerMatches(playerMatches);
             return playerMatches;
         }
 
-        public List<PlayerMatch> GetPlayerMatchesWithPlayerAndNoTeam()
+        public ObservableCollection<PlayerMatch> GetPlayerMatchesWithPlayerAndNoTeam()
         {
-            return new List<PlayerMatch> 
+            return new ObservableCollection<PlayerMatch> 
             { 
                 new PlayerMatch
                 { 
@@ -53,9 +54,9 @@ namespace FootballManagerEF.Repositories
             };
         }
 
-        public List<PlayerMatch> GetPlayerMatchesWithTeamAndNoPlayer()
+        public ObservableCollection<PlayerMatch> GetPlayerMatchesWithTeamAndNoPlayer()
         {
-            return new List<PlayerMatch> 
+            return new ObservableCollection<PlayerMatch> 
             { 
                 new PlayerMatch
                 { 
@@ -72,18 +73,18 @@ namespace FootballManagerEF.Repositories
             };
         }
 
-        public List<PlayerMatch> GetPlayerMatchesWithDuplicatePlayer()
+        public ObservableCollection<PlayerMatch> GetPlayerMatchesWithDuplicatePlayer()
         {
-            return new List<PlayerMatch> 
+            return new ObservableCollection<PlayerMatch> 
             { 
                 AddPlayerMatch(),
                 AddPlayerMatch()
             };
         }
 
-        public List<PlayerMatch> GetPlayerMatchesWithTooManyPlayersInATeam()
+        public ObservableCollection<PlayerMatch> GetPlayerMatchesWithTooManyPlayersInATeam()
         {
-           return new List<PlayerMatch> 
+            return new ObservableCollection<PlayerMatch> 
            { 
               new PlayerMatch
               { 
@@ -130,9 +131,9 @@ namespace FootballManagerEF.Repositories
            };
         }
 
-        private static List<PlayerMatch> AddFivePlayerMatches()
+        private static ObservableCollection<PlayerMatch> AddFivePlayerMatches()
         {
-            return new List<PlayerMatch> 
+            return new ObservableCollection<PlayerMatch> 
             { 
                 AddPlayerMatch(),
                 AddPlayerMatch(),
@@ -142,9 +143,9 @@ namespace FootballManagerEF.Repositories
             };
         }
 
-        private static List<PlayerMatch> AddFiveDistinctPlayerMatches()
+        private static ObservableCollection<PlayerMatch> AddFiveDistinctPlayerMatches()
         {
-            return new List<PlayerMatch> 
+            return new ObservableCollection<PlayerMatch> 
            { 
               new PlayerMatch
               { 
@@ -184,19 +185,15 @@ namespace FootballManagerEF.Repositories
            };
         }
 
-        private static List<PlayerMatch> AddFiveEmptyPlayerMatches(List<PlayerMatch> playerMatches)
+        private static ObservableCollection<PlayerMatch> AddFiveEmptyPlayerMatches(ObservableCollection<PlayerMatch> playerMatches)
         {
-            playerMatches.AddRange(
-            new List<PlayerMatch> 
-            {
-                new PlayerMatch{},
-                new PlayerMatch{},
-                new PlayerMatch{},
-                new PlayerMatch{},
-                new PlayerMatch{}
-            });
+            playerMatches.Add(new PlayerMatch());
+            playerMatches.Add(new PlayerMatch());
+            playerMatches.Add(new PlayerMatch());
+            playerMatches.Add(new PlayerMatch());
+            playerMatches.Add(new PlayerMatch());
 
-            return playerMatches;
+            return new ObservableCollection<PlayerMatch>(playerMatches);
         }
 
         private static PlayerMatch AddPlayerMatch()

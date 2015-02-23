@@ -10,10 +10,10 @@ namespace FootballManagerEF.Interfaces
 {
     public interface IPlayerMatchViewModel
     {
-        List<PlayerMatch> GetPlayerMatches(int matchId);
+        ObservableCollection<PlayerMatch> GetPlayerMatches(int matchId);
         ObservableCollection<Player> GetActivePlayers();
         ObservableCollection<Team> GetTeams();
-        List<PlayerMatch> PlayerMatches{ get; set;}
+        ObservableCollection<PlayerMatch> PlayerMatches { get; set; }
         ObservableCollection<Player> Players { get; set; }
     }
 }
