@@ -41,6 +41,17 @@ namespace FootballManagerEF.Services
             return true;
         }
 
+        public bool DataGridIsComplete()
+        {
+            if (!DataGridIsValid())
+                return false;
+
+            if (DataGridIsIncomplete())
+                return false;
+
+            return true;
+        }
+
         public bool SendErrorToUser()
         {
             ErrorMessage = GetErrorMessageOnUpdate();
@@ -59,6 +70,9 @@ namespace FootballManagerEF.Services
 
             if (MoreThanMaxPlayersInATeam())
                 errorMessage = "One of the teams has more than 5 players.";
+
+            if (DataGridIsIncomplete())
+                errorMessage = "Please ensure that the maximum number of players and teams are entered.";
 
             return errorMessage;
         }
@@ -88,6 +102,14 @@ namespace FootballManagerEF.Services
             return false;
         }
 
+        private bool DataGridIsIncomplete()
+        {
+            if (GridHasMissingRows())
+                return true;
+
+            return false;
+        }
+
         private bool RowsHavePlayerButNoTeam()
         {
             if (PlayerMatches.Where(x => x.PlayerID != null && x.TeamID == null).Count() > 0)
@@ -99,6 +121,14 @@ namespace FootballManagerEF.Services
         private bool RowsHaveTeamButNoPlayer()
         {
             if (PlayerMatches.Where(x => x.PlayerID == null && x.TeamID != null).Count() > 0)
+                return true;
+
+            return false;
+        }
+
+        private bool GridHasMissingRows()
+        {
+            if (PlayerMatches.Where(x => x.PlayerID == null || x.TeamID == null).Count() > 0)
                 return true;
 
             return false;

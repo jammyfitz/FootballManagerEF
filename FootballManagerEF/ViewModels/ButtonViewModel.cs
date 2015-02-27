@@ -63,16 +63,59 @@ namespace FootballManagerEF.ViewModels
 
         public void AutoPickButtonClicked()
         {
+            //if (_matchValidatorService.DataGridIsComplete())
+                ApplyPickingAlgorithm();
+           // else
+               // _matchValidatorService.SendErrorToUser();
+
             //PlayerMatch temp1 = PlayerMatches.ElementAt(0);
             //PlayerMatch temp2 = PlayerMatches.ElementAt(1);
 
-            PlayerMatches.Move(0, 4);
-            PlayerMatches.Move(1, 5);
+            //PlayerMatches.Move(0, 4);
+            //PlayerMatches.Move(1, 5);
 
             //ObservableCollection<PlayerMatch> changedPlayerMatches = PlayerMatches;
 
             //PlayerMatches = changedPlayerMatches;
             //RaisePropertyChanged("PlayerMatches");
+        }
+
+        private void ApplyPickingAlgorithm()
+        {
+            List<PlayerStat> playerStats = _footballRepository.GetPlayerStats();
+            List<PlayerStat> sortedList = new List<PlayerStat>();
+
+            //playerStats.RemoveAll(x => x.PlayerMatches.Where(y => y.PlayerID != x.PlayerID));
+            playerStats.RemoveAll(x => NotInPlayerMatches(x));
+
+            for (int i = 0; i < playerStats.Count() / 2; i++)
+            {
+                sortedList.Add(playerStats[i]);
+                sortedList.Add(playerStats[playerStats.Count() - (i + 1)]);
+            }
+
+            ObservableCollection<PlayerMatch> outputList = new ObservableCollection<PlayerMatch>();
+
+            for (int i = 0; i < sortedList.Count(); i++)
+            {
+                PlayerMatch playerMatch = new PlayerMatch();
+                playerMatch = PlayerMatches[i];
+                playerMatch.PlayerID = sortedList[i].PlayerID;
+                playerMatch.TeamID = (i % 2 == 0) ? _footballRepository.GetTeams().First().TeamID : _footballRepository.GetTeams().Last().TeamID;
+
+                outputList.Add(playerMatch);
+
+            }
+
+
+            PlayerMatches = outputList;
+        }
+
+        private bool NotInPlayerMatches(PlayerStat playerStat)
+        {
+            var matches = PlayerMatches.Where(x => x.PlayerID == playerStat.PlayerID);
+
+            return (matches.Count() > 0) ? false : true; 
         }
 
         private void SaveDataGrid()

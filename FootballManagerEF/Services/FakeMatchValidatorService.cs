@@ -24,6 +24,11 @@ namespace FootballManagerEF.ViewModels
             return _validationResult;
         }
 
+        public bool DataGridIsComplete()
+        {
+            return _validationResult;
+        }
+
         public bool SendErrorToUser()
         {
             return _validationResult;
