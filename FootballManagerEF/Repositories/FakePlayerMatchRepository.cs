@@ -39,18 +39,8 @@ namespace FootballManagerEF.Repositories
         {
             return new ObservableCollection<PlayerMatch> 
             { 
-                new PlayerMatch
-                { 
-                    PlayerMatchID = 1,
-                    PlayerID = 1,
-                    MatchID = 1
-                },
-                new PlayerMatch
-                { 
-                    PlayerMatchID = 2,
-                    PlayerID = 2,
-                    MatchID = 1
-                }
+                AddPlayerMatch(1, 1, 1, null),
+                AddPlayerMatch(2, 2, 1, null)
             };
         }
 
@@ -58,18 +48,8 @@ namespace FootballManagerEF.Repositories
         {
             return new ObservableCollection<PlayerMatch> 
             { 
-                new PlayerMatch
-                { 
-                    PlayerMatchID = 1,
-                    TeamID = 1,
-                    MatchID = 1
-                },
-                new PlayerMatch
-                { 
-                    PlayerMatchID = 2,
-                    TeamID = 2,
-                    MatchID = 1
-                }
+                AddPlayerMatch(1, null, 1, 1),
+                AddPlayerMatch(2, null, 2, 1)
             };
         }
 
@@ -86,50 +66,50 @@ namespace FootballManagerEF.Repositories
         {
             return new ObservableCollection<PlayerMatch> 
            { 
-              new PlayerMatch
-              { 
-                  PlayerMatchID = 1,
-                  PlayerID = 1,
-                  MatchID = 1,
-                  TeamID = 1
-              },
-              new PlayerMatch
-              { 
-                  PlayerMatchID = 2,
-                  PlayerID = 2,
-                  MatchID = 1,
-                  TeamID = 1
-              },
-              new PlayerMatch
-              { 
-                  PlayerMatchID = 3,
-                  PlayerID = 3,
-                  MatchID = 1,
-                  TeamID = 1
-              },
-              new PlayerMatch
-              { 
-                  PlayerMatchID = 4,
-                  PlayerID = 4,
-                  MatchID = 1,
-                  TeamID = 1
-              },
-              new PlayerMatch
-              { 
-                  PlayerMatchID = 5,
-                  PlayerID = 5,
-                  MatchID = 1,
-                  TeamID = 1
-              },
-              new PlayerMatch
-              { 
-                  PlayerMatchID = 6,
-                  PlayerID = 6,
-                  MatchID = 1,
-                  TeamID = 1
-              }
+              AddPlayerMatch(1, 1, 1, 1),
+              AddPlayerMatch(2, 2, 1, 1),
+              AddPlayerMatch(3, 3, 1, 1),
+              AddPlayerMatch(4, 4, 1, 1),
+              AddPlayerMatch(5, 5, 1, 1),
+              AddPlayerMatch(6, 6, 1, 1),
            };
         }
+
+        public ObservableCollection<PlayerMatch> GetPlayerMatchesBeforeAlgorithm()
+        {
+            return new ObservableCollection<PlayerMatch> 
+           { 
+              AddPlayerMatch(0, 1, 1, 1),
+              AddPlayerMatch(0, 2, 1, 2),
+              AddPlayerMatch(0, 3, 1, 1),
+              AddPlayerMatch(0, 4, 1, 2),
+              AddPlayerMatch(0, 5, 1, 1),
+              AddPlayerMatch(0, 6, 1, 2),
+              AddPlayerMatch(0, 7, 1, 1),
+              AddPlayerMatch(0, 8, 1, 2),
+              AddPlayerMatch(0, 9, 1, 1),
+              AddPlayerMatch(0, 10, 1, 2)
+           };
+        }
+
+        public ObservableCollection<PlayerMatch> GetPlayerMatchesAfterAlgorithm()
+        {
+            return new ObservableCollection<PlayerMatch> 
+           { 
+              AddPlayerMatch(0, 10, 1, 1),
+              AddPlayerMatch(0, 1, 1, 1),
+              AddPlayerMatch(0, 9, 1, 1),
+              AddPlayerMatch(0, 2, 1, 1),
+              AddPlayerMatch(0, 8, 1, 1),
+              AddPlayerMatch(0, 3, 1, 2),
+              AddPlayerMatch(0, 7, 1, 2),
+              AddPlayerMatch(0, 4, 1, 2),
+              AddPlayerMatch(0, 6, 1, 2),
+              AddPlayerMatch(0, 5, 1, 2)
+           };
+        }
+
+        #region Private
 
         private static ObservableCollection<PlayerMatch> AddFivePlayerMatches()
         {
@@ -198,14 +178,21 @@ namespace FootballManagerEF.Repositories
 
         private static PlayerMatch AddPlayerMatch()
         {
+            return AddPlayerMatch(1, 1, 1, 1);
+        }
+
+        private static PlayerMatch AddPlayerMatch(int playerMatchId, Nullable<int> playerId, Nullable<int> matchId, Nullable<int> teamId)
+        {
             return new PlayerMatch
             {
-                PlayerMatchID = 1,
-                PlayerID = 1,
-                MatchID = 1,
-                TeamID = 1
+                PlayerMatchID = playerMatchId,
+                PlayerID = playerId,
+                MatchID = matchId,
+                TeamID = teamId
             };
         }
+
+        #endregion
 
         #region IDisposable Members
         private bool disposed = false;

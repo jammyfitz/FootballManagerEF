@@ -79,6 +79,7 @@
     <Compile Include="Interfaces\IPlayerMatchRepository.cs" />
     <Compile Include="Interfaces\IPlayerMatchViewModel.cs" />
     <Compile Include="Interfaces\IPlayerRepository.cs" />
+    <Compile Include="Interfaces\ISelectorService.cs" />
     <Compile Include="Interfaces\ITeamRepository.cs" />
     <Compile Include="Interfaces\IValidatorService.cs" />
     <Compile Include="Models\Config.cs">
@@ -100,6 +101,7 @@
     <Compile Include="Repositories\TeamRepository.cs" />
     <Compile Include="Services\FakeMailerService.cs" />
     <Compile Include="Services\FakePlayerValidatorService.cs" />
+    <Compile Include="Services\GiantKillerSelectorService.cs" />
     <Compile Include="Services\MailerService.cs" />
     <Compile Include="Services\FakeDialogService.cs" />
     <Compile Include="Services\DialogService.cs" />
@@ -129,7 +131,7 @@
     </Compile>
     <Compile Include="Repositories\FakeMatchRepository.cs" />
     <Compile Include="Repositories\MatchRepository.cs" />
-    <Compile Include="Resources\Utils.cs" />
+    <Compile Include="Utils.cs" />
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -14,26 +14,30 @@ namespace FootballManagerEF.Repositories
         {
            return new List<PlayerStat> 
            { 
-              new PlayerStat
-              { 
-                  PlayerID = 1,
-                  PlayerName = "Jamie",
-                  MatchWins = 2
-              },
-              new PlayerStat
-              { 
-                  PlayerID = 2,
-                  PlayerName = "Mike",
-                  MatchWins = 1
-              },
-              new PlayerStat
-              { 
-                  PlayerID = 3,
-                  PlayerName = "Caff",
-                  MatchWins = 1
-              }
+              CreatePlayer(1, "Jamie", 10),
+              CreatePlayer(2, "Mike", 8),
+              CreatePlayer(3, "Caff", 7),
+              CreatePlayer(4, "Ant", 7),
+              CreatePlayer(5, "Croucho", 5),
+              CreatePlayer(6, "Greg", 4),
+              CreatePlayer(7, "Hugh", 4),
+              CreatePlayer(8, "Skip", 4),
+              CreatePlayer(9, "Imran", 2),
+              CreatePlayer(10, "John", 1),
            };
         }
+
+        #region Private
+        private PlayerStat CreatePlayer(int playerId, string playerName, int? matchWins)
+        {
+            return new PlayerStat
+            {
+                PlayerID = playerId,
+                PlayerName = playerName,
+                MatchWins = matchWins
+            };
+        }
+        #endregion
 
         #region IDisposable Members
         public void Save()

@@ -11,6 +11,7 @@ using Rhino.Mocks;
 using FootballManagerEF.Interfaces;
 using FootballManagerEF.Models;
 using FootballManagerEF.Services;
+using System.Collections.ObjectModel;
 
 namespace FootballManagerEF.Tests.ViewModels
 {
@@ -174,5 +175,22 @@ namespace FootballManagerEF.Tests.ViewModels
             //Assert
             mockMailerService.AssertWasNotCalled(x => x.SendOKMessageToUser());
         }
+
+        [Test]
+        public void ButtonViewModel_WhenAutoPickButtonClickedAndDataGridIsCompletePlayerMatchesIsUpdatedCorrectly()
+        {
+            //Arrange 
+            buttonViewModel.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesBeforeAlgorithm();
+            
+            ObservableCollection<PlayerMatch> expectedPlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesAfterAlgorithm();
+            ObservableCollection<PlayerMatch> inputPlayerMatches = buttonViewModel.PlayerMatches;
+
+            //Act
+            buttonViewModel.AutoPickButtonClicked();
+
+            //Assert
+            Assert.IsTrue(buttonViewModel.PlayerMatches.SequenceEqual(expectedPlayerMatches, new PlayerMatchEqualityComparer()));
+        }
+
     }
 }
