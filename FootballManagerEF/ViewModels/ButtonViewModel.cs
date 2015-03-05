@@ -21,6 +21,7 @@ namespace FootballManagerEF.ViewModels
         private IPlayerMatchViewModel _playerMatchViewModel;
         private IMatchValidatorService _matchValidatorService;
         private IMailerService _mailerService;
+        private ISelectorService _selectorService;
 
         private Match _selectedMatch;
 
@@ -44,6 +45,7 @@ namespace FootballManagerEF.ViewModels
             _matchValidatorService.PlayerMatches = _playerMatchViewModel.PlayerMatches;
             _selectedMatch = new Match();
             _mailerService = mailerService;
+            _selectorService = new GiantKillerSelectorService(_footballRepository);
             _canExecute = true;
         }
 
@@ -71,15 +73,7 @@ namespace FootballManagerEF.ViewModels
 
         private void ApplyPickingAlgorithm()
         {
-            ISelectorService selectorService = new GiantKillerSelectorService(_footballRepository, PlayerMatches);
-            PlayerMatches = selectorService.ApplyAlgorithm();
-        }
-
-        private bool NotInPlayerMatches(PlayerStat playerStat)
-        {
-            var matches = PlayerMatches.Where(x => x.PlayerID == playerStat.PlayerID);
-
-            return (matches.Count() > 0) ? false : true; 
+            PlayerMatches = _selectorService.ApplyAlgorithm(PlayerMatches);
         }
 
         private void SaveDataGrid()

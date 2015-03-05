@@ -192,5 +192,33 @@ namespace FootballManagerEF.Tests.ViewModels
             Assert.IsTrue(buttonViewModel.PlayerMatches.SequenceEqual(expectedPlayerMatches, new PlayerMatchEqualityComparer()));
         }
 
+        [Test]
+        public void ButtonViewModel_WhenAutoPickButtonIsClickedAndDataGridIsIncompleteReturnExpectedError()
+        {
+            //Arrange 
+            matchValidatorService.PlayerMatches = fakePlayerMatchRepo.GetFiveFilledAndFiveEmptyPlayerMatches();
+
+            //Act
+            buttonViewModel.AutoPickButtonClicked();
+
+            //Assert
+            Assert.That(matchValidatorService.ErrorMessage, Is.EqualTo("Please ensure that the maximum number of players and teams are entered."));
+        }
+
+        [Test]
+        public void ButtonViewModel_WhenAutoPickButtonIsClickedAndDataGridIsInvalidSendErrorToUserIsCalled()
+        {
+            //Arrange 
+            var mockMatchValidatorService = MockRepository.GenerateMock<IMatchValidatorService>();
+            var mockButtonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, mockMatchValidatorService, fakeMailerService);
+            mockMatchValidatorService.Stub(x => x.DataGridIsValid()).Return(false);
+
+            //Act
+            mockButtonViewModel.AutoPickButtonClicked();
+
+            //Assert
+            mockMatchValidatorService.AssertWasCalled(x => x.SendErrorToUser());
+        }
+
     }
 }

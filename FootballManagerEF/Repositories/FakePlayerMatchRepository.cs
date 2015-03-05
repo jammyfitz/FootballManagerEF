@@ -15,7 +15,7 @@ namespace FootballManagerEF.Repositories
 
         public ObservableCollection<PlayerMatch> GetPlayerMatches(int matchId)
         {
-            return AddFivePlayerMatches();
+            return AddFiveDistinctPlayerMatches();
         }
 
         public ObservableCollection<PlayerMatch> GetTenPlayerMatches(int matchId)
@@ -30,7 +30,7 @@ namespace FootballManagerEF.Repositories
 
         public ObservableCollection<PlayerMatch> GetFiveFilledAndFiveEmptyPlayerMatches()
         {
-            ObservableCollection<PlayerMatch> playerMatches = AddFivePlayerMatches();
+            ObservableCollection<PlayerMatch> playerMatches = AddFiveDistinctPlayerMatches();
             AddFiveEmptyPlayerMatches(playerMatches);
             return playerMatches;
         }
@@ -109,19 +109,24 @@ namespace FootballManagerEF.Repositories
            };
         }
 
-        #region Private
-
-        private static ObservableCollection<PlayerMatch> AddFivePlayerMatches()
+        public ObservableCollection<PlayerMatch> GetTenDifferentPlayerMatches()
         {
             return new ObservableCollection<PlayerMatch> 
-            { 
-                AddPlayerMatch(),
-                AddPlayerMatch(),
-                AddPlayerMatch(),
-                AddPlayerMatch(),
-                AddPlayerMatch()
-            };
+           { 
+              AddPlayerMatch(0, 1, 1, 1),
+              AddPlayerMatch(0, 2, 1, 2),
+              AddPlayerMatch(0, 3, 1, 1),
+              AddPlayerMatch(0, 4, 1, 2),
+              AddPlayerMatch(0, 5, 1, 1),
+              AddPlayerMatch(0, 6, 1, 2),
+              AddPlayerMatch(0, 7, 1, 1),
+              AddPlayerMatch(0, 8, 1, 2),
+              AddPlayerMatch(0, 9, 1, 1),
+              AddPlayerMatch(0, 10, 1, 2)
+           };
         }
+
+        #region Private
 
         private static ObservableCollection<PlayerMatch> AddFiveDistinctPlayerMatches()
         {

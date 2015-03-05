@@ -15,24 +15,22 @@ namespace FootballManagerEF.Services
     public class GiantKillerSelectorService : ISelectorService
     {
         private List<PlayerStat> _playerStats;
-        private ObservableCollection<PlayerMatch> _playerMatches;
         private ObservableCollection<Team> _teams;
         private IFootballRepository _footballRepository;
 
-        public GiantKillerSelectorService(IFootballRepository footballRepository, ObservableCollection<PlayerMatch> playerMatches)
+        public GiantKillerSelectorService(IFootballRepository footballRepository)
         {
             _footballRepository = footballRepository;
             _playerStats = _footballRepository.GetPlayerStats();
             _teams = _footballRepository.GetTeams();
-            _playerMatches = playerMatches;
         }
 
-        public ObservableCollection<PlayerMatch> ApplyAlgorithm()
+        public ObservableCollection<PlayerMatch> ApplyAlgorithm(ObservableCollection<PlayerMatch> playerMatches)
         {
             ObservableCollection<PlayerMatch> outputList = new ObservableCollection<PlayerMatch>();
 
             //Join the win stats onto list of user selected players
-            var result = from pm in _playerMatches
+            var result = from pm in playerMatches
                          join ps in _playerStats.DefaultIfEmpty() on pm.PlayerID equals ps.PlayerID into temp
                          from subtemp in temp.DefaultIfEmpty()
                          select new { PlayerMatch = pm, MatchWins = (subtemp == null ? 0 : subtemp.MatchWins) } into results

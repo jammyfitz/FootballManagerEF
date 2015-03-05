@@ -10,6 +10,6 @@ namespace FootballManagerEF.Interfaces
 {
     public interface ISelectorService
     {
-        ObservableCollection<PlayerMatch> ApplyAlgorithm();
+        ObservableCollection<PlayerMatch> ApplyAlgorithm(ObservableCollection<PlayerMatch> playerMatches);
     }
 }
