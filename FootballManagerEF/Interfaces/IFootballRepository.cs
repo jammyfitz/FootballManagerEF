@@ -12,7 +12,7 @@ namespace FootballManagerEF.Interfaces
     {
         List<Match> GetMatches();
         ObservableCollection<PlayerMatch> GetPlayerMatches(int matchId);
-        List<Player> GetAllPlayers();
+        ObservableCollection<Player> GetAllPlayers();
         ObservableCollection<Player> GetActivePlayers();
         ObservableCollection<Team> GetTeams();
         Config GetConfig();
@@ -21,7 +21,7 @@ namespace FootballManagerEF.Interfaces
         Player GetPlayerByID(int playerId);
         Team GetTeamByID(int teamId);
         bool InsertPlayerMatches(ObservableCollection<PlayerMatch> playerMatchesToInsert, int matchId);
-        bool InsertPlayers(List<Player> playersToInsert);
+        bool InsertPlayers(ObservableCollection<Player> playersToInsert);
         void Refresh();
         void Save();
     }

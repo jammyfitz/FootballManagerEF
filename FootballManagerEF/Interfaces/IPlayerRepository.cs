@@ -10,10 +10,10 @@ namespace FootballManagerEF.Interfaces
 {
     public interface IPlayerRepository : IDisposable
     {
-        List<Player> GetAllPlayers();
+        ObservableCollection<Player> GetAllPlayers();
         ObservableCollection<Player> GetActivePlayers();
         Player GetPlayerByID(int playerId);
-        bool InsertPlayers(List<Player> players);
+        bool InsertPlayers(ObservableCollection<Player> players);
         void Save();
     }
 }

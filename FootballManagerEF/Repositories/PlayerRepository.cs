@@ -24,9 +24,9 @@ namespace FootballManagerEF.Repositories
             return new ObservableCollection<Player>(context.Players.Where(x => x.Active == true).OrderBy(x => x.PlayerName).ToList());
         }
 
-        public List<Player> GetAllPlayers()
+        public ObservableCollection<Player> GetAllPlayers()
         {
-            return context.Players.OrderBy(x => x.PlayerName).ToList();
+            return new ObservableCollection<Player>(context.Players.OrderBy(x => x.PlayerName).ToList());
         }
 
         public Player GetPlayerByID(int playerId)
@@ -34,7 +34,7 @@ namespace FootballManagerEF.Repositories
             return context.Players.Find(playerId);
         }
 
-        public bool InsertPlayers(List<Player> players)
+        public bool InsertPlayers(ObservableCollection<Player> players)
         {
             foreach (Player player in players)
                 context.Players.Add(player);

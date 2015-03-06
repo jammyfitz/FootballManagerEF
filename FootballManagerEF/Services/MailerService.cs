@@ -1,8 +1,12 @@
-﻿using FootballManagerEF.Interfaces;
+﻿using FootballManagerEF.Classes;
+using FootballManagerEF.Helpers;
+using FootballManagerEF.Interfaces;
 using FootballManagerEF.Models;
 using FootballManagerEF.Repositories;
+using FootballManagerEF.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -16,30 +20,45 @@ namespace FootballManagerEF.Services
         private List<PlayerStat> _playerStats;
         private Config _config;
         private IFootballRepository _footballRepository;
+        private Mailer _mailer;
+        private IMailHelper _mailHelper;
+        private SmtpData _smtpData;
+        private IPlayerMatchViewModel _playerMatchViewModel;
+        private ObservableCollection<PlayerMatch> _playerMatches;
+        private ObservableCollection<Team> _teams;
 
-        public MailerService()
+        public MailerService(IPlayerMatchViewModel playerMatchViewModel, ObservableCollection<PlayerMatch> playerMatches, ObservableCollection<Team> teams)
         {
             _footballRepository = new FootballRepository(new FootballEntities());
-            _config = _footballRepository.GetConfig();
+            InitialiseData(playerMatchViewModel);
         }
 
-        public bool SendEmail()
+        public MailerService(IPlayerMatchViewModel playerMatchViewModel, IFootballRepository footballRepository)
+        {
+            _footballRepository = footballRepository;
+            InitialiseData(playerMatchViewModel);
+        }
+
+        public bool SendStats()
         {
             _footballRepository = new FootballRepository(new FootballEntities());
             GetPlayerStats();
 
-            SmtpClient SmtpServer = new SmtpClient(_config.SmtpServer.ToString());
-            var mail = new MailMessage();
-            mail.From = new MailAddress(_config.SmtpAgentSine.ToString());
-            mail.To.Add(_config.SmtpAgentSine.ToString());
-            mail.Subject = DateTime.Now.ToString("yyyy-MM-dd") + " - Thursday Football Stats";
-            mail.Body = GetEmailBody();
-            SmtpServer.Port = int.Parse(_config.SmtpPort.ToString());
-            SmtpServer.UseDefaultCredentials = false;
-            SmtpServer.Credentials = new System.Net.NetworkCredential(_config.SmtpAgentSine.ToString(), GetDecryptedAgentDutyCode());
-            SmtpServer.EnableSsl = true;
-            SmtpServer.Send(mail);
-            return true;
+            _mailHelper = new PlayerStatsMailHelper(_playerStats,_config.SmtpAgentSine);
+            SetupMail(_mailHelper);
+            return _mailer.SendEmail();
+        }
+
+        public bool SendTeams()
+        {
+            _mailHelper = new TeamsMailHelper(_playerMatchViewModel.PlayerMatches, _footballRepository, _config.SmtpAgentSine);
+            SetupMail(_mailHelper);
+            return _mailer.SendEmail();
+        }
+
+        private void SetupMail(IMailHelper mailHelper)
+        {
+            _mailer = new Mailer(_smtpData, mailHelper);
         }
 
         public bool SendOKMessageToUser()
@@ -48,19 +67,13 @@ namespace FootballManagerEF.Services
             return true;
         }
 
-        private string GetEmailBody()
+        #region Private
+        private void InitialiseData(IPlayerMatchViewModel playerMatchViewModel)
         {
-            StringBuilder body = new StringBuilder("***MoleInTheBarn v1.2***\n");
-
-            foreach(PlayerStat playerStat in _playerStats)
-                body.Append(WritePlayerStatLine(playerStat.PlayerName, playerStat.MatchWins.ToString()));
-
-            return body.ToString();
-        }
-
-        private static string WritePlayerStatLine(string playerName, string matchWins)
-        {
-            return string.Format("{0} : {1}\n", playerName, matchWins);
+            _playerMatchViewModel = playerMatchViewModel;
+            _teams = _footballRepository.GetTeams();
+            _config = _footballRepository.GetConfig();
+            _smtpData = InitialiseSmtpData();
         }
 
         private string GetDecryptedAgentDutyCode()
@@ -77,5 +90,17 @@ namespace FootballManagerEF.Services
         {
             _playerStats = _footballRepository.GetPlayerStats();
         }
+
+        private SmtpData InitialiseSmtpData()
+        {
+            return new SmtpData
+            {
+                AgentSine = _config.SmtpAgentSine,
+                AgentDutyCode = GetDecryptedAgentDutyCode(),
+                Host = _config.SmtpServer,
+                Port = _config.SmtpPort
+            };
+        }
+        #endregion
     }
 }

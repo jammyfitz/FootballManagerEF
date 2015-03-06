@@ -11,29 +11,29 @@ namespace FootballManagerEF.Repositories
 {
     public class FakePlayerRepository : IPlayerRepository
     {
-        public List<Player> GetAllPlayers()
+        public ObservableCollection<Player> GetAllPlayers()
         {
-            return new List<Player> 
-           { 
-              new Player
-              { 
-                  PlayerID = 1,
-                  PlayerName = "Jamie",
-                  Active = true
-              },
-              new Player
-              { 
-                  PlayerID = 2,
-                  PlayerName = "Mike",
-                  Active = true
-              },
-              new Player
-              { 
-                  PlayerID = 3,
-                  PlayerName = "Caff",
-                  Active = true
-              }
-           };
+            return new ObservableCollection<Player> 
+            { 
+                new Player
+                { 
+                    PlayerID = 1,
+                    PlayerName = "Jamie",
+                    Active = true
+                },
+                new Player
+                { 
+                    PlayerID = 2,
+                    PlayerName = "Mike",
+                    Active = true
+                },
+                new Player
+                { 
+                    PlayerID = 3,
+                    PlayerName = "Caff",
+                    Active = true
+                }
+            };
         }
 
         public ObservableCollection<Player> GetActivePlayers()
@@ -70,9 +70,9 @@ namespace FootballManagerEF.Repositories
             };
         }
 
-        public List<Player> GetTenValidPlayers()
+        public ObservableCollection<Player> GetTenValidPlayers()
         {
-            return new List<Player> 
+            return new ObservableCollection<Player> 
            { 
               new Player
               { 
@@ -137,105 +137,113 @@ namespace FootballManagerEF.Repositories
            };
         }
 
-        public List<Player> GetPlayersWithPlayerNameAndNoActiveFlag()
+        public ObservableCollection<Player> GetPlayersWithPlayerNameAndNoActiveFlag()
         {
-            return new List<Player> 
-            { 
-                new Player
+            return new ObservableCollection<Player>(
+                new List<Player> 
                 { 
-                    PlayerID = 1,
-                    PlayerName = "Jamie",
-                },
-                new Player
-                { 
-                    PlayerID = 2,
-                    PlayerName = "Mike",
-                    Active = true
-                },
-                new Player
-                { 
-                    PlayerID = 3,
-                    PlayerName = "Caff",
-                    Active = true
-                },
-            };
+                    new Player
+                    { 
+                        PlayerID = 1,
+                        PlayerName = "Jamie",
+                    },
+                    new Player
+                    { 
+                        PlayerID = 2,
+                        PlayerName = "Mike",
+                        Active = true
+                    },
+                    new Player
+                    { 
+                        PlayerID = 3,
+                        PlayerName = "Caff",
+                        Active = true
+                    },
+                }
+            );
         }
 
-        public List<Player> GetPlayersWithActiveFlagAndNoPlayerName()
+        public ObservableCollection<Player> GetPlayersWithActiveFlagAndNoPlayerName()
         {
-            return new List<Player> 
-            { 
-                new Player
+           return new ObservableCollection<Player>(
+                new List<Player> 
                 { 
-                    PlayerID = 1,
-                    PlayerName = "Jamie",
-                    Active = true
-                },
-                new Player
-                { 
-                    PlayerID = 2,
-                    Active = true
-                },
-                new Player
-                { 
-                    PlayerID = 3,
-                    PlayerName = "Caff",
-                    Active = true
-                },
-            };
+                    new Player
+                    { 
+                        PlayerID = 1,
+                        PlayerName = "Jamie",
+                        Active = true
+                    },
+                    new Player
+                    { 
+                        PlayerID = 2,
+                        Active = true
+                    },
+                    new Player
+                    { 
+                        PlayerID = 3,
+                        PlayerName = "Caff",
+                        Active = true
+                    },
+                }
+            );
         }
 
-        public List<Player> GetPlayersWithDuplicatePlayer()
+        public ObservableCollection<Player> GetPlayersWithDuplicatePlayer()
         {
-            return new List<Player> 
-            { 
-                new Player
+            return new ObservableCollection<Player>(
+                new List<Player> 
                 { 
-                    PlayerID = 1,
-                    PlayerName = "Jamie",
-                    Active = true
-                },
-                new Player
-                { 
-                    PlayerID = 2,
-                    PlayerName = "Jamie",
-                    Active = true
-                },
-                new Player
-                { 
-                    PlayerID = 3,
-                    PlayerName = "Caff",
-                    Active = true
-                },
-            };
+                    new Player
+                    { 
+                        PlayerID = 1,
+                        PlayerName = "Jamie",
+                        Active = true
+                    },
+                    new Player
+                    { 
+                        PlayerID = 2,
+                        PlayerName = "Jamie",
+                        Active = true
+                    },
+                    new Player
+                    { 
+                        PlayerID = 3,
+                        PlayerName = "Caff",
+                        Active = true
+                    },
+                }
+            );
         }
 
-        public List<Player> GetPlayersWithNonAlphaCharacters()
+        public ObservableCollection<Player> GetPlayersWithNonAlphaCharacters()
         {
-            return new List<Player> 
-            { 
-                new Player
+            return new ObservableCollection<Player>(
+                new List<Player> 
                 { 
-                    PlayerID = 1,
-                    PlayerName = "Jamie",
-                    Active = true
-                },
-                new Player
-                { 
-                    PlayerID = 2,
-                    PlayerName = "Mike",
-                    Active = true
-                },
-                new Player
-                { 
-                    PlayerID = 3,
-                    PlayerName = "Caff3",
-                    Active = true
-                },
-            };
+                    new Player
+                    { 
+                        PlayerID = 1,
+                        PlayerName = "Jamie",
+                        Active = true
+                    },
+                    new Player
+                    { 
+                        PlayerID = 2,
+                        PlayerName = "Mike",
+                        Active = true
+                    },
+                    new Player
+                    { 
+                        PlayerID = 3,
+                        PlayerName = "Caff3",
+                        Active = true
+                    },
+                }
+            );
         }
 
-        public bool InsertPlayers(List<Player> players)
+        public bool InsertPlayers(ObservableCollection<Player> players)
         {
             return true;
         }

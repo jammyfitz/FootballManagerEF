@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace FootballManagerEF.Interfaces
 {
-    public interface IMailerService
+    public interface IMailHelper
     {
-        bool SendStats();
-        bool SendTeams();
-        bool SendOKMessageToUser();
+        string GetFromAddress();
+        List<string> GetToAddresses();
+        string GetSubject();
+        string GetBody();
     }
 }

@@ -87,7 +87,7 @@ namespace FootballManagerEF.Repositories
         #endregion
 
         #region Player Repository
-        public List<Player> GetAllPlayers()
+        public ObservableCollection<Player> GetAllPlayers()
         {
             return playerRepository.GetAllPlayers();
         }
@@ -102,7 +102,7 @@ namespace FootballManagerEF.Repositories
             return playerRepository.GetPlayerByID(playerId);
         }
 
-        public bool InsertPlayers(List<Player> players)
+        public bool InsertPlayers(ObservableCollection<Player> players)
         {
             return playerRepository.InsertPlayers(players);
         }

@@ -3,6 +3,7 @@ using FootballManagerEF.Interfaces;
 using FootballManagerEF.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -15,11 +16,11 @@ namespace FootballManagerEF.ViewModels
     public class PlayerViewModel : IPlayerViewModel, INotifyPropertyChanged
     {
         private IFootballRepository _footballRepository;
-        private List<Player> _players;
+        private ObservableCollection<Player> _players;
         private IPlayerValidatorService _playerValidatorService;
         private IPlayerMatchViewModel _playerMatchViewModel;
 
-        public List<Player> Players
+        public ObservableCollection<Player> Players
         {
             get { return _players; }
 
@@ -40,7 +41,7 @@ namespace FootballManagerEF.ViewModels
             _canExecute = true;
         }
 
-        public List<Player> GetAllPlayers()
+        public ObservableCollection<Player> GetAllPlayers()
         {
             return _footballRepository.GetAllPlayers();
         }
@@ -63,15 +64,15 @@ namespace FootballManagerEF.ViewModels
 
         private void SaveDataGrid()
         {
-            List<Player> playersToInsert = GetPlayersToInsert();
+            ObservableCollection<Player> playersToInsert = GetPlayersToInsert();
 
             _footballRepository.InsertPlayers(playersToInsert);
             _footballRepository.Save();
         }
 
-        public List<Player> GetPlayersToInsert()
+        public ObservableCollection<Player> GetPlayersToInsert()
         {
-            return Players.Where(x => x.PlayerID == 0).ToList();
+            return new ObservableCollection<Player>(Players.Where(x => x.PlayerID == 0).ToList());
         }
 
         #region INotifyPropertyChanged Members

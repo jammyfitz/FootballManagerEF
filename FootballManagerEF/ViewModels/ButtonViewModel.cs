@@ -57,9 +57,15 @@ namespace FootballManagerEF.ViewModels
                 _matchValidatorService.SendErrorToUser();
         }
 
-        public void SendEmailButtonClicked()
+        public void EmailStatsButtonClicked()
         {
-            if (_mailerService.SendEmail())
+            if (_mailerService.SendStats())
+                _mailerService.SendOKMessageToUser();
+        }
+
+        public void EmailTeamsButtonClicked()
+        {
+            if (_mailerService.SendTeams())
                 _mailerService.SendOKMessageToUser();
         }
 
@@ -116,14 +122,23 @@ namespace FootballManagerEF.ViewModels
         }
         private ICommand _updateCommand;
 
-        public ICommand SendEmailCommand
+        public ICommand EmailStatsCommand
         {
             get
             {
-                return _sendEmailCommand ?? (_sendEmailCommand = new CommandHandler(() => SendEmailButtonClicked(), _canExecute));
+                return _emailStatsCommand ?? (_emailStatsCommand = new CommandHandler(() => EmailStatsButtonClicked(), _canExecute));
             }
         }
-        private ICommand _sendEmailCommand;
+        private ICommand _emailStatsCommand;
+
+        public ICommand EmailTeamsCommand
+        {
+            get
+            {
+                return _emailTeamsCommand ?? (_emailTeamsCommand = new CommandHandler(() => EmailTeamsButtonClicked(), _canExecute));
+            }
+        }
+        private ICommand _emailTeamsCommand;
 
         public ICommand AutoPickCommand
         {

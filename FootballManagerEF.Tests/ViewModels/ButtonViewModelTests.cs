@@ -147,30 +147,30 @@ namespace FootballManagerEF.Tests.ViewModels
         }
 
         [Test]
-        public void ButtonViewModel_WhenSendEmailIsClickedAndEmailHasBeenSentReturnMessageToUser()
+        public void ButtonViewModel_WhenEmailStatsIsClickedAndEmailHasBeenSentReturnMessageToUser()
         {
             //Arrange 
             var mockMailerService = MockRepository.GenerateMock<IMailerService>();
             var mockButtonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, matchValidatorService, mockMailerService);
-            mockMailerService.Stub(x => x.SendEmail()).Return(true);
+            mockMailerService.Stub(x => x.SendStats()).Return(true);
 
             //Act
-            mockButtonViewModel.SendEmailButtonClicked();
+            mockButtonViewModel.EmailStatsButtonClicked();
 
             //Assert
             mockMailerService.AssertWasCalled(x => x.SendOKMessageToUser());
         }
 
         [Test]
-        public void ButtonViewModel_WhenSendEmailIsClickedAndEmailHasntBeenSentNoMessageToUser()
+        public void ButtonViewModel_WhenEmailStatsIsClickedAndEmailHasntBeenSentNoMessageToUser()
         {
             //Arrange 
             var mockMailerService = MockRepository.GenerateMock<IMailerService>();
             var mockButtonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, matchValidatorService, mockMailerService);
-            mockMailerService.Stub(x => x.SendEmail()).Return(false);
+            mockMailerService.Stub(x => x.SendStats()).Return(false);
 
             //Act
-            mockButtonViewModel.SendEmailButtonClicked();
+            mockButtonViewModel.EmailStatsButtonClicked();
 
             //Assert
             mockMailerService.AssertWasNotCalled(x => x.SendOKMessageToUser());

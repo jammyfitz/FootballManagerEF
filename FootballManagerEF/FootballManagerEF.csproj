@@ -68,8 +68,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Mailer.cs" />
     <Compile Include="Handlers\CommandHandler.cs" />
+    <Compile Include="Helpers\PlayerStatsMailHelper.cs" />
+    <Compile Include="Helpers\TeamsMailHelper.cs" />
     <Compile Include="Interfaces\IConfigRepository.cs" />
+    <Compile Include="Classes\MailData.cs" />
     <Compile Include="Interfaces\IMailerService.cs" />
     <Compile Include="Interfaces\IDialogService.cs" />
     <Compile Include="Interfaces\IFootballRepository.cs" />
@@ -81,6 +85,7 @@
     <Compile Include="Interfaces\IPlayerMatchViewModel.cs" />
     <Compile Include="Interfaces\IPlayerRepository.cs" />
     <Compile Include="Interfaces\ISelectorService.cs" />
+    <Compile Include="Classes\SmtpData.cs" />
     <Compile Include="Interfaces\ITeamRepository.cs" />
     <Compile Include="Interfaces\IValidatorService.cs" />
     <Compile Include="Models\Config.cs">

@@ -2,6 +2,7 @@
 using FootballManagerEF.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -12,7 +13,7 @@ namespace FootballManagerEF.Services
         private IDialogService _dialogService;
 
         public string ErrorMessage { get; set; }
-        public List<Player> Players { get; set; }
+        public ObservableCollection<Player> Players { get; set; }
 
         public PlayerValidatorService(IDialogService dialogService)
         {
