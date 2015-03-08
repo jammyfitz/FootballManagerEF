@@ -12,6 +12,7 @@ using FootballManagerEF.Interfaces;
 using FootballManagerEF.Models;
 using FootballManagerEF.Services;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace FootballManagerEF.Tests.ViewModels
 {
@@ -59,7 +60,7 @@ namespace FootballManagerEF.Tests.ViewModels
             mockFootballRepo.Stub(x => x.Save());
 
             //Act
-            mockButtonViewModel.UpdateButtonClicked();
+            mockButtonViewModel.UpdateCommand.Execute(null);
 
             //Assert
             mockFootballRepo.AssertWasCalled(x => x.Save());
@@ -75,7 +76,7 @@ namespace FootballManagerEF.Tests.ViewModels
             mockMatchValidatorService.Stub(x => x.DataGridIsValid()).Return(false);
 
             //Act
-            mockButtonViewModel.UpdateButtonClicked();
+            mockButtonViewModel.UpdateCommand.Execute(null);
 
             //Assert
             mockMatchValidatorService.AssertWasCalled(x => x.SendErrorToUser());
@@ -88,7 +89,7 @@ namespace FootballManagerEF.Tests.ViewModels
             matchValidatorService.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesWithPlayerAndNoTeam();
 
             //Act
-            buttonViewModel.UpdateButtonClicked();
+            buttonViewModel.UpdateCommand.Execute(null);
 
             //Assert
             Assert.That(matchValidatorService.ErrorMessage, Is.EqualTo("Either the team or the player is missing for one of the entries."));
@@ -101,7 +102,7 @@ namespace FootballManagerEF.Tests.ViewModels
             matchValidatorService.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesWithPlayerAndNoTeam();
 
             //Act
-            buttonViewModel.UpdateButtonClicked();
+            buttonViewModel.UpdateCommand.Execute(null);
 
             //Assert
             Assert.That(matchValidatorService.ErrorMessage, Is.EqualTo("Either the team or the player is missing for one of the entries."));
@@ -114,7 +115,7 @@ namespace FootballManagerEF.Tests.ViewModels
             matchValidatorService.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesWithTeamAndNoPlayer();
 
             //Act
-            buttonViewModel.UpdateButtonClicked();
+            buttonViewModel.UpdateCommand.Execute(null);
 
             //Assert
             Assert.That(matchValidatorService.ErrorMessage, Is.EqualTo("Either the team or the player is missing for one of the entries."));
@@ -127,7 +128,7 @@ namespace FootballManagerEF.Tests.ViewModels
             matchValidatorService.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesWithDuplicatePlayer();
 
             //Act
-            buttonViewModel.UpdateButtonClicked();
+            buttonViewModel.UpdateCommand.Execute(null);
 
             //Assert
             Assert.That(matchValidatorService.ErrorMessage, Is.EqualTo("One of the selected players appears more than once for this match."));
@@ -140,7 +141,7 @@ namespace FootballManagerEF.Tests.ViewModels
             matchValidatorService.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesWithTooManyPlayersInATeam();
 
             //Act
-            buttonViewModel.UpdateButtonClicked();
+            buttonViewModel.UpdateCommand.Execute(null);
 
             //Assert
             Assert.That(matchValidatorService.ErrorMessage, Is.EqualTo("One of the teams has more than 5 players."));
@@ -155,7 +156,7 @@ namespace FootballManagerEF.Tests.ViewModels
             mockMailerService.Stub(x => x.SendStats()).Return(true);
 
             //Act
-            mockButtonViewModel.EmailStatsButtonClicked();
+            mockButtonViewModel.EmailStatsCommand.Execute(null);
 
             //Assert
             mockMailerService.AssertWasCalled(x => x.SendOKMessageToUser());
@@ -170,7 +171,7 @@ namespace FootballManagerEF.Tests.ViewModels
             mockMailerService.Stub(x => x.SendStats()).Return(false);
 
             //Act
-            mockButtonViewModel.EmailStatsButtonClicked();
+            mockButtonViewModel.EmailStatsCommand.Execute(null);
 
             //Assert
             mockMailerService.AssertWasNotCalled(x => x.SendOKMessageToUser());
@@ -186,7 +187,7 @@ namespace FootballManagerEF.Tests.ViewModels
             ObservableCollection<PlayerMatch> inputPlayerMatches = buttonViewModel.PlayerMatches;
 
             //Act
-            buttonViewModel.AutoPickButtonClicked();
+            buttonViewModel.AutoPickCommand.Execute(null);
 
             //Assert
             Assert.IsTrue(buttonViewModel.PlayerMatches.SequenceEqual(expectedPlayerMatches, new PlayerMatchEqualityComparer()));
@@ -199,7 +200,7 @@ namespace FootballManagerEF.Tests.ViewModels
             matchValidatorService.PlayerMatches = fakePlayerMatchRepo.GetFiveFilledAndFiveEmptyPlayerMatches();
 
             //Act
-            buttonViewModel.AutoPickButtonClicked();
+            buttonViewModel.AutoPickCommand.Execute(null);
 
             //Assert
             Assert.That(matchValidatorService.ErrorMessage, Is.EqualTo("Please ensure that the maximum number of players and teams are entered."));
@@ -214,11 +215,27 @@ namespace FootballManagerEF.Tests.ViewModels
             mockMatchValidatorService.Stub(x => x.DataGridIsValid()).Return(false);
 
             //Act
-            mockButtonViewModel.AutoPickButtonClicked();
+            mockButtonViewModel.AutoPickCommand.Execute(null);
 
             //Assert
             mockMatchValidatorService.AssertWasCalled(x => x.SendErrorToUser());
         }
+
+        //[Test]
+        //public void ButtonViewModel_WhenAutoPickButtonCommandIsExecutedTheCommandFinishesExecutionSuccessfully()
+        //{
+        //    //Arrange 
+        //    var mockMatchValidatorService = MockRepository.GenerateMock<IMatchValidatorService>();
+        //    var mockButtonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, mockMatchValidatorService, fakeMailerService);
+        //    mockMatchValidatorService.Stub(x => x.DataGridIsValid()).Return(false);
+
+        //    //Act
+        //    //mockButtonViewModel.AutoPickButtonClicked();
+        //    mockButtonViewModel.AutoPickCommand.Execute(1);
+
+        //    //Assert
+        //    mockButtonViewModel.AssertWasCalled(x => x.AutoPickButtonClicked());
+        //}
 
     }
 }

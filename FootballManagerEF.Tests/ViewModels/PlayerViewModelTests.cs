@@ -46,7 +46,7 @@ namespace FootballManagerEF.Tests.ViewModels
             mockFootballRepo.Stub(x => x.Save());
 
             //Act
-            mockPlayerViewModel.UpdateButtonClicked();
+            mockPlayerViewModel.UpdatePlayersCommand.Execute(null);
 
             //Assert
             mockFootballRepo.AssertWasCalled(x => x.Save());
@@ -62,7 +62,7 @@ namespace FootballManagerEF.Tests.ViewModels
             mockPlayerValidatorService.Stub(x => x.DataGridIsValid()).Return(false);
 
             //Act
-            mockPlayerViewModel.UpdateButtonClicked();
+            mockPlayerViewModel.UpdatePlayersCommand.Execute(null);
 
             //Assert
             mockPlayerValidatorService.AssertWasCalled(x => x.SendErrorToUser());
@@ -75,7 +75,7 @@ namespace FootballManagerEF.Tests.ViewModels
             playerValidatorService.Players = fakePlayerRepo.GetPlayersWithPlayerNameAndNoActiveFlag();
 
             //Act
-            playerViewModel.UpdateButtonClicked();
+            playerViewModel.UpdatePlayersCommand.Execute(null);
 
             //Assert
             Assert.That(playerValidatorService.ErrorMessage, Is.EqualTo("Either the player or the active field is missing for one of the entries."));
@@ -88,7 +88,7 @@ namespace FootballManagerEF.Tests.ViewModels
             playerValidatorService.Players = fakePlayerRepo.GetPlayersWithActiveFlagAndNoPlayerName();
 
             //Act
-            playerViewModel.UpdateButtonClicked();
+            playerViewModel.UpdatePlayersCommand.Execute(null);
 
             //Assert
             Assert.That(playerValidatorService.ErrorMessage, Is.EqualTo("Either the player or the active field is missing for one of the entries."));
@@ -101,7 +101,7 @@ namespace FootballManagerEF.Tests.ViewModels
             playerValidatorService.Players = fakePlayerRepo.GetPlayersWithDuplicatePlayer();
 
             //Act
-            playerViewModel.UpdateButtonClicked();
+            playerViewModel.UpdatePlayersCommand.Execute(null);
 
             //Assert
             Assert.That(playerValidatorService.ErrorMessage, Is.EqualTo("One of the players with that name already exists."));
@@ -114,7 +114,7 @@ namespace FootballManagerEF.Tests.ViewModels
             playerValidatorService.Players = fakePlayerRepo.GetPlayersWithNonAlphaCharacters();
 
             //Act
-            playerViewModel.UpdateButtonClicked();
+            playerViewModel.UpdatePlayersCommand.Execute(null);
 
             //Assert
             Assert.That(playerValidatorService.ErrorMessage, Is.EqualTo("One of the players has Non-Alphabetic characters."));
