@@ -1,5 +1,6 @@
 ﻿
 using FootballManagerEF.Repositories;
+using FootballManagerEF.Services;
 using FootballManagerEF.ViewModels;
 using NUnit.Framework;
 using System;
@@ -13,11 +14,28 @@ namespace FootballManagerEF.Tests.ViewModels
     [TestFixture]
     public class MatchViewModelTests
     {
+        FootballRepository fakeFootballRepo;
+        PlayerMatchViewModel playerMatchViewModel;
+        FakePlayerMatchRepository fakePlayerMatchRepo;
+        MatchValidatorService matchValidatorService;
+        ButtonViewModel buttonViewModel;
+        FakeMailerService fakeMailerService;
+
+        [TestFixtureSetUp]
+        public void Init()
+        {
+            fakeFootballRepo = new FootballRepository();
+            fakePlayerMatchRepo = new FakePlayerMatchRepository();
+            playerMatchViewModel = new PlayerMatchViewModel(fakeFootballRepo);
+            matchValidatorService = new MatchValidatorService(playerMatchViewModel, new FakeDialogService());
+            fakeMailerService = new FakeMailerService();
+            buttonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, matchValidatorService, fakeMailerService);
+        }
+
         [Test]
         public void MatchViewModel_WhenGetMatchesIsCalledReturnsListOfMatches()
         {
-            //Arrange 
-            var fakeFootballRepo = new FootballRepository();
+            //Arrange
             var matchViewModel = new MatchViewModel(fakeFootballRepo);
 
             //Act
@@ -30,8 +48,7 @@ namespace FootballManagerEF.Tests.ViewModels
         [Test]
         public void MatchViewModel_WhenGetTeamsIsCalledReturnsListOfTeams()
         {
-            //Arrange 
-            var fakeFootballRepo = new FootballRepository();
+            //Arrange
             var matchViewModel = new MatchViewModel(fakeFootballRepo);
 
             //Act
@@ -39,6 +56,37 @@ namespace FootballManagerEF.Tests.ViewModels
 
             //Assert
             Assert.That(result.Count, Is.GreaterThan(0));
+        }
+
+        [Test]
+        public void MatchViewModel_WhenAMatchIsSelectedPlayerMatchesIsPopulatedOnPlayerMatchViewModel()
+        {
+            //Arrange
+            var matchViewModel = new MatchViewModel(fakeFootballRepo);
+            matchViewModel.PlayerMatchViewModel = playerMatchViewModel;
+            matchViewModel.ButtonViewModel = buttonViewModel;
+
+            //Act
+            matchViewModel.SelectedMatch = fakeFootballRepo.GetMatches().First();
+
+            //Assert
+            Assert.That(matchViewModel.PlayerMatchViewModel.PlayerMatches.Count, Is.GreaterThan(0));
+        }
+
+        [Test]
+        public void MatchViewModel_WhenAMatchIsSelectedSelectedMatchIsPopulatedOnButtonViewModel()
+        {
+            //Arrange
+            var matchViewModel = new MatchViewModel(fakeFootballRepo);
+            var selectedMatch = fakeFootballRepo.GetMatches().First();
+            matchViewModel.PlayerMatchViewModel = playerMatchViewModel;
+            matchViewModel.ButtonViewModel = buttonViewModel;
+
+            //Act
+            matchViewModel.SelectedMatch = selectedMatch;
+
+            //Assert
+            Assert.That(matchViewModel.ButtonViewModel.SelectedMatch, Is.EqualTo(selectedMatch));
         }
     }
 }

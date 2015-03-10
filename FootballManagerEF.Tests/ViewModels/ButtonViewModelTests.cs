@@ -221,21 +221,36 @@ namespace FootballManagerEF.Tests.ViewModels
             mockMatchValidatorService.AssertWasCalled(x => x.SendErrorToUser());
         }
 
-        //[Test]
-        //public void ButtonViewModel_WhenAutoPickButtonCommandIsExecutedTheCommandFinishesExecutionSuccessfully()
-        //{
-        //    //Arrange 
-        //    var mockMatchValidatorService = MockRepository.GenerateMock<IMatchValidatorService>();
-        //    var mockButtonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, mockMatchValidatorService, fakeMailerService);
-        //    mockMatchValidatorService.Stub(x => x.DataGridIsValid()).Return(false);
+        [Test]
+        public void ButtonViewModel_WhenEmailTeamsIsClickedAndEmailHasBeenSentReturnMessageToUser()
+        {
+            //Arrange 
+            var mockMailerService = MockRepository.GenerateMock<IMailerService>();
+            var mockButtonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, matchValidatorService, mockMailerService);
+            mockMailerService.Stub(x => x.SendTeams()).Return(true);
 
-        //    //Act
-        //    //mockButtonViewModel.AutoPickButtonClicked();
-        //    mockButtonViewModel.AutoPickCommand.Execute(1);
+            //Act
+            mockButtonViewModel.EmailTeamsCommand.Execute(null);
 
-        //    //Assert
-        //    mockButtonViewModel.AssertWasCalled(x => x.AutoPickButtonClicked());
-        //}
+            //Assert
+            mockMailerService.AssertWasCalled(x => x.SendOKMessageToUser());
+        }
+
+        [Test]
+        public void ButtonViewModel_WhenEmailTeamsIsClickedAndEmailHasntBeenSentNoMessageToUser()
+        {
+            //Arrange 
+            var mockMailerService = MockRepository.GenerateMock<IMailerService>();
+            var mockButtonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, matchValidatorService, mockMailerService);
+            mockMailerService.Stub(x => x.SendTeams()).Return(false);
+
+            //Act
+            mockButtonViewModel.EmailTeamsCommand.Execute(null);
+
+            //Assert
+            mockMailerService.AssertWasNotCalled(x => x.SendOKMessageToUser());
+        }
+
 
     }
 }
