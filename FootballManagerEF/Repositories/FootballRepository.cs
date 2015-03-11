@@ -48,6 +48,12 @@ namespace FootballManagerEF.Repositories
 
             context.Dispose();
             context = new FootballEntities();
+            matchRepository = new MatchRepository(context);
+            playerMatchRepository = new PlayerMatchRepository(context);
+            playerRepository = new PlayerRepository(context);
+            teamRepository = new TeamRepository(context);
+            configRepository = new ConfigRepository(context);
+            playerStatsRepository = new PlayerStatsRepository(context);
         }
 
         public void Save()
