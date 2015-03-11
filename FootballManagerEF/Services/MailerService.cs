@@ -20,7 +20,7 @@ namespace FootballManagerEF.Services
         private List<PlayerStat> _playerStats;
         private Config _config;
         private IFootballRepository _footballRepository;
-        private Mailer _mailer;
+        private IMailer _mailer;
         private IMailHelper _mailHelper;
         private SmtpData _smtpData;
         private IPlayerMatchViewModel _playerMatchViewModel;
@@ -29,36 +29,39 @@ namespace FootballManagerEF.Services
 
         public MailerService(IPlayerMatchViewModel playerMatchViewModel, ObservableCollection<PlayerMatch> playerMatches, ObservableCollection<Team> teams)
         {
-            _footballRepository = new FootballRepository(new FootballEntities());
+            _footballRepository.Refresh();
+            _mailer = new Mailer(_smtpData, _mailHelper);
             InitialiseData(playerMatchViewModel);
         }
 
         public MailerService(IPlayerMatchViewModel playerMatchViewModel, IFootballRepository footballRepository)
         {
             _footballRepository = footballRepository;
+            _mailer = new FakeMailer(true);
             InitialiseData(playerMatchViewModel);
         }
 
         public bool SendStats()
         {
-            _footballRepository = new FootballRepository(new FootballEntities());
+            //_footballRepository = new FootballRepository(new FootballEntities());
+            _footballRepository.Refresh();
             GetPlayerStats();
 
             _mailHelper = new PlayerStatsMailHelper(_playerStats,_config.SmtpAgentSine);
             SetupMail(_mailHelper);
-            return _mailer.SendEmail();
+            return _mailer.SendMail();
         }
 
         public bool SendTeams()
         {
             _mailHelper = new TeamsMailHelper(_playerMatchViewModel.PlayerMatches, _footballRepository, _config.SmtpAgentSine);
             SetupMail(_mailHelper);
-            return _mailer.SendEmail();
+            return _mailer.SendMail();
         }
 
         private void SetupMail(IMailHelper mailHelper)
         {
-            _mailer = new Mailer(_smtpData, mailHelper);
+            _mailer = _mailer.CreateInstance(_smtpData, mailHelper);
         }
 
         public bool SendOKMessageToUser()

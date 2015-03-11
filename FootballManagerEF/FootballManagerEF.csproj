@@ -74,6 +74,7 @@
     <Compile Include="Helpers\TeamsMailHelper.cs" />
     <Compile Include="Interfaces\IConfigRepository.cs" />
     <Compile Include="Classes\MailData.cs" />
+    <Compile Include="Interfaces\IMailer.cs" />
     <Compile Include="Interfaces\IMailerService.cs" />
     <Compile Include="Interfaces\IDialogService.cs" />
     <Compile Include="Interfaces\IFootballRepository.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Repositories\PlayerMatchRepository.cs" />
     <Compile Include="Repositories\PlayerRepository.cs" />
     <Compile Include="Repositories\TeamRepository.cs" />
+    <Compile Include="Services\FakeMailer.cs" />
     <Compile Include="Services\FakeMailerService.cs" />
     <Compile Include="Services\FakePlayerValidatorService.cs" />
     <Compile Include="Services\GiantKillerSelectorService.cs" />

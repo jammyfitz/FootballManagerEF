@@ -13,9 +13,9 @@ namespace FootballManagerEF.Repositories
         public Config GetConfig()
         {
            return new Config 
-           { 
-              SmtpAgentDutyCode = "TestSmtpAgentDutyCode",
-              SmtpAgentSine = "TestSmtpAgentDutyCode",
+           {
+              SmtpAgentDutyCode = "s+ujX2T9QSr1pVDNYLFU8A==",
+              SmtpAgentSine = "TestSmtpAgentSine",
               SmtpPort = "TestSmtpPort",
               SmtpServer = "TestSmtpServer"
            };

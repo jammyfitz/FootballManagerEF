@@ -43,6 +43,9 @@ namespace FootballManagerEF.Repositories
 
         public void Refresh()
         {
+            if (context == null)
+                return;
+
             context.Dispose();
             context = new FootballEntities();
         }

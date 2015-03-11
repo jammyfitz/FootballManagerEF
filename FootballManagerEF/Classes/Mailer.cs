@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FootballManagerEF.Classes
 {
-    public class Mailer
+    public class Mailer : IMailer
     {
         SmtpData _smtpData;
         IMailHelper _mailHelper;
@@ -19,7 +19,12 @@ namespace FootballManagerEF.Classes
             _mailHelper = mailHelper;
         }
 
-        public bool SendEmail()
+        public IMailer CreateInstance(SmtpData smtpData, IMailHelper mailHelper)
+        {
+            return new Mailer(smtpData, mailHelper);
+        }
+
+        public bool SendMail()
         {
             var mail = CreateMail();
 
@@ -32,7 +37,7 @@ namespace FootballManagerEF.Classes
             return true;
         }
 
-        private MailMessage CreateMail()
+        public MailMessage CreateMail()
         {
             MailMessage mail = new MailMessage()
             {
