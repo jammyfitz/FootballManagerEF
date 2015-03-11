@@ -24,7 +24,7 @@ namespace FootballManagerEF.Tests.ViewModels
         FakePlayerMatchRepository fakePlayerMatchRepo;
         MatchValidatorService matchValidatorService;
         ButtonViewModel buttonViewModel;
-        FakeMailerService fakeMailerService;
+        MailerService mailerService;
 
         [TestFixtureSetUp]
         public void Init()
@@ -33,8 +33,8 @@ namespace FootballManagerEF.Tests.ViewModels
             fakePlayerMatchRepo = new FakePlayerMatchRepository();
             playerMatchViewModel = new PlayerMatchViewModel(fakeFootballRepo);
             matchValidatorService = new MatchValidatorService(playerMatchViewModel, new FakeDialogService());
-            fakeMailerService = new FakeMailerService();
-            buttonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, matchValidatorService, fakeMailerService);
+            mailerService = new MailerService(playerMatchViewModel, fakeFootballRepo);
+            buttonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, matchValidatorService, mailerService);
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace FootballManagerEF.Tests.ViewModels
         {
             //Arrange 
             var mockFootballRepo = MockRepository.GenerateMock<IFootballRepository>();
-            var mockButtonViewModel = new ButtonViewModel(mockFootballRepo, new PlayerMatchViewModel(mockFootballRepo), matchValidatorService, fakeMailerService);
+            var mockButtonViewModel = new ButtonViewModel(mockFootballRepo, new PlayerMatchViewModel(mockFootballRepo), matchValidatorService, mailerService);
             mockButtonViewModel.PlayerMatches = fakePlayerMatchRepo.GetTenPlayerMatches(1);
             mockFootballRepo.Stub(x => x.Save());
 
@@ -72,7 +72,7 @@ namespace FootballManagerEF.Tests.ViewModels
             //Arrange 
 
             var mockMatchValidatorService = MockRepository.GenerateMock<IMatchValidatorService>();
-            var mockButtonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, mockMatchValidatorService, fakeMailerService);
+            var mockButtonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, mockMatchValidatorService, mailerService);
             mockMatchValidatorService.Stub(x => x.DataGridIsValid()).Return(false);
 
             //Act
@@ -211,7 +211,7 @@ namespace FootballManagerEF.Tests.ViewModels
         {
             //Arrange 
             var mockMatchValidatorService = MockRepository.GenerateMock<IMatchValidatorService>();
-            var mockButtonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, mockMatchValidatorService, fakeMailerService);
+            var mockButtonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, mockMatchValidatorService, mailerService);
             mockMatchValidatorService.Stub(x => x.DataGridIsValid()).Return(false);
 
             //Act

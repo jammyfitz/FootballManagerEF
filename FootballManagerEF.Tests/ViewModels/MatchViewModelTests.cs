@@ -19,7 +19,7 @@ namespace FootballManagerEF.Tests.ViewModels
         FakePlayerMatchRepository fakePlayerMatchRepo;
         MatchValidatorService matchValidatorService;
         ButtonViewModel buttonViewModel;
-        FakeMailerService fakeMailerService;
+        MailerService mailerService;
 
         [TestFixtureSetUp]
         public void Init()
@@ -28,8 +28,8 @@ namespace FootballManagerEF.Tests.ViewModels
             fakePlayerMatchRepo = new FakePlayerMatchRepository();
             playerMatchViewModel = new PlayerMatchViewModel(fakeFootballRepo);
             matchValidatorService = new MatchValidatorService(playerMatchViewModel, new FakeDialogService());
-            fakeMailerService = new FakeMailerService();
-            buttonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, matchValidatorService, fakeMailerService);
+            mailerService = new MailerService(playerMatchViewModel,fakeFootballRepo);
+            buttonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, matchValidatorService, mailerService);
         }
 
         [Test]
