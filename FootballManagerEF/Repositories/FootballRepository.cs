@@ -23,22 +23,12 @@ namespace FootballManagerEF.Repositories
         public FootballRepository(FootballEntities context)
         {
             this.context = context;
-            matchRepository = new MatchRepository(context);
-            playerMatchRepository = new PlayerMatchRepository(context);
-            playerRepository = new PlayerRepository(context);
-            teamRepository = new TeamRepository(context);
-            configRepository = new ConfigRepository(context);
-            playerStatsRepository = new PlayerStatsRepository(context);
+            InitialiseRepositories();
         }
 
         public FootballRepository()
         {
-            matchRepository = new FakeMatchRepository();
-            playerMatchRepository = new FakePlayerMatchRepository();
-            playerRepository = new FakePlayerRepository();
-            teamRepository = new FakeTeamRepository();
-            configRepository = new FakeConfigRepository();
-            playerStatsRepository = new FakePlayerStatsRepository();
+            InitialiseTestRepositories();
         }
 
         public void Refresh()
@@ -48,12 +38,7 @@ namespace FootballManagerEF.Repositories
 
             context.Dispose();
             context = new FootballEntities();
-            matchRepository = new MatchRepository(context);
-            playerMatchRepository = new PlayerMatchRepository(context);
-            playerRepository = new PlayerRepository(context);
-            teamRepository = new TeamRepository(context);
-            configRepository = new ConfigRepository(context);
-            playerStatsRepository = new PlayerStatsRepository(context);
+            InitialiseRepositories();
         }
 
         public void Save()
@@ -140,6 +125,29 @@ namespace FootballManagerEF.Repositories
         public List<PlayerStat> GetPlayerStats()
         {
             return playerStatsRepository.GetPlayerStats();
+        }
+
+        #endregion
+
+        #region Private
+        private void InitialiseRepositories()
+        {
+            matchRepository = new MatchRepository(context);
+            playerMatchRepository = new PlayerMatchRepository(context);
+            playerRepository = new PlayerRepository(context);
+            teamRepository = new TeamRepository(context);
+            configRepository = new ConfigRepository(context);
+            playerStatsRepository = new PlayerStatsRepository(context);
+        }
+
+        private void InitialiseTestRepositories()
+        {
+            matchRepository = new FakeMatchRepository();
+            playerMatchRepository = new FakePlayerMatchRepository();
+            playerRepository = new FakePlayerRepository();
+            teamRepository = new FakeTeamRepository();
+            configRepository = new FakeConfigRepository();
+            playerStatsRepository = new FakePlayerStatsRepository();
         }
 
         #endregion
