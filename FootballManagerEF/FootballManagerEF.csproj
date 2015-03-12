@@ -106,7 +106,7 @@
     <Compile Include="Repositories\PlayerMatchRepository.cs" />
     <Compile Include="Repositories\PlayerRepository.cs" />
     <Compile Include="Repositories\TeamRepository.cs" />
-    <Compile Include="Services\FakeMailer.cs" />
+    <Compile Include="Classes\FakeMailer.cs" />
     <Compile Include="Services\FakePlayerValidatorService.cs" />
     <Compile Include="Services\GiantKillerSelectorService.cs" />
     <Compile Include="Services\MailerService.cs" />
@@ -138,7 +138,7 @@
     </Compile>
     <Compile Include="Repositories\FakeMatchRepository.cs" />
     <Compile Include="Repositories\MatchRepository.cs" />
-    <Compile Include="Utils.cs" />
+    <Compile Include="Classes\Utils.cs" />
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
