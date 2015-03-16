@@ -29,7 +29,6 @@ namespace FootballManagerEF.Services
 
         public MailerService(IPlayerMatchViewModel playerMatchViewModel, ObservableCollection<PlayerMatch> playerMatches, ObservableCollection<Team> teams)
         {
-            //_footballRepository.Refresh();
             _footballRepository = new FootballRepository(new FootballEntities());
             _mailer = new Mailer(_smtpData, _mailHelper);
             InitialiseData(playerMatchViewModel);
@@ -44,7 +43,6 @@ namespace FootballManagerEF.Services
 
         public bool SendStats()
         {
-            //_footballRepository = new FootballRepository(new FootballEntities());
             _footballRepository.Refresh();
             GetPlayerStats();
 
