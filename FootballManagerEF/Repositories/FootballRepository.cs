@@ -100,6 +100,11 @@ namespace FootballManagerEF.Repositories
         {
             return playerRepository.InsertPlayers(players);
         }
+
+        public List<string> GetEmailAddresses(List<int?> playerIDs)
+        {
+            return playerRepository.GetEmailAddresses(playerIDs);
+        }
         #endregion
 
         #region Team Repository

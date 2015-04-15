@@ -26,6 +26,7 @@ namespace FootballManagerEF.Services
         private IPlayerMatchViewModel _playerMatchViewModel;
         private ObservableCollection<PlayerMatch> _playerMatches;
         private ObservableCollection<Team> _teams;
+        private List<int> _playerIds;
 
         public MailerService(IPlayerMatchViewModel playerMatchViewModel, ObservableCollection<PlayerMatch> playerMatches, ObservableCollection<Team> teams)
         {
@@ -76,6 +77,7 @@ namespace FootballManagerEF.Services
             _teams = _footballRepository.GetTeams();
             _config = _footballRepository.GetConfig();
             _smtpData = InitialiseSmtpData();
+            _playerIds = null;
         }
 
         private string GetDecryptedAgentDutyCode()

@@ -14,6 +14,7 @@ namespace FootballManagerEF.Interfaces
         ObservableCollection<Player> GetActivePlayers();
         Player GetPlayerByID(int playerId);
         bool InsertPlayers(ObservableCollection<Player> players);
+        List<string> GetEmailAddresses(List<int?> playerIds);
         void Save();
     }
 }

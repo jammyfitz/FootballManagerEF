@@ -46,7 +46,9 @@ namespace FootballManagerEF.Classes
                 Body = _mailHelper.GetBody(),
             };
 
-            mail.To.Add(string.Join(",", _mailHelper.GetToAddresses()));
+            foreach (var address in _mailHelper.GetToAddresses())
+                mail.To.Add(address);
+
             return mail;
         }
     }

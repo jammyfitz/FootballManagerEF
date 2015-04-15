@@ -42,6 +42,22 @@ namespace FootballManagerEF.Repositories
             return true;
         }
 
+        public List<string> GetEmailAddresses(List<int?> playerIDs)
+        {
+            List<string> emailAddresses = new List<string>();
+
+            foreach (int playerId in playerIDs)
+            {
+                string emailAddress = GetPlayerByID(playerId).EmailAddress;
+
+                if (!string.IsNullOrEmpty(emailAddress))
+                    emailAddresses.Add(emailAddress);
+            }
+                
+
+            return emailAddresses;
+        }
+
         public void Save()
         {
             context.SaveChanges();

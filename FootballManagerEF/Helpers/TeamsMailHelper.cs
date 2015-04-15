@@ -15,12 +15,14 @@ namespace FootballManagerEF.Helpers
         private ObservableCollection<Player> _players;
         private ObservableCollection<Team> _teams;
         private IFootballRepository _footballRepository;
-        private string _toAddress;
+        private string _fromAddress;
+        private List<string> _toAddresses;
 
-        public TeamsMailHelper(ObservableCollection<PlayerMatch> playerMatches, IFootballRepository footballRepository, string toAddress)
+        public TeamsMailHelper(ObservableCollection<PlayerMatch> playerMatches, IFootballRepository footballRepository, string fromAddress)
         {
             _playerMatches = playerMatches;
-            _toAddress = toAddress;
+            _fromAddress = fromAddress;
+            _toAddresses = footballRepository.GetEmailAddresses(playerMatches.Select(x => x.PlayerID).ToList());
             _footballRepository = footballRepository;
             _players = _footballRepository.GetAllPlayers();
             _teams = _footballRepository.GetTeams();
@@ -28,12 +30,12 @@ namespace FootballManagerEF.Helpers
 
         public string GetFromAddress()
         {
-            return _toAddress;
+            return _fromAddress;
         }
 
         public List<string> GetToAddresses()
         {
-            return new List<string>() { _toAddress };
+            return  _toAddresses;
         }
 
         public string GetSubject()

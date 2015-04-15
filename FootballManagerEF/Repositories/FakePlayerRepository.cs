@@ -243,6 +243,15 @@ namespace FootballManagerEF.Repositories
             );
         }
 
+        public List<string> GetEmailAddresses(List<int?> playerIds)
+        {
+            return new List<string>() {
+                "test1@test.com",
+                "test2@test.com",
+                "test3@test.co.uk"
+            };
+        }
+
         public bool InsertPlayers(ObservableCollection<Player> players)
         {
             return true;
