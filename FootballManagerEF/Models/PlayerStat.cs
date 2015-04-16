@@ -17,5 +17,6 @@ namespace FootballManagerEF.Models
         public string PlayerName { get; set; }
         public Nullable<int> MatchWins { get; set; }
         public int PlayerID { get; set; }
+        public Nullable<int> MatchesPlayed { get; set; }
     }
 }

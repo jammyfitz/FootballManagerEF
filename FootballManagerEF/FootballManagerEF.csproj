@@ -108,6 +108,7 @@
     <Compile Include="Repositories\TeamRepository.cs" />
     <Compile Include="Classes\FakeMailer.cs" />
     <Compile Include="Services\FakePlayerValidatorService.cs" />
+    <Compile Include="Services\TheProportionerSelectorService.cs" />
     <Compile Include="Services\GiantKillerSelectorService.cs" />
     <Compile Include="Services\MailerService.cs" />
     <Compile Include="Services\FakeDialogService.cs" />

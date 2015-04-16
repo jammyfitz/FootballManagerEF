@@ -57,6 +57,7 @@ warning 6002: The table/view 'Football.dbo.PlayerStats' does not have a primary 
           <Property Name="PlayerName" Type="nvarchar" MaxLength="50" />
           <Property Name="MatchWins" Type="int" />
           <Property Name="PlayerID" Type="int" Nullable="false" />
+          <Property Name="MatchesPlayed" Type="int" />
         </EntityType>
         <Association Name="FK_PlayerMatch_Match">
           <End Role="Match" Type="Self.Match" Multiplicity="0..1" />
@@ -104,7 +105,8 @@ warning 6002: The table/view 'Football.dbo.PlayerStats' does not have a primary 
             <DefiningQuery>SELECT 
     [PlayerStats].[PlayerName] AS [PlayerName], 
     [PlayerStats].[MatchWins] AS [MatchWins], 
-    [PlayerStats].[PlayerID] AS [PlayerID]
+    [PlayerStats].[PlayerID] AS [PlayerID], 
+    [PlayerStats].[MatchesPlayed] AS [MatchesPlayed]
     FROM [dbo].[PlayerStats] AS [PlayerStats]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_PlayerMatch_Match" Association="Self.FK_PlayerMatch_Match">
@@ -236,6 +238,7 @@ warning 6002: The table/view 'Football.dbo.PlayerStats' does not have a primary 
           <Property Name="PlayerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="MatchWins" Type="Int32" />
           <Property Name="PlayerID" Type="Int32" Nullable="false" />
+          <Property Name="MatchesPlayed" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -294,6 +297,7 @@ warning 6002: The table/view 'Football.dbo.PlayerStats' does not have a primary 
           <EntitySetMapping Name="PlayerStats">
             <EntityTypeMapping TypeName="FootballModel.PlayerStat">
               <MappingFragment StoreEntitySet="PlayerStats">
+                <ScalarProperty Name="MatchesPlayed" ColumnName="MatchesPlayed" />
                 <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
                 <ScalarProperty Name="MatchWins" ColumnName="MatchWins" />
                 <ScalarProperty Name="PlayerName" ColumnName="PlayerName" />
