@@ -95,6 +95,7 @@
     <Compile Include="Models\PlayerStat.cs">
       <DependentUpon>FootballEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SelectionAlgorithm.cs" />
     <Compile Include="Repositories\FakeConfigRepository.cs" />
     <Compile Include="Repositories\FakePlayerStatsRepository.cs" />
     <Compile Include="Repositories\FakePlayerMatchRepository.cs" />

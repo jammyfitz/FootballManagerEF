@@ -33,32 +33,6 @@ namespace FootballManagerEF.Tests.ViewModels
         }
 
         [Test]
-        public void MatchViewModel_WhenGetMatchesIsCalledReturnsListOfMatches()
-        {
-            //Arrange
-            var matchViewModel = new MatchViewModel(fakeFootballRepo);
-
-            //Act
-            var result = matchViewModel.GetMatches();
-
-            //Assert
-            Assert.That(result.Count, Is.GreaterThan(0));
-        }
-
-        [Test]
-        public void MatchViewModel_WhenGetTeamsIsCalledReturnsListOfTeams()
-        {
-            //Arrange
-            var matchViewModel = new MatchViewModel(fakeFootballRepo);
-
-            //Act
-            var result = matchViewModel.GetTeams();
-
-            //Assert
-            Assert.That(result.Count, Is.GreaterThan(0));
-        }
-
-        [Test]
         public void MatchViewModel_WhenAMatchIsSelectedPlayerMatchesIsPopulatedOnPlayerMatchViewModel()
         {
             //Arrange

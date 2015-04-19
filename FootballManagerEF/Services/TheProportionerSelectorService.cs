@@ -34,8 +34,8 @@ namespace FootballManagerEF.Services
                          join ps in _playerStats.DefaultIfEmpty() on pm.PlayerID equals ps.PlayerID into temp
                          from subtemp in temp.DefaultIfEmpty()
                          select new { PlayerMatch = pm, MatchWins = (subtemp == null ? 0 : subtemp.MatchWins),
-                             MatchesPlayed = subtemp.MatchesPlayed,
-                             WinRatio = subtemp.MatchWins / subtemp.MatchesPlayed
+                                      MatchesPlayed = subtemp.MatchesPlayed,
+                                      WinRatio = GetWinRatio(subtemp)
                          } into results
                          orderby results.WinRatio descending
                          select results;
@@ -54,6 +54,13 @@ namespace FootballManagerEF.Services
             }
 
             return outputList;
+        }
+
+        private static decimal? GetWinRatio(PlayerStat playerStat)
+        {
+            decimal? matchWins = (decimal?)playerStat.MatchWins;
+            decimal? matchesPlayed = (decimal?)playerStat.MatchesPlayed;
+            return matchWins / matchesPlayed;
         }
     }
 }

@@ -21,14 +21,19 @@ namespace FootballManagerEF.ViewModels
         private IPlayerMatchViewModel _playerMatchViewModel;
         private IMatchValidatorService _matchValidatorService;
         private IMailerService _mailerService;
-        private ISelectorService _selectorService;
-
         private Match _selectedMatch;
+        private SelectionAlgorithm _selectedAlgorithm;
 
         public Match SelectedMatch
         {
             get { return _selectedMatch; }
             set { _selectedMatch = value; RaisePropertyChanged("SelectedMatch"); }
+        }
+
+        public SelectionAlgorithm SelectedAlgorithm
+        {
+            get { return _selectedAlgorithm; }
+            set { _selectedAlgorithm = value; RaisePropertyChanged("SelectedAlgorithm"); }
         }
 
         public ObservableCollection<PlayerMatch> PlayerMatches
@@ -45,7 +50,6 @@ namespace FootballManagerEF.ViewModels
             _matchValidatorService.PlayerMatches = _playerMatchViewModel.PlayerMatches;
             _selectedMatch = new Match();
             _mailerService = mailerService;
-            _selectorService = new GiantKillerSelectorService(_footballRepository);
             _canExecute = true;
         }
 
@@ -79,7 +83,7 @@ namespace FootballManagerEF.ViewModels
 
         private void ApplyPickingAlgorithm()
         {
-            PlayerMatches = _selectorService.ApplyAlgorithm(PlayerMatches);
+            PlayerMatches = SelectedAlgorithm.Class.ApplyAlgorithm(PlayerMatches);
         }
 
         private void SaveDataGrid()

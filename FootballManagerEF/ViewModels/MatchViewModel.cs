@@ -25,6 +25,8 @@ namespace FootballManagerEF.ViewModels
         private IMatchValidatorService _matchValidatorService;
         private IPlayerValidatorService _playerValidatorService;
         private IMailerService _mailerService;
+        private ObservableCollection<SelectionAlgorithm> _selectionAlgorithms;
+        private SelectionAlgorithm _selectedAlgorithm;
 
         public List<Match> Matches
         {
@@ -36,6 +38,27 @@ namespace FootballManagerEF.ViewModels
         {
             get { return _teams; }
             set { _teams = value; }
+        }
+
+        public ObservableCollection<SelectionAlgorithm> SelectionAlgorithms
+        {
+            get { return _selectionAlgorithms; }
+            set
+            {
+                _selectionAlgorithms = value;
+                RaisePropertyChanged("SelectionAlgorithms");
+            }
+        }
+
+        public SelectionAlgorithm SelectedAlgorithm
+        {
+            get { return _selectedAlgorithm; }
+            set
+            {
+                _selectedAlgorithm = value;
+                RaisePropertyChanged("SelectedAlgorithm");
+                ButtonViewModel.SelectedAlgorithm = _selectedAlgorithm;
+            }
         }
 
         public Match SelectedMatch
@@ -84,28 +107,29 @@ namespace FootballManagerEF.ViewModels
             ButtonViewModel = new ButtonViewModel(_footballRepository, _playerMatchViewModel, _matchValidatorService, _mailerService);
             PlayerViewModel = new PlayerViewModel(_footballRepository, _playerMatchViewModel, _playerValidatorService);
             InitialiseMatchesAndTeams();
+            _selectionAlgorithms = InitialiseSelectionAlgorithms();
+            _selectedAlgorithm = _selectionAlgorithms.First();
+            ButtonViewModel.SelectedAlgorithm = _selectedAlgorithm;
         }
 
         private void InitialiseMatchesAndTeams()
         {
-            Matches = GetMatches();
-            Teams = GetTeams();
+            _matches = _footballRepository.GetMatches();
+            _teams = _footballRepository.GetTeams();
+        }
+
+        private ObservableCollection<SelectionAlgorithm> InitialiseSelectionAlgorithms()
+        {
+            return new ObservableCollection<SelectionAlgorithm>(){
+                new SelectionAlgorithm() { Name = "The Giant Killer", Class = new GiantKillerSelectorService(_footballRepository) },
+                new SelectionAlgorithm() { Name = "The Proportioner", Class = new TheProportionerSelectorService(_footballRepository) },
+            };
         }
 
         public MatchViewModel(IFootballRepository footballRepository)
         {
             _footballRepository = footballRepository;
             InitialiseMatchesAndTeams();
-        }
-
-        public List<Match> GetMatches()
-        {
-            return _footballRepository.GetMatches();
-        }
-
-        public ObservableCollection<Team> GetTeams()
-        {
-            return _footballRepository.GetTeams();
         }
 
         #region INotifyPropertyChanged Members
