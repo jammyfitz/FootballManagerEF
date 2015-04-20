@@ -92,7 +92,7 @@ namespace FootballManagerEF.Repositories
            };
         }
 
-        public ObservableCollection<PlayerMatch> GetPlayerMatchesAfterAlgorithm()
+        public ObservableCollection<PlayerMatch> GetPlayerMatchesAfterGiantKillerAlgorithm()
         {
             return new ObservableCollection<PlayerMatch> 
            { 
@@ -106,6 +106,23 @@ namespace FootballManagerEF.Repositories
               AddPlayerMatch(0, 4, 1, 2),
               AddPlayerMatch(0, 6, 1, 2),
               AddPlayerMatch(0, 5, 1, 2)
+           };
+        }
+
+        public ObservableCollection<PlayerMatch> GetPlayerMatchesAfterTheProportionerAlgorithm()
+        {
+            return new ObservableCollection<PlayerMatch> 
+           { 
+              AddPlayerMatch(0, 10, 1, 1),
+              AddPlayerMatch(0, 1, 1, 1),
+              AddPlayerMatch(0, 9, 1, 1),
+              AddPlayerMatch(0, 6, 1, 1),
+              AddPlayerMatch(0, 8, 1, 1),
+              AddPlayerMatch(0, 7, 1, 2),
+              AddPlayerMatch(0, 5, 1, 2),
+              AddPlayerMatch(0, 2, 1, 2),
+              AddPlayerMatch(0, 4, 1, 2),
+              AddPlayerMatch(0, 3, 1, 2)
            };
         }
 

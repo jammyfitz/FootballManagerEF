@@ -24,7 +24,7 @@ namespace FootballManagerEF.Services
 
         public MailMessage CreateMail()
         {
-            return new MailMessage();
+            return null;
         }
 
         public bool SendMail()

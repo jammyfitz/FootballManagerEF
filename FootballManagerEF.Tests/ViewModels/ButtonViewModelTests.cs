@@ -178,12 +178,28 @@ namespace FootballManagerEF.Tests.ViewModels
         }
 
         [Test]
-        public void ButtonViewModel_WhenAutoPickButtonClickedAndDataGridIsCompletePlayerMatchesIsUpdatedCorrectly()
+        public void ButtonViewModel_WhenAutoPickButtonClickedWithGiantKillerAlgorithmAndDataGridIsCompletePlayerMatchesIsUpdatedCorrectly()
         {
             //Arrange 
             buttonViewModel.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesBeforeAlgorithm();
-            
-            ObservableCollection<PlayerMatch> expectedPlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesAfterAlgorithm();
+            buttonViewModel.SelectedAlgorithm = new SelectionAlgorithm() { Class = new GiantKillerSelectorService(fakeFootballRepo) };
+            ObservableCollection<PlayerMatch> expectedPlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesAfterGiantKillerAlgorithm();
+            ObservableCollection<PlayerMatch> inputPlayerMatches = buttonViewModel.PlayerMatches;
+
+            //Act
+            buttonViewModel.AutoPickCommand.Execute(null);
+
+            //Assert
+            Assert.IsTrue(buttonViewModel.PlayerMatches.SequenceEqual(expectedPlayerMatches, new PlayerMatchEqualityComparer()));
+        }
+
+        [Test]
+        public void ButtonViewModel_WhenAutoPickButtonClickedWithTheProportionerAlgorithmAndDataGridIsCompletePlayerMatchesIsUpdatedCorrectly()
+        {
+            //Arrange 
+            buttonViewModel.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesBeforeAlgorithm();
+            buttonViewModel.SelectedAlgorithm = new SelectionAlgorithm() { Class = new TheProportionerSelectorService(fakeFootballRepo) };
+            ObservableCollection<PlayerMatch> expectedPlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesAfterTheProportionerAlgorithm();
             ObservableCollection<PlayerMatch> inputPlayerMatches = buttonViewModel.PlayerMatches;
 
             //Act
