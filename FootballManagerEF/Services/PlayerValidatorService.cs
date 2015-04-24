@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace FootballManagerEF.Services
 {
@@ -31,6 +32,9 @@ namespace FootballManagerEF.Services
             if (PlayersHaveNonAlphaCharacters())
                 return false;
 
+            if (PlayersHaveInvalidEmail())
+                return false;
+
             return true;
         }
 
@@ -50,6 +54,9 @@ namespace FootballManagerEF.Services
 
             if (PlayersHaveNonAlphaCharacters())
                 return "One of the players has Non-Alphabetic characters.";
+
+            if (PlayersHaveInvalidEmail())
+                return "One of the players has an invalid e-mail address.";
 
             return string.Empty;
         }
@@ -126,6 +133,17 @@ namespace FootballManagerEF.Services
                 return true;
 
             return false;
+        }
+
+        private bool PlayersHaveInvalidEmail()
+        {
+            Regex isEmailAddress = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+
+            var results = from player in Players.Where(x => x.EmailAddress != null)
+                          where !isEmailAddress.IsMatch(player.EmailAddress)
+                          select player;
+
+            return results.Any();
         }
     }
 }

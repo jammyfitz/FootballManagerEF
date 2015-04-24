@@ -119,5 +119,18 @@ namespace FootballManagerEF.Tests.ViewModels
             //Assert
             Assert.That(playerValidatorService.ErrorMessage, Is.EqualTo("One of the players has Non-Alphabetic characters."));
         }
+
+        [Test]
+        public void PlayerViewModel_WhenUpdateButtonIsClickedAndPlayerHasInvalidEmailAddressReturnExpectedError()
+        {
+            //Arrange 
+            playerValidatorService.Players = fakePlayerRepo.GetPlayersWithInvalidEmailAddress();
+
+            //Act
+            playerViewModel.UpdatePlayersCommand.Execute(null);
+
+            //Assert
+            Assert.That(playerValidatorService.ErrorMessage, Is.EqualTo("One of the players has an invalid e-mail address."));
+        }
     }
 }

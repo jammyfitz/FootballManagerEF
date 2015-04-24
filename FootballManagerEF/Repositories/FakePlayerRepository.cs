@@ -243,6 +243,36 @@ namespace FootballManagerEF.Repositories
             );
         }
 
+        public ObservableCollection<Player> GetPlayersWithInvalidEmailAddress()
+        {
+            return new ObservableCollection<Player>(
+                new List<Player> 
+                { 
+                    new Player
+                    { 
+                        PlayerID = 1,
+                        PlayerName = "Jamie",
+                        Active = true,
+                        EmailAddress = "test1@test.com"
+                    },
+                    new Player
+                    { 
+                        PlayerID = 2,
+                        PlayerName = "Mike",
+                        Active = true,
+                        EmailAddress = "test1@test.com"
+                    },
+                    new Player
+                    { 
+                        PlayerID = 3,
+                        PlayerName = "Caff",
+                        Active = true,
+                        EmailAddress = "invalidemailaddress"
+                    },
+                }
+            );
+        }
+
         public List<string> GetEmailAddresses(List<int?> playerIds)
         {
             return new List<string>() {

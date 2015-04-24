@@ -91,7 +91,8 @@
                     <DataGrid Name="dg_Players" ItemsSource="{Binding PlayerViewModel.Players, Mode=TwoWay}" AutoGenerateColumns="False" Height="264" Canvas.Left="10" Canvas.Top="25" Width="455" GridLinesVisibility="None">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="PlayerID" Binding="{Binding PlayerID, Mode=TwoWay}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Name" Binding="{Binding PlayerName, Mode=TwoWay}" Width="280"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding PlayerName, Mode=TwoWay}" Width="140"/>
+                            <DataGridTextColumn Header="Email" Binding="{Binding EmailAddress, Mode=TwoWay}" Width="200"/>
                             <DataGridTextColumn Header="Active" Binding="{Binding Active, Mode=TwoWay}" Width="80" />
                         </DataGrid.Columns>
                     </DataGrid>
