@@ -70,6 +70,7 @@
     </ApplicationDefinition>
     <Compile Include="Classes\Mailer.cs" />
     <Compile Include="Handlers\CommandHandler.cs" />
+    <Compile Include="Helpers\MatchHelper.cs" />
     <Compile Include="Helpers\PlayerStatsMailHelper.cs" />
     <Compile Include="Helpers\TeamsMailHelper.cs" />
     <Compile Include="Interfaces\IConfigRepository.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="ViewModels\ButtonViewModel.cs" />
     <Compile Include="Services\MatchValidatorService.cs" />
     <Compile Include="Services\FakeMatchValidatorService.cs" />
+    <Compile Include="ViewModels\MatchButtonViewModel.cs" />
     <Compile Include="ViewModels\MatchViewModel.cs" />
     <Compile Include="Models\FootballEntities.cs">
       <AutoGen>True</AutoGen>

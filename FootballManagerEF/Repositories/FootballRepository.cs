@@ -56,6 +56,11 @@ namespace FootballManagerEF.Repositories
         {
             return matchRepository.GetMatchByID(id);
         }
+
+        public Match InsertMatch(Match match)
+        {
+            return matchRepository.InsertMatch(match);
+        }
         #endregion
 
         #region PlayerMatch Repository

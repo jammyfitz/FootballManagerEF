@@ -22,6 +22,7 @@ namespace FootballManagerEF.Interfaces
         Team GetTeamByID(int teamId);
         bool InsertPlayerMatches(ObservableCollection<PlayerMatch> playerMatchesToInsert, int matchId);
         bool InsertPlayers(ObservableCollection<Player> playersToInsert);
+        Match InsertMatch(Match match);
         List<string> GetEmailAddresses(List<int?> playerIds);
         void Refresh();
         void Save();

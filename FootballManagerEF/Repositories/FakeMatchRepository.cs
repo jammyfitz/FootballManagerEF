@@ -30,10 +30,19 @@ namespace FootballManagerEF.Repositories
         public Match GetMatchByID(int id)
         {
             return new Match
-              {
-                  MatchID = 1,
-                  MatchDate = DateTime.Today.AddDays(-14)
-              };
+            {
+                MatchID = 1,
+                MatchDate = DateTime.Today.AddDays(-14)
+            };
+        }
+
+        public Match InsertMatch(Match match)
+        {
+            return new Match
+            {
+                MatchID = 1,
+                MatchDate = DateTime.Today
+            };
         }
 
         public void Save()
@@ -41,6 +50,7 @@ namespace FootballManagerEF.Repositories
             throw new NotImplementedException();
         }
 
+        #region IDisposable Members
         private bool disposed = false;
 
         protected virtual void Dispose(bool disposing)
@@ -53,5 +63,6 @@ namespace FootballManagerEF.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+        #endregion
     }
 }

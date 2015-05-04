@@ -31,7 +31,11 @@ namespace FootballManagerEF.ViewModels
         public List<Match> Matches
         {
             get { return _matches; }
-            set { _matches = value; }
+            set
+            {
+                _matches = value;
+                RaisePropertyChanged("Matches");
+            }
         }
 
         public ObservableCollection<Team> Teams
@@ -86,6 +90,8 @@ namespace FootballManagerEF.ViewModels
 
         public ButtonViewModel ButtonViewModel { get; set; }
 
+        public MatchButtonViewModel MatchButtonViewModel { get; set; }
+
         public IPlayerViewModel PlayerViewModel
         {
             get { return _playerViewModel; }
@@ -106,6 +112,7 @@ namespace FootballManagerEF.ViewModels
             _mailerService = new MailerService(_playerMatchViewModel, _playerMatchViewModel.PlayerMatches, _teams);
             ButtonViewModel = new ButtonViewModel(_footballRepository, _playerMatchViewModel, _matchValidatorService, _mailerService);
             PlayerViewModel = new PlayerViewModel(_footballRepository, _playerMatchViewModel, _playerValidatorService);
+            MatchButtonViewModel = new MatchButtonViewModel(_footballRepository, this);
             InitialiseMatchesAndTeams();
             _selectionAlgorithms = InitialiseSelectionAlgorithms();
             _selectedAlgorithm = _selectionAlgorithms.First();

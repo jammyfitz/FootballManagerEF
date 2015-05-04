@@ -45,9 +45,11 @@ namespace FootballManagerEF.Repositories
             return context.Matches.Find(id);
         }
 
-        public void InsertMatch(Match match)
+        public Match InsertMatch(Match match)
         {
             context.Matches.Add(match);
+            Save();
+            return match;
         }
 
         public void DeleteMatch(int matchID)
@@ -66,6 +68,7 @@ namespace FootballManagerEF.Repositories
             context.SaveChanges();
         }
 
+        #region IDisposable Members
         private bool disposed = false;
 
         protected virtual void Dispose(bool disposing)
@@ -85,5 +88,6 @@ namespace FootballManagerEF.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+        #endregion
     }
 }

@@ -11,6 +11,7 @@ namespace FootballManagerEF.Interfaces
     {
         List<Match> GetMatches();
         Match GetMatchByID(int matchId);
+        Match InsertMatch(Match match);
         void Save();
     }
 }
