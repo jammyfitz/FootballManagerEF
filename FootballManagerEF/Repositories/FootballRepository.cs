@@ -47,7 +47,7 @@ namespace FootballManagerEF.Repositories
         }
 
         #region Match Repository
-        public List<Match> GetMatches()
+        public ObservableCollection<Match> GetMatches()
         {
             return matchRepository.GetMatches();
         }

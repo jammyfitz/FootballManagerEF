@@ -10,7 +10,7 @@ namespace FootballManagerEF.Interfaces
 {
     public interface IFootballRepository : IMatchRepository, IPlayerMatchRepository, IPlayerRepository, ITeamRepository, IConfigRepository, IPlayerStatsRepository, IDisposable
     {
-        List<Match> GetMatches();
+        ObservableCollection<Match> GetMatches();
         ObservableCollection<PlayerMatch> GetPlayerMatches(int matchId);
         ObservableCollection<Player> GetAllPlayers();
         ObservableCollection<Player> GetActivePlayers();

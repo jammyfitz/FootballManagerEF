@@ -70,7 +70,6 @@ namespace FootballManagerEF.Tests.ViewModels
         public void ButtonViewModel_WhenUpdateButtonClickedAndDataGridIsInvalidSendErrorToUserIsCalled()
         {
             //Arrange 
-
             var mockMatchValidatorService = MockRepository.GenerateMock<IMatchValidatorService>();
             var mockButtonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, mockMatchValidatorService, mailerService);
             mockMatchValidatorService.Stub(x => x.DataGridIsValid()).Return(false);
@@ -266,7 +265,5 @@ namespace FootballManagerEF.Tests.ViewModels
             //Assert
             mockMailerService.AssertWasNotCalled(x => x.SendOKMessageToUser());
         }
-
-
     }
 }

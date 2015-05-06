@@ -16,7 +16,7 @@ namespace FootballManagerEF.ViewModels
     public class MatchViewModel : INotifyPropertyChanged
     {
         private IFootballRepository _footballRepository;
-        private List<Match> _matches;
+        private ObservableCollection<Match> _matches;
         private ObservableCollection<Team> _teams;
         private Match _selectedMatch;
         private IPlayerMatchViewModel _playerMatchViewModel;
@@ -28,7 +28,7 @@ namespace FootballManagerEF.ViewModels
         private ObservableCollection<SelectionAlgorithm> _selectionAlgorithms;
         private SelectionAlgorithm _selectedAlgorithm;
 
-        public List<Match> Matches
+        public ObservableCollection<Match> Matches
         {
             get { return _matches; }
             set

@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace FootballManagerEF.Repositories
 {
@@ -18,17 +19,17 @@ namespace FootballManagerEF.Repositories
             this.context = context;
         }
 
-        public List<Match> GetMatches()
+        public ObservableCollection<Match> GetMatches()
         {
             return GetMatchesByDateAscNotOlderThanTwoWeeks();
         }
 
-        public List<Match> GetMatchesByDateAsc()
+        public ObservableCollection<Match> GetMatchesByDateAsc()
         {
-            return context.Matches.OrderBy(x => x.MatchDate).ToList();
+            return new ObservableCollection<Match>(context.Matches.OrderBy(x => x.MatchDate).ToList());
         }
 
-        public List<Match> GetMatchesByDateAscNotOlderThanTwoWeeks()
+        public ObservableCollection<Match> GetMatchesByDateAscNotOlderThanTwoWeeks()
         {
             DateTime twoWeeksAgo = Utils.TwoWeeksAgo();
 
@@ -37,7 +38,7 @@ namespace FootballManagerEF.Repositories
                          orderby matches.MatchDate ascending
                          select matches;
 
-            return result.ToList();
+            return new ObservableCollection<Match>(result.ToList());
         }
 
         public Match GetMatchByID(int id)

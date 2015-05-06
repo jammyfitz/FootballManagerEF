@@ -5,14 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace FootballManagerEF.Repositories
 {
     public class FakeMatchRepository : IMatchRepository
     {
-        public List<Match> GetMatches()
+        public ObservableCollection<Match> GetMatches()
         {
-           return new List<Match> 
+            return new ObservableCollection<Match> 
            { 
               new Match
               { 
@@ -25,6 +26,25 @@ namespace FootballManagerEF.Repositories
                   MatchDate = DateTime.Today.AddDays(-7)
               }
            };
+        }
+
+        public ObservableCollection<Match> GetTwoMatches()
+        {
+            return new ObservableCollection<Match>(
+               new List<Match> 
+               { 
+                  new Match
+                  { 
+                      MatchID = 1,
+                      MatchDate = DateTime.Today.AddDays(-14)
+                  },
+                  new Match
+                  { 
+                      MatchID = 2,
+                      MatchDate = DateTime.Today.AddDays(-7)
+                  }
+               }
+            );
         }
 
         public Match GetMatchByID(int id)

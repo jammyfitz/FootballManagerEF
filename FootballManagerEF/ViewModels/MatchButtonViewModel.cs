@@ -27,8 +27,8 @@ namespace FootballManagerEF.ViewModels
         {
             Match newMatch = _footballRepository.GetMatches().Last().GetNewSubsequentMatch();
 
-            _footballRepository.InsertMatch(newMatch);
-            _matchViewModel.Matches = _footballRepository.GetMatches();
+            newMatch = _footballRepository.InsertMatch(newMatch);
+            _matchViewModel.Matches.Add(newMatch);
         }
 
         #region ICommand Members
