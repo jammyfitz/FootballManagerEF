@@ -10,6 +10,6 @@ namespace FootballManagerEF.Interfaces
     {
         bool SendStats();
         bool SendTeams();
-        bool SendOKMessageToUser();
+        bool SendOKToUser();
     }
 }

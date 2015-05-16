@@ -27,10 +27,16 @@ namespace FootballManagerEF.Tests.ViewModels
         MailerService mailerService;
 
         [TestFixtureSetUp]
-        public void Init()
+        public void Setup()
         {
             fakeFootballRepo = new FootballRepository();
             fakePlayerMatchRepo = new FakePlayerMatchRepository();
+            
+        }
+
+        [SetUp]
+        public void Init()
+        {
             playerMatchViewModel = new PlayerMatchViewModel(fakeFootballRepo);
             matchValidatorService = new MatchValidatorService(playerMatchViewModel, new FakeDialogService());
             mailerService = new MailerService(playerMatchViewModel, fakeFootballRepo);
@@ -147,7 +153,7 @@ namespace FootballManagerEF.Tests.ViewModels
         }
 
         [Test]
-        public void ButtonViewModel_WhenEmailStatsIsClickedAndEmailHasBeenSentReturnMessageToUser()
+        public void ButtonViewModel_WhenEmailStatsIsClickedAndEmailHasBeenSentReturnOKToUser()
         {
             //Arrange 
             var mockMailerService = MockRepository.GenerateMock<IMailerService>();
@@ -158,7 +164,7 @@ namespace FootballManagerEF.Tests.ViewModels
             mockButtonViewModel.EmailStatsCommand.Execute(null);
 
             //Assert
-            mockMailerService.AssertWasCalled(x => x.SendOKMessageToUser());
+            mockMailerService.AssertWasCalled(x => x.SendOKToUser());
         }
 
         [Test]
@@ -173,11 +179,11 @@ namespace FootballManagerEF.Tests.ViewModels
             mockButtonViewModel.EmailStatsCommand.Execute(null);
 
             //Assert
-            mockMailerService.AssertWasNotCalled(x => x.SendOKMessageToUser());
+            mockMailerService.AssertWasNotCalled(x => x.SendOKToUser());
         }
 
         [Test]
-        public void ButtonViewModel_WhenAutoPickButtonClickedWithGiantKillerAlgorithmAndDataGridIsCompletePlayerMatchesIsUpdatedCorrectly()
+        public void ButtonViewModel_WhenAutoPickButtonIsClickedWithGiantKillerAlgorithmAndDataGridIsCompletePlayerMatchesIsUpdatedCorrectly()
         {
             //Arrange 
             buttonViewModel.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesBeforeAlgorithm();
@@ -193,7 +199,7 @@ namespace FootballManagerEF.Tests.ViewModels
         }
 
         [Test]
-        public void ButtonViewModel_WhenAutoPickButtonClickedWithTheProportionerAlgorithmAndDataGridIsCompletePlayerMatchesIsUpdatedCorrectly()
+        public void ButtonViewModel_WhenAutoPickButtonIsClickedWithTheProportionerAlgorithmAndDataGridIsCompletePlayerMatchesIsUpdatedCorrectly()
         {
             //Arrange 
             buttonViewModel.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesBeforeAlgorithm();
@@ -237,7 +243,7 @@ namespace FootballManagerEF.Tests.ViewModels
         }
 
         [Test]
-        public void ButtonViewModel_WhenEmailTeamsIsClickedAndEmailHasBeenSentReturnMessageToUser()
+        public void ButtonViewModel_WhenEmailTeamsIsClickedAndDataGridIsCompleteSendTeamsIsCalled()
         {
             //Arrange 
             var mockMailerService = MockRepository.GenerateMock<IMailerService>();
@@ -248,22 +254,37 @@ namespace FootballManagerEF.Tests.ViewModels
             mockButtonViewModel.EmailTeamsCommand.Execute(null);
 
             //Assert
-            mockMailerService.AssertWasCalled(x => x.SendOKMessageToUser());
+            mockMailerService.AssertWasCalled(x => x.SendTeams());
         }
 
         [Test]
-        public void ButtonViewModel_WhenEmailTeamsIsClickedAndEmailHasntBeenSentNoMessageToUser()
-        {
+        public void ButtonViewModel_WhenEmailTeamsIsClickedAndDataGridIsCompleteReturnOKToUser()
+        {   
             //Arrange 
             var mockMailerService = MockRepository.GenerateMock<IMailerService>();
             var mockButtonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, matchValidatorService, mockMailerService);
-            mockMailerService.Stub(x => x.SendTeams()).Return(false);
+            mockMailerService.Stub(x => x.SendTeams()).Return(true);
 
             //Act
             mockButtonViewModel.EmailTeamsCommand.Execute(null);
 
             //Assert
-            mockMailerService.AssertWasNotCalled(x => x.SendOKMessageToUser());
+            mockMailerService.AssertWasCalled(x => x.SendOKToUser());
+        }
+
+        [Test]
+        public void ButtonViewModel_WhenEmailTeamsIsClickedAndDataGridIsIncompleteSendErrorToUser()
+        {
+            //Arrange 
+            var mockMatchValidatorService = MockRepository.GenerateMock<IMatchValidatorService>();
+            var mockButtonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, mockMatchValidatorService, mailerService);
+            mockMatchValidatorService.Stub(x => x.DataGridIsValid()).Return(false);
+
+            //Act
+            mockButtonViewModel.EmailTeamsCommand.Execute(null);
+
+            //Assert
+            mockMatchValidatorService.AssertWasCalled(x => x.SendErrorToUser());
         }
     }
 }

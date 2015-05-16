@@ -64,7 +64,7 @@ namespace FootballManagerEF.Services
             _mailer = _mailer.CreateInstance(_smtpData, mailHelper);
         }
 
-        public bool SendOKMessageToUser()
+        public bool SendOKToUser()
         {
             MessageBox.Show("E-mail sent OK!");
             return true;

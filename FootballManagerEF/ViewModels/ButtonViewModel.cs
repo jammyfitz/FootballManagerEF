@@ -64,13 +64,17 @@ namespace FootballManagerEF.ViewModels
         public void EmailStatsButtonClicked()
         {
             if (_mailerService.SendStats())
-                _mailerService.SendOKMessageToUser();
+                _mailerService.SendOKToUser();
         }
 
         public void EmailTeamsButtonClicked()
         {
-            if (_mailerService.SendTeams())
-                _mailerService.SendOKMessageToUser();
+            if (_matchValidatorService.DataGridIsComplete())
+            { 
+                _mailerService.SendTeams();
+                _mailerService.SendOKToUser();
+            } else
+                _matchValidatorService.SendErrorToUser();
         }
 
         public void AutoPickButtonClicked()
@@ -96,7 +100,7 @@ namespace FootballManagerEF.ViewModels
 
         public ObservableCollection<PlayerMatch> GetPlayerMatchesToInsert()
         {
-            return new ObservableCollection<PlayerMatch>(PlayerMatches.Where(x => (x.PlayerID & x.TeamID) != null).ToList());
+            return new ObservableCollection<PlayerMatch>(PlayerMatches.Where(x => (x.PlayerID & x.TeamID) != null));
         }
 
         #region INotifyPropertyChanged Members
