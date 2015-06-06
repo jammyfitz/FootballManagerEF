@@ -30,10 +30,10 @@ namespace FootballManagerEF.Services
             ObservableCollection<PlayerMatch> outputList = new ObservableCollection<PlayerMatch>();
 
             //Join the win stats onto list of user selected players
-            var result = from pm in playerMatches
+            IEnumerable<PlayerData> result = from pm in playerMatches
                          join ps in _playerStats.DefaultIfEmpty() on pm.PlayerID equals ps.PlayerID into temp
                          from subtemp in temp.DefaultIfEmpty()
-                         select new { PlayerMatch = pm, MatchWins = (subtemp == null ? 0 : subtemp.MatchWins),
+                         select new PlayerData { PlayerMatch = pm, MatchWins = (subtemp == null ? 0 : subtemp.MatchWins),
                                       MatchesPlayed = subtemp.MatchesPlayed,
                                       WinRatio = GetWinRatio(subtemp)
                          } into results

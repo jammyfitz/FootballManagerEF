@@ -69,6 +69,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\Mailer.cs" />
+    <Compile Include="Comparers\PlayerDataComparer.cs" />
     <Compile Include="Handlers\CommandHandler.cs" />
     <Compile Include="Helpers\MatchHelper.cs" />
     <Compile Include="Helpers\PlayerStatsMailHelper.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Models\Config.cs">
       <DependentUpon>FootballEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PlayerData.cs" />
     <Compile Include="Models\PlayerStat.cs">
       <DependentUpon>FootballEntities.tt</DependentUpon>
     </Compile>
