@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FootballManagerEF.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +8,19 @@ using System.Threading.Tasks;
 
 namespace FootballManagerEF.Comparers
 {
-    public class PlayerDataComparer : IComparer
+    public class PlayerDataComparer : IComparable
     {
-        public PlayerDataComparer()
-        {
+        private decimal? _totalWinRatio;
 
+        public PlayerDataComparer(decimal? totalWinRatio)
+        {
+            _totalWinRatio = totalWinRatio;
         }
 
-        public int Compare(object x, object y)
+        public int CompareTo(object x)
         {
-            throw new NotImplementedException();
+            //return ((PlayerData)x).WinRatio.CompareTo(null);
+            return -1;
         }
     }
 }

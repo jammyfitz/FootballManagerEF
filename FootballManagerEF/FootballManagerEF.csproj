@@ -70,6 +70,7 @@
     </ApplicationDefinition>
     <Compile Include="Classes\Mailer.cs" />
     <Compile Include="Comparers\PlayerDataComparer.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Handlers\CommandHandler.cs" />
     <Compile Include="Helpers\MatchHelper.cs" />
     <Compile Include="Helpers\PlayerStatsMailHelper.cs" />

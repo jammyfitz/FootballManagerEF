@@ -9,6 +9,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using FootballManagerEF.Extensions;
 
 namespace FootballManagerEF.Services
 {
@@ -37,14 +38,19 @@ namespace FootballManagerEF.Services
                                       MatchesPlayed = subtemp.MatchesPlayed,
                                       WinRatio = GetWinRatio(subtemp)
                          } into results
+                         // Remove orderby when implemented shuffle sort.
                          orderby results.WinRatio descending
                          select results;
 
+            IList<PlayerData> playerData = result.ToList();
+            //playerData.Shuffle();
+            //playerData.EquallyHalveBy(x => x.WinRatio);
+
             // Assign the players
-            for (int i = 0; i < result.Count() / 2; i++)
+            for (int i = 0; i < playerData.Count() / 2; i++)
             {
-                outputList.Add(result.ElementAt(result.Count() - (i + 1)).PlayerMatch);
-                outputList.Add(result.ElementAt(i).PlayerMatch);
+                outputList.Add(playerData.ElementAt(playerData.Count() - (i + 1)).PlayerMatch);
+                outputList.Add(playerData.ElementAt(i).PlayerMatch);
             }
 
             // Assign the teams
