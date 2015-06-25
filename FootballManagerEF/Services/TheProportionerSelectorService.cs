@@ -31,7 +31,7 @@ namespace FootballManagerEF.Services
             ObservableCollection<PlayerMatch> outputList = new ObservableCollection<PlayerMatch>();
 
             //Join the win stats onto list of user selected players
-            IEnumerable<PlayerData> result = from pm in playerMatches
+            var result = from pm in playerMatches
                          join ps in _playerStats.DefaultIfEmpty() on pm.PlayerID equals ps.PlayerID into temp
                          from subtemp in temp.DefaultIfEmpty()
                          select new PlayerData { PlayerMatch = pm, MatchWins = (subtemp == null ? 0 : subtemp.MatchWins),
@@ -42,15 +42,11 @@ namespace FootballManagerEF.Services
                          orderby results.WinRatio descending
                          select results;
 
-            IList<PlayerData> playerData = result.ToList();
-            //playerData.Shuffle();
-            //playerData.EquallyHalveBy(x => x.WinRatio);
-
             // Assign the players
-            for (int i = 0; i < playerData.Count() / 2; i++)
+            for (int i = 0; i < result.Count() / 2; i++)
             {
-                outputList.Add(playerData.ElementAt(playerData.Count() - (i + 1)).PlayerMatch);
-                outputList.Add(playerData.ElementAt(i).PlayerMatch);
+                outputList.Add(result.ElementAt(result.Count() - (i + 1)).PlayerMatch);
+                outputList.Add(result.ElementAt(i).PlayerMatch);
             }
 
             // Assign the teams

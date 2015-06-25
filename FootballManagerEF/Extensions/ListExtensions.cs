@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,15 +24,20 @@ namespace FootballManagerEF.Extensions
             }
         }
 
-        public static void EquallyHalveBy<T>(this IList<T> list, Func<PlayerData,bool> predicate)
+        public static void Swap(this IList<PlayerData> playerDataList, PlayerData firstSwapCandidate, PlayerData lastSwapCandidate)
         {
-            //var query = from trade in list
-            //            where predicate(trade)
-            //            orderby trade.TradeTime descending
-            //            select trade;
-            //return (query.First().Value - query.Last().Value) / query.First().Value * 100;
+            var firstIndex = playerDataList.IndexOf(firstSwapCandidate);
+            var secondIndex = playerDataList.IndexOf(lastSwapCandidate);
 
+            var tmp = playerDataList[firstIndex];
+            playerDataList[firstIndex] = playerDataList[secondIndex];
+            playerDataList[secondIndex] = tmp;
+        }
 
+        public static PlayerData GetClosestToWinRatio(this IEnumerable<PlayerData> enumeration, decimal target)
+        {
+            PlayerData closest = enumeration.OrderBy(playerData => Math.Abs((decimal)(target - playerData.WinRatio))).First();
+            return closest;
         }
     }
 }

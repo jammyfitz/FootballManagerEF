@@ -130,6 +130,7 @@ namespace FootballManagerEF.ViewModels
             return new ObservableCollection<SelectionAlgorithm>(){
                 new SelectionAlgorithm() { Name = "The Giant Killer", Class = new GiantKillerSelectorService(_footballRepository) },
                 new SelectionAlgorithm() { Name = "The Proportioner", Class = new TheProportionerSelectorService(_footballRepository) },
+                new SelectionAlgorithm() { Name = "The Porter", Class = new ThePorterSelectorService(_footballRepository) },
             };
         }
 
