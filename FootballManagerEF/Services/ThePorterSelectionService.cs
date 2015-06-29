@@ -50,8 +50,8 @@ namespace FootballManagerEF.Services
             IEnumerable<PlayerData> lastTeam = result.Skip(playerData.Count / 2);
 
             decimal winRatioOffset = (decimal)(firstTeam.Sum(x => x.WinRatio) - lastTeam.Sum(x => x.WinRatio));
-            PlayerData firstSwapCandidate = firstTeam.GetClosestToWinRatio(winRatioOffset);
-            PlayerData lastSwapCandidate = lastTeam.GetClosestToWinRatio(winRatioOffset);
+            PlayerData firstSwapCandidate = firstTeam.GetClosestToWinRatio(winRatioOffset / 2);
+            PlayerData lastSwapCandidate = lastTeam.GetClosestToWinRatio(winRatioOffset / 2);
 
             playerData.Swap(firstSwapCandidate, lastSwapCandidate);
 

@@ -26,8 +26,8 @@ namespace FootballManagerEF.Extensions
 
         public static void Swap(this IList<PlayerData> playerDataList, PlayerData firstSwapCandidate, PlayerData lastSwapCandidate)
         {
-            var firstIndex = playerDataList.IndexOf(firstSwapCandidate);
-            var secondIndex = playerDataList.IndexOf(lastSwapCandidate);
+            var firstIndex = playerDataList.GetIndexByPlayerId(firstSwapCandidate.PlayerMatch.PlayerID);
+            var secondIndex = playerDataList.GetIndexByPlayerId(lastSwapCandidate.PlayerMatch.PlayerID);
 
             var tmp = playerDataList[firstIndex];
             playerDataList[firstIndex] = playerDataList[secondIndex];
@@ -38,6 +38,11 @@ namespace FootballManagerEF.Extensions
         {
             PlayerData closest = enumeration.OrderBy(playerData => Math.Abs((decimal)(target - playerData.WinRatio))).First();
             return closest;
+        }
+
+        public static int GetIndexByPlayerId(this IList<PlayerData> playerDataList, int? playerId)
+        {
+            return playerDataList.IndexOf(playerDataList.Single(x => x.PlayerMatch.PlayerID == playerId));
         }
     }
 }

@@ -189,7 +189,6 @@ namespace FootballManagerEF.Tests.ViewModels
             buttonViewModel.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesBeforeAlgorithm();
             buttonViewModel.SelectedAlgorithm = new SelectionAlgorithm() { Class = new GiantKillerSelectorService(fakeFootballRepo) };
             ObservableCollection<PlayerMatch> expectedPlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesAfterGiantKillerAlgorithm();
-            ObservableCollection<PlayerMatch> inputPlayerMatches = buttonViewModel.PlayerMatches;
 
             //Act
             buttonViewModel.AutoPickCommand.Execute(null);
@@ -205,13 +204,28 @@ namespace FootballManagerEF.Tests.ViewModels
             buttonViewModel.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesBeforeAlgorithm();
             buttonViewModel.SelectedAlgorithm = new SelectionAlgorithm() { Class = new TheProportionerSelectorService(fakeFootballRepo) };
             ObservableCollection<PlayerMatch> expectedPlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesAfterTheProportionerAlgorithm();
-            ObservableCollection<PlayerMatch> inputPlayerMatches = buttonViewModel.PlayerMatches;
 
             //Act
             buttonViewModel.AutoPickCommand.Execute(null);
 
             //Assert
             Assert.IsTrue(buttonViewModel.PlayerMatches.SequenceEqual(expectedPlayerMatches, new PlayerMatchEqualityComparer()));
+        }
+
+        [Test]
+        public void ButtonViewModel_WhenAutoPickButtonIsClickedWithThePorterAlgorithmAndDataGridIsCompletePlayerMatchesIsUpdatedCorrectly()
+        {
+            //Arrange 
+            buttonViewModel.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesBeforeAlgorithm();
+            buttonViewModel.SelectedAlgorithm = new SelectionAlgorithm() { Class = new ThePorterSelectorService(fakeFootballRepo) };
+            //ObservableCollection<PlayerMatch> expectedPlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesAfterTheProportionerAlgorithm();
+            ObservableCollection<PlayerMatch> inputPlayerMatches = new ObservableCollection<PlayerMatch>(buttonViewModel.PlayerMatches);
+
+            //Act
+            buttonViewModel.AutoPickCommand.Execute(null);
+
+            //Assert
+            Assert.IsFalse(buttonViewModel.PlayerMatches.SequenceEqual(inputPlayerMatches, new PlayerMatchEqualityComparer()));
         }
 
         [Test]
