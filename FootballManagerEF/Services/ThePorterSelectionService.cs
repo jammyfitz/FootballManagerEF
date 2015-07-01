@@ -46,14 +46,31 @@ namespace FootballManagerEF.Services
             IList<PlayerData> playerData = result.ToList();
             playerData.Shuffle();
 
-            IEnumerable<PlayerData> firstTeam = result.Take(playerData.Count / 2);
-            IEnumerable<PlayerData> lastTeam = result.Skip(playerData.Count / 2);
+            IEnumerable<PlayerData> firstTeam = playerData.Take(playerData.Count / 2);
+            IEnumerable<PlayerData> lastTeam = playerData.Skip(playerData.Count / 2);
 
-            decimal winRatioOffset = (decimal)(firstTeam.Sum(x => x.WinRatio) - lastTeam.Sum(x => x.WinRatio));
+            decimal winRatioOffset = Math.Abs((decimal)(firstTeam.Sum(x => x.WinRatio) - lastTeam.Sum(x => x.WinRatio)));
             PlayerData firstSwapCandidate = firstTeam.GetClosestToWinRatio(winRatioOffset / 2);
             PlayerData lastSwapCandidate = lastTeam.GetClosestToWinRatio(winRatioOffset / 2);
 
-            playerData.Swap(firstSwapCandidate, lastSwapCandidate);
+            Console.WriteLine("**********************\nBefore");
+            Console.WriteLine("firstTeam =" + firstTeam.Sum(x => x.WinRatio));
+            Console.WriteLine("lastTeam = " + lastTeam.Sum(x => x.WinRatio));
+            Console.WriteLine("offset = " + winRatioOffset);
+            Console.WriteLine();
+
+            decimal? candidateOffset =  Math.Abs((decimal)(firstSwapCandidate.WinRatio - lastSwapCandidate.WinRatio));
+
+            if (candidateOffset < winRatioOffset)
+                playerData.Swap(firstSwapCandidate, lastSwapCandidate);
+
+            decimal? firstTeamWinRatio = playerData.Take(playerData.Count / 2).Sum(x => x.WinRatio);
+            decimal? lastTeamWinRatio = playerData.Skip(playerData.Count / 2).Sum(x => x.WinRatio);
+
+            Console.WriteLine("After");
+            Console.WriteLine("firstTeam =" + firstTeamWinRatio);
+            Console.WriteLine("lastTeam = " + lastTeamWinRatio);
+            Console.WriteLine("offset = " + Math.Abs((decimal)(firstTeamWinRatio - lastTeamWinRatio)));
 
             // Assign the players
             for (int i = 0; i < playerData.Count() / 2; i++)
