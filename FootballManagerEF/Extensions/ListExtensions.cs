@@ -1,6 +1,7 @@
 ﻿using FootballManagerEF.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -10,6 +11,8 @@ namespace FootballManagerEF.Extensions
 {
     public static class ListExtensions
     {
+        #region Generic Extension Methods
+
         public static void Shuffle<T>(this IList<T> list)
         {
             Random rng = new Random();
@@ -23,6 +26,18 @@ namespace FootballManagerEF.Extensions
                 list[n] = value;
             }
         }
+
+        public static IEnumerable<T> TakeFirstHalf<T>(this IList<T> list)
+        {
+            return list.Take(list.Count / 2);
+        }
+
+        public static IEnumerable<T> TakeLastHalf<T>(this IList<T> list)
+        {
+            return list.Skip(list.Count / 2);
+        }
+
+        #endregion
 
         public static void Swap(this IList<PlayerData> playerDataList, PlayerData firstSwapCandidate, PlayerData lastSwapCandidate)
         {
@@ -44,5 +59,35 @@ namespace FootballManagerEF.Extensions
         {
             return playerDataList.IndexOf(playerDataList.Single(x => x.PlayerMatch.PlayerID == playerId));
         }
+
+        public static void EvenlyDistributePlayersFromList(this ObservableCollection<PlayerMatch> playerMatchList, IList<PlayerData> playerDataList)
+        {
+            for (int i = 0; i < playerDataList.Count() / 2; i++)
+            {
+                playerMatchList.Add(playerDataList.ElementAt(playerDataList.Count() - (i + 1)).PlayerMatch);
+                playerMatchList.Add(playerDataList.ElementAt(i).PlayerMatch);
+            }
+        }
+
+        public static void DistributePlayersBasedOnListOrder(this ObservableCollection<PlayerMatch> playerMatchList, IList<PlayerData> playerDataList)
+        {
+            foreach (var playerData in playerDataList)
+            {
+                playerMatchList.Add(playerData.PlayerMatch);
+            }
+        }
+
+        public static void AssignTeamsBasedOnListOrder(this ObservableCollection<PlayerMatch> playerMatchList, ObservableCollection<Team> teamList)
+        {
+            int firstTeamId = teamList.First().TeamID;
+            int lastTeamId = teamList.Last().TeamID;
+            int teamSize = playerMatchList.Count() / 2;
+
+            for (int i = 0; i < playerMatchList.Count(); i++)
+            {
+                playerMatchList.ElementAt(i).TeamID = (i < teamSize) ? firstTeamId : lastTeamId;
+            }
+        }
+
     }
 }

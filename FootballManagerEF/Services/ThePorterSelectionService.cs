@@ -44,48 +44,42 @@ namespace FootballManagerEF.Services
                                              select results;
 
             IList<PlayerData> playerData = result.ToList();
+
+            // Randomly shuffle list
             playerData.Shuffle();
 
-            IEnumerable<PlayerData> firstTeam = playerData.Take(playerData.Count / 2);
-            IEnumerable<PlayerData> lastTeam = playerData.Skip(playerData.Count / 2);
+            // Divide list of player data into a list per team
+            IEnumerable<PlayerData> firstTeam = playerData.TakeFirstHalf();
+            IEnumerable<PlayerData> lastTeam = playerData.TakeLastHalf();
 
-            decimal winRatioOffset = Math.Abs((decimal)(firstTeam.Sum(x => x.WinRatio) - lastTeam.Sum(x => x.WinRatio)));
+            // Get total win ratios per team
+            decimal? firstTeamsTotalWinRatio = firstTeam.Sum(x => x.WinRatio);
+            decimal? lastTeamsTotalWinRatio = lastTeam.Sum(x => x.WinRatio);
+
+            // Get difference in win ratio between teams
+            decimal winRatioOffset = GetOffset(firstTeamsTotalWinRatio, lastTeamsTotalWinRatio);
+
+            // Prepare swap candidates based on win ratio differential
             PlayerData firstSwapCandidate = firstTeam.GetClosestToWinRatio(winRatioOffset / 2);
             PlayerData lastSwapCandidate = lastTeam.GetClosestToWinRatio(winRatioOffset / 2);
 
-            Console.WriteLine("**********************\nBefore");
-            Console.WriteLine("firstTeam =" + firstTeam.Sum(x => x.WinRatio));
-            Console.WriteLine("lastTeam = " + lastTeam.Sum(x => x.WinRatio));
-            Console.WriteLine("offset = " + winRatioOffset);
-            Console.WriteLine();
+            // Get difference in win ratio between swap candidates
+            decimal? candidateOffset = GetOffset(firstSwapCandidate.WinRatio, lastSwapCandidate.WinRatio);
 
-            decimal? candidateOffset =  Math.Abs((decimal)(firstSwapCandidate.WinRatio - lastSwapCandidate.WinRatio));
-
+            // Undertake the swap if there would be a reduction in the differential i.e. improvement in team matching
             if (candidateOffset < winRatioOffset)
                 playerData.Swap(firstSwapCandidate, lastSwapCandidate);
 
-            decimal? firstTeamWinRatio = playerData.Take(playerData.Count / 2).Sum(x => x.WinRatio);
-            decimal? lastTeamWinRatio = playerData.Skip(playerData.Count / 2).Sum(x => x.WinRatio);
-
-            Console.WriteLine("After");
-            Console.WriteLine("firstTeam =" + firstTeamWinRatio);
-            Console.WriteLine("lastTeam = " + lastTeamWinRatio);
-            Console.WriteLine("offset = " + Math.Abs((decimal)(firstTeamWinRatio - lastTeamWinRatio)));
-
-            // Assign the players
-            for (int i = 0; i < playerData.Count() / 2; i++)
-            {
-                outputList.Add(playerData.ElementAt(playerData.Count() - (i + 1)).PlayerMatch);
-                outputList.Add(playerData.ElementAt(i).PlayerMatch);
-            }
-
-            // Assign the teams
-            for (int i = 0; i < outputList.Count(); i++)
-            {
-                outputList.ElementAt(i).TeamID = (i < outputList.Count() / 2) ? _teams.First().TeamID : _teams.Last().TeamID;
-            }
+            // List is correctly ordered, 
+            outputList.DistributePlayersBasedOnListOrder(playerData);
+            outputList.AssignTeamsBasedOnListOrder(_teams);
 
             return outputList;
+        }
+
+        private static decimal GetOffset(decimal? firstValue, decimal? secondValue)
+        {
+            return Math.Abs((decimal)(firstValue - secondValue));
         }
 
         private static decimal? GetWinRatio(PlayerStat playerStat)

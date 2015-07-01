@@ -1,6 +1,7 @@
 ﻿using FootballManagerEF.Interfaces;
 using FootballManagerEF.Models;
 using FootballManagerEF.Repositories;
+using FootballManagerEF.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,25 +31,17 @@ namespace FootballManagerEF.Services
             ObservableCollection<PlayerMatch> outputList = new ObservableCollection<PlayerMatch>();
 
             //Join the win stats onto list of user selected players
-            var result = from pm in playerMatches
-                         join ps in _playerStats.DefaultIfEmpty() on pm.PlayerID equals ps.PlayerID into temp
-                         from subtemp in temp.DefaultIfEmpty()
-                         select new { PlayerMatch = pm, MatchWins = (subtemp == null ? 0 : subtemp.MatchWins) } into results
-                         orderby results.MatchWins descending
-                         select results;
+            IEnumerable<PlayerData> result = from pm in playerMatches
+                                             join ps in _playerStats.DefaultIfEmpty() on pm.PlayerID equals ps.PlayerID into temp
+                                             from subtemp in temp.DefaultIfEmpty()
+                                             select new PlayerData { PlayerMatch = pm, MatchWins = (subtemp == null ? 0 : subtemp.MatchWins) } into results
+                                             orderby results.MatchWins descending
+                                             select results;
 
-            // Assign the players
-            for (int i = 0; i < result.Count() / 2; i++)
-            {
-                outputList.Add(result.ElementAt(result.Count() - (i + 1)).PlayerMatch);
-                outputList.Add(result.ElementAt(i).PlayerMatch);
-            }
+            IList<PlayerData> playerData = result.ToList();
 
-            // Assign the teams
-            for (int i = 0; i < outputList.Count(); i++)
-            {
-                outputList.ElementAt(i).TeamID = (i < outputList.Count() / 2) ? _teams.First().TeamID : _teams.Last().TeamID;
-            }
+            outputList.EvenlyDistributePlayersFromList(playerData);
+            outputList.AssignTeamsBasedOnListOrder(_teams);
 
             return outputList;
         }
