@@ -2,17 +2,12 @@
 using FootballManagerEF.Repositories;
 using FootballManagerEF.ViewModels;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Rhino.Mocks;
 using FootballManagerEF.Interfaces;
 using FootballManagerEF.Models;
 using FootballManagerEF.Services;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 
 namespace FootballManagerEF.Tests.ViewModels
 {
@@ -31,7 +26,6 @@ namespace FootballManagerEF.Tests.ViewModels
         {
             fakeFootballRepo = new FootballRepository();
             fakePlayerMatchRepo = new FakePlayerMatchRepository();
-            
         }
 
         [SetUp]

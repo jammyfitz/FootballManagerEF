@@ -33,14 +33,14 @@
                     </StackPanel>
                 </TabItem.Header>
                 <Canvas Margin="0,0,-115,-30" RenderTransformOrigin="0.512,0.51">
-                    <Label x:Name="lbl_Matches" Content="Matches" HorizontalAlignment="Left" Height="19" Margin="7,9,0,0" VerticalAlignment="Top" Width="79" FontFamily="Aharoni"/>
-                    <ListBox x:Name="lb_Matches" HorizontalAlignment="Left" Height="242" Margin="10,28,0,0" VerticalAlignment="Top" Width="91" 
+                    <Label x:Name="lbl_Matches" Content="Matches" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="79" FontFamily="Aharoni" Canvas.Left="7" Canvas.Top="7" FontWeight="Bold"/>
+                    <ListBox x:Name="lb_Matches" HorizontalAlignment="Left" Height="242" VerticalAlignment="Top" Width="91" 
                  DisplayMemberPath="MatchDate" ItemStringFormat="yyyy-MM-dd" 
                  ItemsSource="{Binding Matches, Mode=TwoWay}"  
-                 SelectedValue="{Binding SelectedMatch, Mode=TwoWay}"/>
-                    <Label x:Name="lbl_Selection" Content="Team Selection" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="149" FontFamily="Aharoni" Canvas.Left="117" Canvas.Top="8"/>
+                 SelectedValue="{Binding SelectedMatch, Mode=TwoWay}" Canvas.Left="10" Canvas.Top="32"/>
+                    <Label x:Name="lbl_Selection" Content="Team Selection" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top" Width="149" FontFamily="Aharoni" Canvas.Left="117" Canvas.Top="6" FontWeight="Bold"/>
 
-                    <DataGrid Name="dg_PlayerMatch" ItemsSource="{Binding PlayerMatchViewModel.PlayerMatches, Mode=TwoWay}" AutoGenerateColumns="False" Height="242" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Margin="117,28,0,0" GridLinesVisibility="None" CanUserAddRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" >
+                    <DataGrid Name="dg_PlayerMatch" ItemsSource="{Binding PlayerMatchViewModel.PlayerMatches, Mode=TwoWay}" AutoGenerateColumns="False" Height="242" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" GridLinesVisibility="None" CanUserAddRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" Canvas.Left="117" Canvas.Top="32" >
                         <DataGrid.Columns>
                             <DataGridComboBoxColumn x:Name="cb_Player" Header="Player" Width="90" SelectedValueBinding="{Binding PlayerID}" SelectedValuePath="PlayerID" DisplayMemberPath="PlayerName" SortMemberPath="PlayerName" SortDirection="Ascending">
                                 <DataGridComboBoxColumn.ElementStyle>
@@ -68,15 +68,15 @@
                             </DataGridComboBoxColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button x:Name="btn_UpdatePlayerMatches" DataContext="{Binding ButtonViewModel}" Content="Update" Command="{Binding UpdateCommand}" HorizontalAlignment="Center" Height="20" Width="68" FontFamily="Aharoni" VerticalAlignment="Center" FontSize="11" RenderTransformOrigin="0.5,0.64" Canvas.Left="313" Canvas.Top="113" />
-                    <Label x:Name="lb_MatchWinner" Content="Winner" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="61" FontFamily="Aharoni" RenderTransformOrigin="0.498,0.83" Canvas.Left="122" Canvas.Top="275"/>
-                    <ComboBox x:Name="cb_MatchWinner" ItemsSource="{Binding Teams}" SelectedValue="{Binding SelectedMatch.MatchWinner, Mode=TwoWay}" SelectedValuePath="TeamID" DisplayMemberPath="TeamName" HorizontalAlignment="Left" Height="22" VerticalAlignment="Top" Width="120" Canvas.Left="177" Canvas.Top="275" />
-                    <Button x:Name="btn_EmailStats" DataContext="{Binding ButtonViewModel}" Content="Email Stats" Command="{Binding EmailStatsCommand}" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" Width="72" FontFamily="Aharoni" FontSize="11" Canvas.Left="313" Canvas.Top="142"/>
-                    <Button x:Name="btn_AutoPick" DataContext="{Binding ButtonViewModel}" Content="Auto Pick" Command="{Binding AutoPickCommand}" HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Width="68" FontFamily="Aharoni" FontSize="11" Canvas.Left="320" Canvas.Top="66"/>
-                    <Button x:Name="btn_EmailTeams" DataContext="{Binding ButtonViewModel}" Content="Email Teams" Command="{Binding EmailTeamsCommand}" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" Width="81" FontFamily="Aharoni" FontSize="11" Canvas.Left="313" Canvas.Top="171"/>
-                    <GroupBox Header="Automatic Selection" FontFamily="Aharoni" FontSize="12" Height="86" Canvas.Left="312" Canvas.Top="13" Width="154"/>
-                    <ComboBox x:Name="cb_SelectionAlgorithm" ItemsSource="{Binding SelectionAlgorithms}" SelectedIndex="1" SelectedValue="{Binding SelectedAlgorithm, Mode=TwoWay}" DisplayMemberPath="Name" HorizontalAlignment="Left" Height="22" VerticalAlignment="Top" Width="119" Canvas.Left="321" Canvas.Top="35" />
-                    <Button x:Name="btn_CreateMatch" DataContext="{Binding MatchButtonViewModel}" Content="Create Match" Command="{Binding CreateMatchCommand}" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" Width="91" FontFamily="Aharoni" FontSize="11" Canvas.Left="10" Canvas.Top="279"/>
+                    <Button x:Name="btn_UpdatePlayerMatches" DataContext="{Binding ButtonViewModel}" Content="Update" Command="{Binding UpdateCommand}" HorizontalAlignment="Center" Height="20" Width="68" FontFamily="Aharoni" VerticalAlignment="Center" FontSize="11" RenderTransformOrigin="0.5,0.64" Canvas.Left="313" Canvas.Top="109" FontWeight="Bold" />
+                    <Label x:Name="lb_MatchWinner" Content="Winner" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="61" FontFamily="Aharoni" RenderTransformOrigin="0.498,0.83" Canvas.Left="122" Canvas.Top="279" FontWeight="Bold"/>
+                    <ComboBox x:Name="cb_MatchWinner" ItemsSource="{Binding Teams}" SelectedValue="{Binding SelectedMatch.MatchWinner, Mode=TwoWay}" SelectedValuePath="TeamID" DisplayMemberPath="TeamName" HorizontalAlignment="Left" Height="22" VerticalAlignment="Top" Width="120" Canvas.Left="177" Canvas.Top="279" />
+                    <Button x:Name="btn_EmailStats" DataContext="{Binding ButtonViewModel}" Content="Email Stats" Command="{Binding EmailStatsCommand}" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" Width="72" FontFamily="Aharoni" FontSize="11" Canvas.Left="313" Canvas.Top="138" FontWeight="Bold"/>
+                    <Button x:Name="btn_AutoPick" DataContext="{Binding ButtonViewModel}" Content="Auto Pick" Command="{Binding AutoPickCommand}" HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Width="68" FontFamily="Aharoni" FontSize="11" Canvas.Left="320" Canvas.Top="66" FontWeight="Bold"/>
+                    <Button x:Name="btn_EmailTeams" DataContext="{Binding ButtonViewModel}" Content="Email Teams" Command="{Binding EmailTeamsCommand}" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" Width="81" FontFamily="Aharoni" FontSize="11" Canvas.Left="313" Canvas.Top="167" FontWeight="Bold"/>
+                    <GroupBox Header="Automatic Selection" FontFamily="Aharoni" FontSize="12" Height="86" Canvas.Left="312" Canvas.Top="8" Width="154" FontWeight="Bold"/>
+                    <ComboBox x:Name="cb_SelectionAlgorithm" ItemsSource="{Binding SelectionAlgorithms}" SelectedIndex="1" SelectedValue="{Binding SelectedAlgorithm, Mode=TwoWay}" DisplayMemberPath="Name" HorizontalAlignment="Left" Height="22" VerticalAlignment="Top" Width="119" Canvas.Left="321" Canvas.Top="31" />
+                    <Button x:Name="btn_CreateMatch" DataContext="{Binding MatchButtonViewModel}" Content="Create Match" Command="{Binding CreateMatchCommand}" HorizontalAlignment="Left" Height="20" VerticalAlignment="Center" Width="91" FontFamily="Aharoni" FontSize="11" Canvas.Left="10" Canvas.Top="283" FontWeight="Bold"/>
                 </Canvas>
             </TabItem>
             <TabItem x:Name="tb_Players" Margin="0,0,-9,-2">
