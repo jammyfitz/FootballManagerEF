@@ -2,10 +2,7 @@
 using FootballManagerEF.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 
 namespace FootballManagerEF.Repositories
@@ -54,7 +51,6 @@ namespace FootballManagerEF.Repositories
                     emailAddresses.Add(emailAddress);
             }
                 
-
             return emailAddresses;
         }
 
