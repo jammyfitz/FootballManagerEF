@@ -72,10 +72,38 @@ namespace FootballManagerEF.Services
 
             // List is correctly ordered, 
             outputList.DistributePlayersBasedOnListOrder(playerData);
-            outputList.AssignTeamsBasedOnListOrder(_teams);
+
+            AssignShortestTeamToBibs(outputList);
+
+            
 
             return outputList;
         }
+
+        private void AssignShortestTeamToBibs(ObservableCollection<PlayerMatch> playerMatchList)
+        {
+            playerMatchList.AssignTeamsBasedOnListOrder(_teams);
+
+            var playersByHeight = from player in _footballRepository.GetActivePlayers()
+                                join players in playerMatchList on player.PlayerID equals players.PlayerID
+                                where player.Height != null
+                                select player;
+
+            var shortestPlayer = playersByHeight.OrderBy(x => x.Height).FirstOrDefault();
+
+            if(ShortestPlayerNotInFirstTeam(playerMatchList, shortestPlayer))
+            {
+                playerMatchList.SwapTeams(_teams);
+            }
+        }
+
+        private static bool ShortestPlayerNotInFirstTeam(ObservableCollection<PlayerMatch> playerMatchList, Player shortestPlayer)
+        {
+            if (shortestPlayer == null)
+                return false;
+
+            return !playerMatchList.TakeFirstHalf().Where(x => x.PlayerID == shortestPlayer.PlayerID).Any();
+        } 
 
         private static decimal GetOffset(decimal? firstValue, decimal? secondValue)
         {

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FootballModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FootballModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Config">
           <Key>
             <PropertyRef Name="SmtpPort" />
@@ -31,6 +31,7 @@
           <Property Name="EmailAddress" Type="nvarchar(max)" />
           <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
           <Property Name="Active" Type="bit" />
+          <Property Name="Height" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="PlayerMatch">
           <Key>
@@ -145,6 +146,7 @@ warning 6002: The table/view 'Football.dbo.PlayerStats' does not have a primary 
           <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PlayerMatches" Relationship="Self.FK_PlayerMatch_Player" FromRole="Player" ToRole="PlayerMatch" />
           <Property Name="Active" Type="Boolean" />
+          <Property Name="Height" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="PlayerMatch">
           <Key>
@@ -258,6 +260,7 @@ warning 6002: The table/view 'Football.dbo.PlayerStats' does not have a primary 
           <EntitySetMapping Name="Players">
             <EntityTypeMapping TypeName="FootballModel.Player">
               <MappingFragment StoreEntitySet="Player">
+                <ScalarProperty Name="Height" ColumnName="Height" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
                 <ScalarProperty Name="PlayerName" ColumnName="PlayerName" />

@@ -57,6 +57,49 @@ namespace FootballManagerEF.Repositories
                   PlayerID = 3,
                   PlayerName = "Caff",
                   Active = true
+              },
+               new Player
+              {
+                  PlayerID = 4,
+                  PlayerName = "Steve",
+                  Active = true
+              },
+              new Player
+              {
+                  PlayerID = 5,
+                  PlayerName = "Richard",
+                  Active = true
+              },
+              new Player
+              {
+                  PlayerID = 6,
+                  PlayerName = "Bruce",
+                  Active = true
+              },
+              new Player
+              {
+                  PlayerID = 7,
+                  PlayerName = "Simon",
+                  Active = true
+              },
+              new Player
+              {
+                  PlayerID = 8,
+                  PlayerName = "Ant",
+                  Active = true
+              },
+              new Player
+              {
+                  PlayerID = 9,
+                  PlayerName = "Dec",
+                  Active = true
+              },
+              new Player
+              {
+                  PlayerID = 10,
+                  PlayerName = "Walter",
+                  Active = true,
+                  Height = 180
               }
            };
         }

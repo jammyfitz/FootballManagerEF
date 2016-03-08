@@ -42,7 +42,7 @@ namespace FootballManagerEF.Tests.ViewModels
         }
 
         [Test]
-        public void PlayerMatchViewModel_WhenGetActivePlayersIsCalledReturnsListOfThreePlayers()
+        public void PlayerMatchViewModel_WhenGetActivePlayersIsCalledReturnsListOfTenPlayers()
         {
             //Arrange 
             var fakeFootballRepo = new FootballRepository();
@@ -52,7 +52,7 @@ namespace FootballManagerEF.Tests.ViewModels
             var result = playerMatchViewModel.GetActivePlayers();
 
             //Assert
-            Assert.That(result.Count, Is.EqualTo(3));
+            Assert.That(result.Count, Is.EqualTo(10));
         }
 
         [Test]

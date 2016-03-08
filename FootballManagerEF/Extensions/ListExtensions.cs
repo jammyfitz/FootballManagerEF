@@ -89,5 +89,27 @@ namespace FootballManagerEF.Extensions
             }
         }
 
+        public static void SwapTeams(this ObservableCollection<PlayerMatch> playerMatchList, ObservableCollection<Team> teamList)
+        {
+            int firstTeamId = teamList.First().TeamID;
+            int lastTeamId = teamList.Last().TeamID;
+
+            foreach (PlayerMatch playerMatch in playerMatchList)
+            {
+                if(playerMatch.TeamID == firstTeamId)
+                {
+                    playerMatch.TeamID = lastTeamId;
+                }
+                else
+                {
+                    playerMatch.TeamID = firstTeamId;
+                }
+            }
+        }
+
+        private static int? GetShortestPlayersTeamId(ObservableCollection<PlayerMatch> playerMatchList)
+        {
+            return playerMatchList.OrderByDescending(x => x.Player.Height).First().TeamID;
+        }
     }
 }
