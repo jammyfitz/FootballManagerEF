@@ -1,15 +1,10 @@
 ﻿using FootballManagerEF.Interfaces;
 using FootballManagerEF.Models;
-using FootballManagerEF.Repositories;
 using FootballManagerEF.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+using FootballManagerEF.Helpers;
 
 namespace FootballManagerEF.Services
 {
@@ -41,7 +36,7 @@ namespace FootballManagerEF.Services
             IList<PlayerData> playerData = result.ToList();
 
             outputList.EvenlyDistributePlayersFromList(playerData);
-            outputList.AssignTeamsBasedOnListOrder(_teams);
+            SelectorServiceHelper.AssignShortestTeamToBibs(outputList, _footballRepository);
 
             return outputList;
         }

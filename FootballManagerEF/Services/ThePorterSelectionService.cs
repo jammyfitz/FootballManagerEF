@@ -1,15 +1,10 @@
 ﻿using FootballManagerEF.Interfaces;
 using FootballManagerEF.Models;
-using FootballManagerEF.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using FootballManagerEF.Extensions;
+using FootballManagerEF.Helpers;
 
 namespace FootballManagerEF.Services
 {
@@ -39,7 +34,7 @@ namespace FootballManagerEF.Services
                                                  PlayerMatch = pm,
                                                  MatchWins = (subtemp == null ? 0 : subtemp.MatchWins),
                                                  MatchesPlayed = subtemp.MatchesPlayed,
-                                                 WinRatio = GetWinRatio(subtemp)
+                                                 WinRatio = SelectorServiceHelper.GetWinRatio(subtemp)
                                              } into results
                                              select results;
 
@@ -57,64 +52,26 @@ namespace FootballManagerEF.Services
             decimal? lastTeamsTotalWinRatio = lastTeam.Sum(x => x.WinRatio);
 
             // Get difference in win ratio between teams
-            decimal winRatioOffset = GetOffset(firstTeamsTotalWinRatio, lastTeamsTotalWinRatio);
+            decimal winRatioOffset = SelectorServiceHelper.GetOffset(firstTeamsTotalWinRatio, lastTeamsTotalWinRatio);
 
             // Prepare swap candidates based on win ratio differential
             PlayerData firstSwapCandidate = firstTeam.GetClosestToWinRatio(winRatioOffset / 2);
             PlayerData lastSwapCandidate = lastTeam.GetClosestToWinRatio(winRatioOffset / 2);
 
             // Get difference in win ratio between swap candidates
-            decimal? candidateOffset = GetOffset(firstSwapCandidate.WinRatio, lastSwapCandidate.WinRatio);
+            decimal? candidateOffset = SelectorServiceHelper.GetOffset(firstSwapCandidate.WinRatio, lastSwapCandidate.WinRatio);
 
             // Undertake the swap if there would be a reduction in the differential i.e. improvement in team matching
             if (candidateOffset < winRatioOffset)
                 playerData.Swap(firstSwapCandidate, lastSwapCandidate);
 
-            // List is correctly ordered, 
+            // List is correctly ordered by player
             outputList.DistributePlayersBasedOnListOrder(playerData);
 
-            AssignShortestTeamToBibs(outputList);
-
-            
+            // Assign the teams, smallest player should wear a bib
+            SelectorServiceHelper.AssignShortestTeamToBibs(outputList, _footballRepository);
 
             return outputList;
-        }
-
-        private void AssignShortestTeamToBibs(ObservableCollection<PlayerMatch> playerMatchList)
-        {
-            playerMatchList.AssignTeamsBasedOnListOrder(_teams);
-
-            var playersByHeight = from player in _footballRepository.GetActivePlayers()
-                                join players in playerMatchList on player.PlayerID equals players.PlayerID
-                                where player.Height != null
-                                select player;
-
-            var shortestPlayer = playersByHeight.OrderBy(x => x.Height).FirstOrDefault();
-
-            if(ShortestPlayerNotInFirstTeam(playerMatchList, shortestPlayer))
-            {
-                playerMatchList.SwapTeams(_teams);
-            }
-        }
-
-        private static bool ShortestPlayerNotInFirstTeam(ObservableCollection<PlayerMatch> playerMatchList, Player shortestPlayer)
-        {
-            if (shortestPlayer == null)
-                return false;
-
-            return !playerMatchList.TakeFirstHalf().Where(x => x.PlayerID == shortestPlayer.PlayerID).Any();
-        } 
-
-        private static decimal GetOffset(decimal? firstValue, decimal? secondValue)
-        {
-            return Math.Abs((decimal)(firstValue - secondValue));
-        }
-
-        private static decimal? GetWinRatio(PlayerStat playerStat)
-        {
-            decimal? matchWins = (decimal?)playerStat.MatchWins;
-            decimal? matchesPlayed = (decimal?)playerStat.MatchesPlayed;
-            return matchWins / matchesPlayed;
         }
     }
 }

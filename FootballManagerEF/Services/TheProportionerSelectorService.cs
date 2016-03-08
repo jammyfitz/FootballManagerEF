@@ -1,15 +1,10 @@
 ﻿using FootballManagerEF.Interfaces;
 using FootballManagerEF.Models;
-using FootballManagerEF.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using FootballManagerEF.Extensions;
+using FootballManagerEF.Helpers;
 
 namespace FootballManagerEF.Services
 {
@@ -36,7 +31,7 @@ namespace FootballManagerEF.Services
                                              from subtemp in temp.DefaultIfEmpty()
                                              select new PlayerData { PlayerMatch = pm, MatchWins = (subtemp == null ? 0 : subtemp.MatchWins),
                                                           MatchesPlayed = subtemp.MatchesPlayed,
-                                                          WinRatio = GetWinRatio(subtemp)
+                                                          WinRatio = SelectorServiceHelper.GetWinRatio(subtemp)
                                              } into results
                                              orderby results.WinRatio descending
                                              select results;
@@ -44,16 +39,10 @@ namespace FootballManagerEF.Services
             IList<PlayerData> playerData = result.ToList();
 
             outputList.EvenlyDistributePlayersFromList(playerData);
-            outputList.AssignTeamsBasedOnListOrder(_teams);
+
+            SelectorServiceHelper.AssignShortestTeamToBibs(outputList, _footballRepository);
 
             return outputList;
-        }
-
-        private static decimal? GetWinRatio(PlayerStat playerStat)
-        {
-            decimal? matchWins = (decimal?)playerStat.MatchWins;
-            decimal? matchesPlayed = (decimal?)playerStat.MatchesPlayed;
-            return matchWins / matchesPlayed;
         }
     }
 }
