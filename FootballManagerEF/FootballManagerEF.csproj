@@ -82,6 +82,7 @@
     <Compile Include="Helpers\TeamsMailHelper.cs" />
     <Compile Include="Interfaces\IConfigRepository.cs" />
     <Compile Include="Classes\MailData.cs" />
+    <Compile Include="Interfaces\IDialogSelectionService.cs" />
     <Compile Include="Interfaces\IMailer.cs" />
     <Compile Include="Interfaces\IMailerService.cs" />
     <Compile Include="Interfaces\IDialogService.cs" />
@@ -117,6 +118,8 @@
     <Compile Include="Repositories\PlayerRepository.cs" />
     <Compile Include="Repositories\TeamRepository.cs" />
     <Compile Include="Classes\FakeMailer.cs" />
+    <Compile Include="Services\DialogSelectionService.cs" />
+    <Compile Include="Services\FakeDialogSelectionService.cs" />
     <Compile Include="Services\FakePlayerValidatorService.cs" />
     <Compile Include="Services\ThePorterSelectionService.cs" />
     <Compile Include="Services\TheProportionerSelectorService.cs" />

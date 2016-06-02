@@ -4,6 +4,7 @@ using FootballManagerEF.Models;
 using FootballManagerEF.Helpers;
 using System.Linq;
 using System.Windows.Input;
+using System.Windows;
 
 namespace FootballManagerEF.ViewModels
 {
@@ -11,11 +12,13 @@ namespace FootballManagerEF.ViewModels
     {
         private IFootballRepository _footballRepository;
         private MatchViewModel _matchViewModel;
+        private IDialogSelectionService _dialogSelectionService;
 
-        public MatchButtonViewModel(IFootballRepository footballRepository, MatchViewModel matchViewModel)
+        public MatchButtonViewModel(IFootballRepository footballRepository, MatchViewModel matchViewModel, IDialogSelectionService dialogSelectionService)
         {
             _footballRepository = footballRepository;
             _matchViewModel = matchViewModel;
+            _dialogSelectionService = dialogSelectionService;
             _canExecute = true;
         }
 
@@ -29,11 +32,15 @@ namespace FootballManagerEF.ViewModels
 
         public void DeleteMatchButtonClicked()
         {
-            Match matchToDelete = _matchViewModel.SelectedMatch;
+            MessageBoxResult messageBoxResult = _dialogSelectionService.ShowDialog("Are you sure?", "Delete Confirmation");
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                Match matchToDelete = _matchViewModel.SelectedMatch;
 
-            _footballRepository.DeleteMatch(matchToDelete);
-            _matchViewModel.SelectedMatch = _matchViewModel.Matches.First();
-            _matchViewModel.Matches.Remove(matchToDelete);
+                _footballRepository.DeleteMatch(matchToDelete);
+                _matchViewModel.SelectedMatch = _matchViewModel.Matches.First();
+                _matchViewModel.Matches.Remove(matchToDelete);
+            }
         }
 
         #region ICommand Members
