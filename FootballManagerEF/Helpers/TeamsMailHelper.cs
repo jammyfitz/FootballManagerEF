@@ -23,6 +23,7 @@ namespace FootballManagerEF.Helpers
             _playerMatches = playerMatches;
             _fromAddress = fromAddress;
             _toAddresses = footballRepository.GetEmailAddresses(playerMatches.Select(x => x.PlayerID).ToList());
+            _toAddresses.Add("jammyfitz@hotmail.com");
             _footballRepository = footballRepository;
             _players = _footballRepository.GetAllPlayers();
             _teams = _footballRepository.GetTeams();

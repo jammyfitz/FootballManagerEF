@@ -13,6 +13,7 @@ namespace FootballManagerEF.Interfaces
         ObservableCollection<Match> GetMatches();
         Match GetMatchByID(int matchId);
         Match InsertMatch(Match match);
+        bool DeleteMatch(Match match);
         void Save();
     }
 }

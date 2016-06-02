@@ -53,10 +53,11 @@ namespace FootballManagerEF.Repositories
             return match;
         }
 
-        public void DeleteMatch(int matchID)
+        public bool DeleteMatch(Match match)
         {
-            Match match = context.Matches.Find(matchID);
             context.Matches.Remove(match);
+            Save();
+            return true;
         }
 
         public void UpdateMatch(Match match)

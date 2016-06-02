@@ -3,14 +3,8 @@ using FootballManagerEF.Helpers;
 using FootballManagerEF.Interfaces;
 using FootballManagerEF.Models;
 using FootballManagerEF.Repositories;
-using FootballManagerEF.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace FootballManagerEF.Services
@@ -24,9 +18,7 @@ namespace FootballManagerEF.Services
         private IMailHelper _mailHelper;
         private SmtpData _smtpData;
         private IPlayerMatchViewModel _playerMatchViewModel;
-        private ObservableCollection<PlayerMatch> _playerMatches;
         private ObservableCollection<Team> _teams;
-        private List<int> _playerIds;
 
         public MailerService(IPlayerMatchViewModel playerMatchViewModel, ObservableCollection<PlayerMatch> playerMatches, ObservableCollection<Team> teams)
         {
@@ -77,7 +69,6 @@ namespace FootballManagerEF.Services
             _teams = _footballRepository.GetTeams();
             _config = _footballRepository.GetConfig();
             _smtpData = InitialiseSmtpData();
-            _playerIds = null;
         }
 
         private string GetDecryptedAgentDutyCode()
@@ -93,6 +84,15 @@ namespace FootballManagerEF.Services
         private void GetPlayerStats()
         {
             _playerStats = _footballRepository.GetPlayerStats();
+            RegisterWinRatios(_playerStats);
+        }
+
+        private void RegisterWinRatios(List<PlayerStat> _playerStats)
+        {
+            foreach (PlayerStat playerStat in _playerStats)
+            {
+                playerStat.WinRatio = ((decimal)playerStat.MatchWins / (decimal)playerStat.MatchesPlayed) * 100;
+            }
         }
 
         private SmtpData InitialiseSmtpData()

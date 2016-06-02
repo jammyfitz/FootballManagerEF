@@ -2,11 +2,7 @@
 using FootballManagerEF.Interfaces;
 using FootballManagerEF.Models;
 using FootballManagerEF.Helpers;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace FootballManagerEF.ViewModels
@@ -31,6 +27,15 @@ namespace FootballManagerEF.ViewModels
             _matchViewModel.Matches.Add(newMatch);
         }
 
+        public void DeleteMatchButtonClicked()
+        {
+            Match matchToDelete = _matchViewModel.SelectedMatch;
+
+            _footballRepository.DeleteMatch(matchToDelete);
+            _matchViewModel.SelectedMatch = _matchViewModel.Matches.First();
+            _matchViewModel.Matches.Remove(matchToDelete);
+        }
+
         #region ICommand Members
         private bool _canExecute;
 
@@ -42,6 +47,15 @@ namespace FootballManagerEF.ViewModels
             }
         }
         private ICommand _createMatchCommand;
+
+        public ICommand DeleteMatchCommand
+        {
+            get
+            {
+                return _deleteMatchCommand ?? (_deleteMatchCommand = new CommandHandler(() => DeleteMatchButtonClicked(), _canExecute));
+            }
+        }
+        private ICommand _deleteMatchCommand;
         #endregion
     }
 }

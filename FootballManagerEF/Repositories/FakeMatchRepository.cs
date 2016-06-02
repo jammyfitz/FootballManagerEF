@@ -65,6 +65,11 @@ namespace FootballManagerEF.Repositories
             };
         }
 
+        public bool DeleteMatch(Match match)
+        {
+            return true;
+        }
+
         public void Save()
         {
             throw new NotImplementedException();
@@ -83,6 +88,7 @@ namespace FootballManagerEF.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
         #endregion
     }
 }

@@ -37,17 +37,17 @@ namespace FootballManagerEF.Helpers
 
         public string GetBody()
         {
-            StringBuilder body = new StringBuilder("***MoleInTheBarn v1.3***\n");
+            StringBuilder body = new StringBuilder("***MoleInTheBarn v1.4***\n");
 
             foreach (PlayerStat playerStat in _playerStats)
-                body.Append(WritePlayerStatLine(playerStat.PlayerName, playerStat.MatchWins.ToString()));
+                body.Append(WritePlayerStatLine(playerStat.PlayerName, playerStat.MatchWins.ToString(), playerStat.WinRatio));
 
             return body.ToString();
         }
 
-        private static string WritePlayerStatLine(string playerName, string matchWins)
+        private static string WritePlayerStatLine(string playerName, string matchWins, decimal winRatio)
         {
-            return string.Format("{0} : {1}\n", playerName, matchWins);
+            return string.Format("{0} - {1} - {2}%\n", playerName, matchWins, Math.Round(winRatio, 0, MidpointRounding.AwayFromZero));
         }
     }
 }

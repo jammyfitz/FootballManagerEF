@@ -18,5 +18,6 @@ namespace FootballManagerEF.Models
         public Nullable<int> MatchWins { get; set; }
         public int PlayerID { get; set; }
         public Nullable<int> MatchesPlayed { get; set; }
+        public decimal WinRatio { get; set; }
     }
 }

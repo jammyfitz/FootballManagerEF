@@ -61,6 +61,11 @@ namespace FootballManagerEF.Repositories
         {
             return matchRepository.InsertMatch(match);
         }
+
+        public bool DeleteMatch(Match match)
+        {
+            return matchRepository.DeleteMatch(match);
+        }
         #endregion
 
         #region PlayerMatch Repository
