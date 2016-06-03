@@ -3,6 +3,7 @@ using FootballManagerEF.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,9 +23,8 @@ namespace FootballManagerEF.Helpers
         {
             _playerMatches = playerMatches;
             _fromAddress = fromAddress;
-            _toAddresses = footballRepository.GetEmailAddresses(playerMatches.Select(x => x.PlayerID).ToList());
-            _toAddresses.Add("jammyfitz@hotmail.com");
             _footballRepository = footballRepository;
+            _toAddresses = GetEmailAddresses();
             _players = _footballRepository.GetAllPlayers();
             _teams = _footballRepository.GetTeams();
         }
@@ -62,6 +62,17 @@ namespace FootballManagerEF.Helpers
         private string WriteTeamLine(string playerName, string teamName)
         {
             return string.Format("{0} : {1}\n", playerName, _teams.Single(x => x.TeamName == teamName).TeamName);
+        }
+
+        private List<string> GetEmailAddresses()
+        {
+            var organiserEmail = ConfigurationManager.AppSettings["OrganiserEmail"];
+            var toAddresses = _footballRepository.GetEmailAddresses(_playerMatches.Select(x => x.PlayerID).ToList());
+
+            if (!toAddresses.Contains(organiserEmail))
+                toAddresses.Add(organiserEmail);
+
+            return toAddresses;
         }
     }
 }
