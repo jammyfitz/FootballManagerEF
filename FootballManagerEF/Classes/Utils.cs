@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FootballManagerEF
 {
@@ -29,9 +24,9 @@ namespace FootballManagerEF
             return false;
         }
 
-        public static DateTime TwoWeeksAgo()
+        public static DateTime ThreeWeeksAgo()
         {
-            return DateTime.Now.AddDays(-14);
+            return DateTime.Now.AddDays(-21);
         }
     }
 }

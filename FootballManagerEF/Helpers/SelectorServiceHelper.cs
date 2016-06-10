@@ -20,6 +20,9 @@ namespace FootballManagerEF.Helpers
 
         public static decimal? GetWinRatio(PlayerStat playerStat)
         {
+            if (playerStat.MatchesPlayed == 0)
+                return 0.5M;
+
             decimal? matchWins = playerStat.MatchWins;
             decimal? matchesPlayed = playerStat.MatchesPlayed;
             return matchWins / matchesPlayed;

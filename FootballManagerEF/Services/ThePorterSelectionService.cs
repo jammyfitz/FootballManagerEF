@@ -17,7 +17,7 @@ namespace FootballManagerEF.Services
         public ThePorterSelectorService(IFootballRepository footballRepository)
         {
             _footballRepository = footballRepository;
-            _playerStats = _footballRepository.GetPlayerStats();
+            _playerStats = GetPlayerStatsForAllPlayers();
             _teams = _footballRepository.GetTeams();
         }
 
@@ -27,7 +27,7 @@ namespace FootballManagerEF.Services
 
             //Join the win stats onto list of user selected players
             IEnumerable<PlayerData> result = from pm in playerMatches
-                                             join ps in _playerStats.DefaultIfEmpty() on pm.PlayerID equals ps.PlayerID into temp
+                                             join ps in GetPlayerStatsForAllPlayers().DefaultIfEmpty() on pm.PlayerID equals ps.PlayerID into temp
                                              from subtemp in temp.DefaultIfEmpty()
                                              select new PlayerData
                                              {
@@ -72,6 +72,26 @@ namespace FootballManagerEF.Services
             SelectorServiceHelper.AssignShortestTeamToBibs(outputList, _footballRepository);
 
             return outputList;
+        }
+
+        private List<PlayerStat> GetPlayerStatsForAllPlayers()
+        {
+            var completeStats = _footballRepository.GetPlayerStats();
+            var players = _footballRepository.GetAllPlayers();
+
+            var missingPlayers = from player in players
+                                 join playerStat in completeStats.DefaultIfEmpty() on player.PlayerID equals playerStat.PlayerID into completeStat
+                                 from stat in completeStat.DefaultIfEmpty()
+                                 select new PlayerStat
+                                 {
+                                     MatchesPlayed = (stat == null ? 0 : stat.MatchesPlayed),
+                                     MatchWins = (stat == null ? 0 : stat.MatchWins),
+                                     PlayerID = player.PlayerID,
+                                     PlayerName = player.PlayerName,
+                                 } into results
+                                 select results;
+
+            return missingPlayers.ToList();
         }
     }
 }

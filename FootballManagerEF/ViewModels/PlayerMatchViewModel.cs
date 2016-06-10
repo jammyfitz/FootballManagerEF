@@ -1,13 +1,8 @@
 ﻿using FootballManagerEF.Models;
 using FootballManagerEF.Interfaces;
-using FootballManagerEF.Repositories;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using FootballManagerEF.Events;
 
 namespace FootballManagerEF.ViewModels
 {
@@ -57,6 +52,12 @@ namespace FootballManagerEF.ViewModels
             _playerMatches = new ObservableCollection<PlayerMatch>();
             _players = GetActivePlayers();
             _teams = GetTeams();
+            EventManager<object>.AddEvent("UpdateButtonClicked", UpdateButtonClickedHandler);
+        }
+
+        public void UpdateButtonClickedHandler(object sender, GenericEventArgs<object> args)
+        {
+            _players = GetActivePlayers();
         }
 
         public ObservableCollection<PlayerMatch> GetPlayerMatches(int matchId)

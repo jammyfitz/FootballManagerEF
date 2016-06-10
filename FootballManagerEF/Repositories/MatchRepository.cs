@@ -21,7 +21,7 @@ namespace FootballManagerEF.Repositories
 
         public ObservableCollection<Match> GetMatches()
         {
-            return GetMatchesByDateAscNotOlderThanTwoWeeks();
+            return GetMatchesByDateAscNotOlderThanThreeWeeks();
         }
 
         public ObservableCollection<Match> GetMatchesByDateAsc()
@@ -29,12 +29,12 @@ namespace FootballManagerEF.Repositories
             return new ObservableCollection<Match>(context.Matches.OrderBy(x => x.MatchDate).ToList());
         }
 
-        public ObservableCollection<Match> GetMatchesByDateAscNotOlderThanTwoWeeks()
+        public ObservableCollection<Match> GetMatchesByDateAscNotOlderThanThreeWeeks()
         {
-            DateTime twoWeeksAgo = Utils.TwoWeeksAgo();
+            DateTime threeWeeksAgo = Utils.ThreeWeeksAgo();
 
             var result = from matches in context.Matches
-                         where (matches.MatchDate > twoWeeksAgo)
+                         where (matches.MatchDate > threeWeeksAgo)
                          orderby matches.MatchDate ascending
                          select matches;
 

@@ -75,6 +75,8 @@
     </ApplicationDefinition>
     <Compile Include="Classes\Mailer.cs" />
     <Compile Include="Comparers\PlayerDataComparer.cs" />
+    <Compile Include="Events\EventManager.cs" />
+    <Compile Include="Events\GenericEventArgs.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Handlers\CommandHandler.cs" />
     <Compile Include="Helpers\MatchHelper.cs" />

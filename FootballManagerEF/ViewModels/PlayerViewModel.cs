@@ -1,4 +1,5 @@
-﻿using FootballManagerEF.Handlers;
+﻿using FootballManagerEF.Events;
+using FootballManagerEF.Handlers;
 using FootballManagerEF.Interfaces;
 using FootballManagerEF.Models;
 using System.Collections.ObjectModel;
@@ -14,6 +15,7 @@ namespace FootballManagerEF.ViewModels
         private ObservableCollection<Player> _players;
         private IPlayerValidatorService _playerValidatorService;
         private IPlayerMatchViewModel _playerMatchViewModel;
+        public event GenericEventHandler<object> UpdateButtonClickHandler;
 
         public ObservableCollection<Player> Players
         {
@@ -23,6 +25,7 @@ namespace FootballManagerEF.ViewModels
             {
                 _players = value;
                 RaisePropertyChanged("Players");
+
             }
         }
 
@@ -34,6 +37,8 @@ namespace FootballManagerEF.ViewModels
             _playerValidatorService = playerValidatorService;
             _playerValidatorService.Players = _players;
             _canExecute = true;
+            EventManager<object>.RegisterEvent("UpdateButtonClicked", UpdateButtonClickHandler);
+            
         }
 
         public ObservableCollection<Player> GetAllPlayers()
@@ -47,6 +52,8 @@ namespace FootballManagerEF.ViewModels
             {
                 SaveDataGrid();
                 RefreshPlayersInView();
+                EventManager<object>.RaiseEvent("UpdateButtonClicked", this,
+                            new GenericEventArgs<object>(_players));
             }
             else
                 _playerValidatorService.SendErrorToUser();
