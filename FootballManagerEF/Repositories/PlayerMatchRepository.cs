@@ -52,6 +52,14 @@ namespace FootballManagerEF.Repositories
            return true;
         }
 
+        public bool DeletePlayerMatches(Match match)
+        {
+            var playerMatchesToDelete = context.PlayerMatches.Where(x => x.MatchID == match.MatchID);
+            context.PlayerMatches.RemoveRange(playerMatchesToDelete);
+            Save();
+            return true;
+        }
+
         public ObservableCollection<PlayerMatch> GetFiveFilledAndFiveEmptyPlayerMatches()
         {
             throw new NotImplementedException();

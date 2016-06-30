@@ -64,7 +64,10 @@ namespace FootballManagerEF.Repositories
 
         public bool DeleteMatch(Match match)
         {
-            return matchRepository.DeleteMatch(match);
+            bool playerMatchesDeleted = playerMatchRepository.DeletePlayerMatches(match);
+            bool matchDeleted = matchRepository.DeleteMatch(match);
+
+            return (playerMatchesDeleted && matchDeleted);
         }
         #endregion
 
@@ -87,6 +90,11 @@ namespace FootballManagerEF.Repositories
         public ObservableCollection<PlayerMatch> GetFiveFilledAndFiveEmptyPlayerMatches()
         {
             return playerMatchRepository.GetFiveFilledAndFiveEmptyPlayerMatches();
+        }
+
+        public bool DeletePlayerMatches(Match match)
+        {
+            return playerMatchRepository.DeletePlayerMatches(match);
         }
         #endregion
 

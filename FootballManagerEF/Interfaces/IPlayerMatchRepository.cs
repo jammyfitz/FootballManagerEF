@@ -1,10 +1,6 @@
 ﻿using FootballManagerEF.Models;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FootballManagerEF.Interfaces
 {
@@ -14,6 +10,7 @@ namespace FootballManagerEF.Interfaces
         ObservableCollection<PlayerMatch> GetTenPlayerMatches(int matchId);
         ObservableCollection<PlayerMatch> GetFiveFilledAndFiveEmptyPlayerMatches();
         bool InsertPlayerMatches(ObservableCollection<PlayerMatch> playerMatches, int matchId);
+        bool DeletePlayerMatches(Match match);
         void Save();
     }
 }

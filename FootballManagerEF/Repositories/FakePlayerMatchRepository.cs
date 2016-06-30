@@ -143,6 +143,11 @@ namespace FootballManagerEF.Repositories
            };
         }
 
+        public bool DeletePlayerMatches(Match match)
+        {
+            return true;
+        }
+
         #region Private
 
         private static ObservableCollection<PlayerMatch> AddFiveDistinctPlayerMatches()
