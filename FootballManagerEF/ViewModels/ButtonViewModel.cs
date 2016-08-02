@@ -77,6 +77,12 @@ namespace FootballManagerEF.ViewModels
                 _matchValidatorService.SendErrorToUser();
         }
 
+        public void EmailCancellationButtonClicked()
+        {
+            if (_mailerService.SendCancellation())
+                _mailerService.SendOKToUser();
+        }
+
         public void AutoPickButtonClicked()
         {
             if (_matchValidatorService.DataGridIsComplete())
@@ -147,6 +153,15 @@ namespace FootballManagerEF.ViewModels
             }
         }
         private ICommand _emailTeamsCommand;
+
+        public ICommand EmailCancellationCommand
+        {
+            get
+            {
+                return _emailCancellationCommand ?? (_emailCancellationCommand = new CommandHandler(() => EmailCancellationButtonClicked(), _canExecute));
+            }
+        }
+        private ICommand _emailCancellationCommand;
 
         public ICommand AutoPickCommand
         {

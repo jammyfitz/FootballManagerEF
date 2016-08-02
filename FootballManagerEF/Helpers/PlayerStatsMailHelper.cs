@@ -37,7 +37,7 @@ namespace FootballManagerEF.Helpers
 
         public string GetBody()
         {
-            StringBuilder body = new StringBuilder("***MoleInTheBarn v1.4***\n");
+            StringBuilder body = new StringBuilder("***MoleInTheBarn v1.5***\n");
 
             foreach (PlayerStat playerStat in _playerStats)
                 body.Append(WritePlayerStatLine(playerStat.PlayerName, playerStat.MatchWins.ToString(), playerStat.WinRatio));

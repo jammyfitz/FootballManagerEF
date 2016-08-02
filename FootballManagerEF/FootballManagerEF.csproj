@@ -79,6 +79,7 @@
     <Compile Include="Events\GenericEventArgs.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Handlers\CommandHandler.cs" />
+    <Compile Include="Helpers\CancellationMailHelper.cs" />
     <Compile Include="Helpers\MatchHelper.cs" />
     <Compile Include="Helpers\PlayerStatsMailHelper.cs" />
     <Compile Include="Helpers\SelectorServiceHelper.cs" />

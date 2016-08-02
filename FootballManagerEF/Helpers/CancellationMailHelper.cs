@@ -9,23 +9,22 @@ using System.Text;
 
 namespace FootballManagerEF.Helpers
 {
-    public class TeamsMailHelper : IMailHelper
+    public class CancellationMailHelper : IMailHelper
     {
         private ObservableCollection<PlayerMatch> _playerMatches;
         private ObservableCollection<Player> _players;
-        private ObservableCollection<Team> _teams;
+
         private IFootballRepository _footballRepository;
         private string _fromAddress;
         private List<string> _toAddresses;
 
-        public TeamsMailHelper(ObservableCollection<PlayerMatch> playerMatches, IFootballRepository footballRepository, string fromAddress)
+        public CancellationMailHelper(ObservableCollection<PlayerMatch> playerMatches, IFootballRepository footballRepository, string fromAddress)
         {
             _playerMatches = playerMatches;
             _fromAddress = fromAddress;
             _footballRepository = footballRepository;
             _toAddresses = GetEmailAddresses();
             _players = _footballRepository.GetAllPlayers();
-            _teams = _footballRepository.GetTeams();
         }
 
         public string GetFromAddress()
@@ -35,32 +34,21 @@ namespace FootballManagerEF.Helpers
 
         public List<string> GetToAddresses()
         {
-            return  _toAddresses;
+            return _toAddresses;
         }
 
         public string GetSubject()
         {
-            return DateTime.Now.ToString("yyyy-MM-dd") + " - Octopus Teams";
+            return DateTime.Now.ToString("yyyy-MM-dd") + " - Thursday Football Cancelled";
         }
 
         public string GetBody()
         {
-            StringBuilder body = new StringBuilder("***OctopusInTheBarn v1.0***\n");
+            StringBuilder body = new StringBuilder("***MoleInTheBarn v1.5***\n\n");
 
-            foreach (PlayerMatch playerMatch in _playerMatches)
-            {
-                string teamName = _teams.Single(x => x.TeamID == playerMatch.TeamID).TeamName;
-                string playerName = _players.Single(x => x.PlayerID == playerMatch.PlayerID).PlayerName;
-                string teamLine = WriteTeamLine(playerName, teamName);
-                body.Append(teamLine);
-            }
+            body.AppendLine("Unfortunately football has been cancelled this week.");
 
             return body.ToString();
-        }
-
-        private string WriteTeamLine(string playerName, string teamName)
-        {
-            return string.Format("{0} : {1}\n", playerName, _teams.Single(x => x.TeamName == teamName).TeamName);
         }
 
         private List<string> GetEmailAddresses()

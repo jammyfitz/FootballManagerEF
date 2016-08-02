@@ -51,6 +51,13 @@ namespace FootballManagerEF.Services
             return _mailer.SendMail();
         }
 
+        public bool SendCancellation()
+        {
+            _mailHelper = new CancellationMailHelper(_playerMatchViewModel.PlayerMatches, _footballRepository, _config.SmtpAgentSine);
+            SetupMail(_mailHelper);
+            return _mailer.SendMail();
+        }
+
         private void SetupMail(IMailHelper mailHelper)
         {
             _mailer = _mailer.CreateInstance(_smtpData, mailHelper);
