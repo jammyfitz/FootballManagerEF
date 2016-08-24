@@ -43,7 +43,7 @@ namespace FootballManagerEF.Repositories
         {
             List<string> emailAddresses = new List<string>();
 
-            foreach (int playerId in playerIDs)
+            foreach (int playerId in playerIDs.Where(x => x.HasValue))
             {
                 string emailAddress = GetPlayerByID(playerId).EmailAddress;
 
