@@ -79,6 +79,9 @@ namespace FootballManagerEF.Services
             var completeStats = _footballRepository.GetPlayerStats();
             var players = _footballRepository.GetAllPlayers();
 
+            if (!completeStats.Any())
+                return new List<PlayerStat>();
+
             var missingPlayers = from player in players
                                  join playerStat in completeStats.DefaultIfEmpty() on player.PlayerID equals playerStat.PlayerID into completeStat
                                  from stat in completeStat.DefaultIfEmpty()
