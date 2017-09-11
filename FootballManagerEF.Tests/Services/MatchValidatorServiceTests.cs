@@ -27,7 +27,7 @@ namespace FootballManagerEF.Tests.Services
         }
 
         [Test]
-        public void MatchValidatorService_WhenDataGridIsValidIsCalledAndGridRowHasPlayerAndNoTeamReturnFalse()
+        public void MatchValidatorService_WhenDataGridIsValidIsCalledAndGridRowHasPlayerAndNoTeamReturnTrue()
         {
             //Arrange 
             matchValidatorService.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesWithPlayerAndNoTeam();
@@ -36,7 +36,7 @@ namespace FootballManagerEF.Tests.Services
             var result = matchValidatorService.DataGridIsValid();
 
             //Assert
-            Assert.That(result, Is.EqualTo(false));
+            Assert.That(result, Is.EqualTo(true));
         }
 
         [Test]

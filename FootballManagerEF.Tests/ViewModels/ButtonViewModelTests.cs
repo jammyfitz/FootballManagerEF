@@ -82,29 +82,19 @@ namespace FootballManagerEF.Tests.ViewModels
         }
 
         [Test]
-        public void ButtonViewModel_WhenDataGridIsValidIsCalledAndGridRowHasPlayerAndNoTeamReturnExpectedError()
+        public void ButtonViewModel_WhenUpdateButtonIsClickedAndGridRowHasPlayerAndNoTeamSaveWasCalledOnFootballRepository()
         {
-            //Arrange 
+            //Arrange
+            var mockFootballRepo = MockRepository.GenerateMock<IFootballRepository>();
+            var mockButtonViewModel = new ButtonViewModel(mockFootballRepo, new PlayerMatchViewModel(mockFootballRepo), matchValidatorService, mailerService);
             matchValidatorService.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesWithPlayerAndNoTeam();
+            mockFootballRepo.Stub(x => x.Save());
 
             //Act
-            buttonViewModel.UpdateCommand.Execute(null);
+            mockButtonViewModel.UpdateCommand.Execute(null);
 
             //Assert
-            Assert.That(matchValidatorService.ErrorMessage, Is.EqualTo("Either the team or the player is missing for one of the entries."));
-        }
-
-        [Test]
-        public void ButtonViewModel_WhenUpdateButtonIsClickedAndGridRowHasPlayerAndNoTeamReturnExpectedError()
-        {
-            //Arrange 
-            matchValidatorService.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesWithPlayerAndNoTeam();
-
-            //Act
-            buttonViewModel.UpdateCommand.Execute(null);
-
-            //Assert
-            Assert.That(matchValidatorService.ErrorMessage, Is.EqualTo("Either the team or the player is missing for one of the entries."));
+            mockFootballRepo.AssertWasCalled(x => x.Save());
         }
 
         [Test]

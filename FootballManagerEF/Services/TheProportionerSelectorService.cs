@@ -17,7 +17,7 @@ namespace FootballManagerEF.Services
         public TheProportionerSelectorService(IFootballRepository footballRepository)
         {
             _footballRepository = footballRepository;
-            _playerStats = _footballRepository.GetPlayerStats();
+            _playerStats = PlayerStatHelper.GetPlayerStatsForAllPlayers(_footballRepository.GetPlayerStats(), _footballRepository.GetAllPlayers());
             _teams = _footballRepository.GetTeams();
         }
 

@@ -78,7 +78,7 @@ namespace FootballManagerEF.Services
         private bool MoreThanMaxPlayersInATeam()
         {
             var tooManyPlayers = from x in PlayerMatches
-                                 where x.PlayerID != null
+                                 where x.PlayerID != null & x.TeamID != null
                                  group x by x.TeamID into grouped
                                  where grouped.Count() > 5
                                  select grouped.Key;
@@ -94,15 +94,12 @@ namespace FootballManagerEF.Services
             if (RowsHaveTeamButNoPlayer())
                 return true;
 
-            if (RowsHavePlayerButNoTeam())
-                return true;
-
             return false;
         }
 
         private bool DataGridIsIncomplete()
         {
-            if (GridHasMissingRows())
+            if (GridHasMissingPlayers())
                 return true;
 
             return false;
@@ -119,6 +116,14 @@ namespace FootballManagerEF.Services
         private bool RowsHaveTeamButNoPlayer()
         {
             if (PlayerMatches.Where(x => x.PlayerID == null && x.TeamID != null).Count() > 0)
+                return true;
+
+            return false;
+        }
+
+        private bool GridHasMissingPlayers()
+        {
+            if (PlayerMatches.Where(x => x.PlayerID == null).Count() > 0)
                 return true;
 
             return false;
