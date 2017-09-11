@@ -12,13 +12,13 @@ namespace FootballManagerEF.ViewModels
     {
         private IFootballRepository _footballRepository;
         private MatchViewModel _matchViewModel;
-        private IDialogSelectionService _dialogSelectionService;
+        private IDialogSelectorService _dialogSelectorService;
 
-        public MatchButtonViewModel(IFootballRepository footballRepository, MatchViewModel matchViewModel, IDialogSelectionService dialogSelectionService)
+        public MatchButtonViewModel(IFootballRepository footballRepository, MatchViewModel matchViewModel, IDialogSelectorService dialogSelectorService)
         {
             _footballRepository = footballRepository;
             _matchViewModel = matchViewModel;
-            _dialogSelectionService = dialogSelectionService;
+            _dialogSelectorService = dialogSelectorService;
             _canExecute = true;
         }
 
@@ -32,7 +32,7 @@ namespace FootballManagerEF.ViewModels
 
         public void DeleteMatchButtonClicked()
         {
-            MessageBoxResult messageBoxResult = _dialogSelectionService.ShowDialog("Are you sure?", "Delete Confirmation");
+            MessageBoxResult messageBoxResult = _dialogSelectorService.ShowDialog("Are you sure?", "Delete Confirmation");
             if (messageBoxResult == MessageBoxResult.Yes)
             {
                 Match matchToDelete = _matchViewModel.SelectedMatch;

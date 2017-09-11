@@ -122,10 +122,10 @@
     <Compile Include="Repositories\PlayerRepository.cs" />
     <Compile Include="Repositories\TeamRepository.cs" />
     <Compile Include="Classes\FakeMailer.cs" />
-    <Compile Include="Services\DialogSelectionService.cs" />
-    <Compile Include="Services\FakeDialogSelectionService.cs" />
+    <Compile Include="Services\DialogSelectorService.cs" />
+    <Compile Include="Services\FakeDialogSelectorService.cs" />
     <Compile Include="Services\FakePlayerValidatorService.cs" />
-    <Compile Include="Services\ThePorterSelectionService.cs" />
+    <Compile Include="Services\ThePorterSelectorService.cs" />
     <Compile Include="Services\TheProportionerSelectorService.cs" />
     <Compile Include="Services\GiantKillerSelectorService.cs" />
     <Compile Include="Services\MailerService.cs" />

@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace FootballManagerEF.Services
 {
-    public class DialogSelectionService : IDialogSelectionService
+    public class DialogSelectorService : IDialogSelectorService
     {
         public MessageBoxResult ShowDialog(string messageBoxText, string title)
         {

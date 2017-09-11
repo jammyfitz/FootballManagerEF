@@ -24,7 +24,7 @@ namespace FootballManagerEF.Tests.ViewModels
             fakeMatchRepo = new FakeMatchRepository();
             matchViewModel = new MatchViewModel(fakeFootballRepo);
             playerMatchViewModel = new PlayerMatchViewModel(fakeFootballRepo);
-            matchButtonViewModel = new MatchButtonViewModel(fakeFootballRepo, matchViewModel, new FakeDialogSelectionService());
+            matchButtonViewModel = new MatchButtonViewModel(fakeFootballRepo, matchViewModel, new FakeDialogSelectorService());
             fakeMailerService = new MailerService(playerMatchViewModel, fakeFootballRepo);
             buttonViewModel = new ButtonViewModel(fakeFootballRepo, playerMatchViewModel, new FakeMatchValidatorService(true), fakeMailerService);
             matchViewModel.PlayerMatchViewModel = playerMatchViewModel;

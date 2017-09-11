@@ -98,7 +98,7 @@ namespace FootballManagerEF.Tests.ViewModels
         public void PlayerViewModel_WhenUpdateButtonIsClickedAndPlayerAppearsMoreThanOnceReturnExpectedError()
         {
             //Arrange 
-            playerValidatorService.Players = fakePlayerRepo.GetPlayersWithDuplicatePlayer();
+            playerValidatorService.Players = fakePlayerRepo.GetPlayersWithDuplicatePlayerName();
 
             //Act
             playerViewModel.UpdatePlayersCommand.Execute(null);

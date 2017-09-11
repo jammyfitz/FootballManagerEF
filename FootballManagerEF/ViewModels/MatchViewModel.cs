@@ -112,7 +112,7 @@ namespace FootballManagerEF.ViewModels
             _mailerService = new MailerService(_playerMatchViewModel, _playerMatchViewModel.PlayerMatches, _teams);
             ButtonViewModel = new ButtonViewModel(_footballRepository, _playerMatchViewModel, _matchValidatorService, _mailerService);
             PlayerViewModel = new PlayerViewModel(_footballRepository, _playerMatchViewModel, _playerValidatorService);
-            MatchButtonViewModel = new MatchButtonViewModel(_footballRepository, this, new DialogSelectionService());
+            MatchButtonViewModel = new MatchButtonViewModel(_footballRepository, this, new DialogSelectorService());
             InitialiseMatchesAndTeams();
             _selectionAlgorithms = InitialiseSelectionAlgorithms();
             _selectedAlgorithm = _selectionAlgorithms.First();
