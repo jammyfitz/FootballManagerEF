@@ -45,6 +45,19 @@ namespace FootballManagerEF.Tests.ViewModels
         }
 
         [Test]
+        public void MatchButtonViewModel_WhenCreateMatchButtonIsClickedWithNoCurrentMatchesAMatchIsAddedToMatches()
+        {
+            //Arrange
+            matchViewModel.Matches = fakeMatchRepo.GetNoMatches();
+
+            //Act
+            matchButtonViewModel.CreateMatchCommand.Execute(null);
+
+            //Assert
+            Assert.That(matchViewModel.Matches.Count(), Is.EqualTo(1));
+        }
+
+        [Test]
         public void MatchButtonViewModel_WhenDeleteMatchButtonIsClickedAMatchIsDeletedFromMatches()
         {
             //Arrange

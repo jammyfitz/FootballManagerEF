@@ -47,6 +47,11 @@ namespace FootballManagerEF.Repositories
             );
         }
 
+        public ObservableCollection<Match> GetNoMatches()
+        {
+            return new ObservableCollection<Match>();
+        }
+
         public Match GetMatchByID(int id)
         {
             return new Match
