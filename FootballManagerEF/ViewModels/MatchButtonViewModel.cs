@@ -24,8 +24,17 @@ namespace FootballManagerEF.ViewModels
 
         public void CreateMatchButtonClicked()
         {
-            Match newMatch = _footballRepository.GetMatches().Last().GetNewSubsequentMatch();
-
+            var existingMatches = _footballRepository.GetMatches();
+            Match newMatch;
+            if (existingMatches.Any())
+            {
+                newMatch = existingMatches.Last().GetNewSubsequentMatch();
+            }
+            else
+            {
+                newMatch = _footballRepository.GetNewMatch();
+            }
+            
             newMatch = _footballRepository.InsertMatch(newMatch);
             _matchViewModel.Matches.Add(newMatch);
         }

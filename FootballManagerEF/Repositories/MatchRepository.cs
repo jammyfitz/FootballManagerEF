@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using FootballManagerEF.Helpers;
 
 namespace FootballManagerEF.Repositories
 {
@@ -65,6 +66,11 @@ namespace FootballManagerEF.Repositories
             context.Entry(match).State = EntityState.Modified;
         }
 
+        public Match GetNewMatch()
+        {
+            return MatchHelper.GetNewSubsequentMatch();
+        }
+
         public void Save()
         {
             context.SaveChanges();
@@ -90,6 +96,7 @@ namespace FootballManagerEF.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
         #endregion
     }
 }

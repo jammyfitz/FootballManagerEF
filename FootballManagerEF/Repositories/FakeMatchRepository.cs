@@ -94,6 +94,11 @@ namespace FootballManagerEF.Repositories
             GC.SuppressFinalize(this);
         }
 
+        public Match GetNewMatch()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

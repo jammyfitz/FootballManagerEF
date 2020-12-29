@@ -24,6 +24,7 @@ namespace FootballManagerEF.Interfaces
         bool InsertPlayers(ObservableCollection<Player> playersToInsert);
         Match InsertMatch(Match match);
         bool DeleteMatch(Match match);
+        Match GetNewMatch();
         List<string> GetEmailAddresses(List<int?> playerIds);
         void Refresh();
         void Save();

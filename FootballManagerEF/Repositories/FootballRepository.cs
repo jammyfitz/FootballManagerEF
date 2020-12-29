@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using FootballManagerEF.Helpers;
 
 namespace FootballManagerEF.Repositories
 {
@@ -69,6 +70,12 @@ namespace FootballManagerEF.Repositories
 
             return (playerMatchesDeleted && matchDeleted);
         }
+
+        public Match GetNewMatch()
+        {
+            return matchRepository.GetNewMatch();
+        }
+
         #endregion
 
         #region PlayerMatch Repository
