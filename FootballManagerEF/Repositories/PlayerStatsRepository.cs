@@ -59,9 +59,10 @@ namespace FootballManagerEF.Repositories
                     .Take(mostRecentWinsToCount)
                     .Count(y => y.WonMatch()),
                 WinRatio = x.ToList().GetWinRatio(),
-                RecentMatches = x.OrderByDescending(y => y.Match.MatchDate)
+                RecentMatchCount = x.OrderByDescending(y => y.Match.MatchDate)
                     .Where(y => y.Match.MatchWinner.HasValue)
-                    .Take(mostRecentWinsToCount),
+                    .Take(mostRecentWinsToCount)
+                    .Count(),
             })
             .OrderByDescending(x => x.TotalMatchWins)
             .ToList();

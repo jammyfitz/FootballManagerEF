@@ -16,7 +16,8 @@ namespace FootballManagerEF.Tests.Helpers
             {
                 MatchesPlayed = 0,
                 WinRatio = 0,
-                RecentMatchWins = 0
+                RecentMatchWins = 0,
+                RecentMatchCount = 0
             };
             var expectedResult = 1m;
 
@@ -35,7 +36,8 @@ namespace FootballManagerEF.Tests.Helpers
             {
                 MatchesPlayed = 5,
                 WinRatio = 100,
-                RecentMatchWins = 5
+                RecentMatchWins = 5,
+                RecentMatchCount = 5
             };
             var expectedResult = 2m;
 

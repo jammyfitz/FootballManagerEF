@@ -202,7 +202,6 @@ namespace FootballManagerEF.Tests.ViewModels
             //Arrange 
             buttonViewModel.PlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesBeforeAlgorithm();
             buttonViewModel.SelectedAlgorithm = new SelectionAlgorithm() { Class = new ThePorterSelectorService(fakeFootballRepo) };
-            //ObservableCollection<PlayerMatch> expectedPlayerMatches = fakePlayerMatchRepo.GetPlayerMatchesAfterTheProportionerAlgorithm();
             ObservableCollection<PlayerMatch> inputPlayerMatches = new ObservableCollection<PlayerMatch>(buttonViewModel.PlayerMatches);
 
             //Act

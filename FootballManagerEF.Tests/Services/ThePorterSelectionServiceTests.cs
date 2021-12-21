@@ -25,7 +25,7 @@ namespace FootballManagerEF.Tests.Services
         }
 
         [Test]
-        public void ThePorterSelectionService_ReordersTeamsWithShortestPlayerOnBibs()
+        public void ThePorterSelectionService_AppliesAlgorithmAndReordersTeams()
         {
             //Arrange 
             var playerMatches = fakePlayerMatchRepo.GetPlayerMatchesBeforeAlgorithm();
@@ -35,7 +35,9 @@ namespace FootballManagerEF.Tests.Services
             var result = porterSelectorService.ApplyAlgorithm(playerMatches);
 
             //Assert
-            Assert.That(result.First(x => x.PlayerID == 10).TeamID == bibsTeamId);
+            Assert.That(result.Count, Is.EqualTo(playerMatches.Count()));
+            Assert.That(result.Count(x => x.TeamID == bibsTeamId), Is.EqualTo(5));
+            Assert.That(result.Count(x => x.TeamID != bibsTeamId), Is.EqualTo(5));
         }
     }
 }

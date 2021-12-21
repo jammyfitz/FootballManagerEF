@@ -22,7 +22,7 @@ namespace FootballManagerEF.Helpers
         public static decimal? GetWinRatio(PlayerStat playerStat)
         {
             if (playerStat.MatchesPlayed == 0)
-                return 0.5M;
+                return 0.5m;
 
             decimal? matchWins = playerStat.MatchWins;
             decimal? matchesPlayed = playerStat.MatchesPlayed;
@@ -54,13 +54,28 @@ namespace FootballManagerEF.Helpers
 
         public static decimal GetPlayerScore(PlayerCalculation playerCalculation)
         {
-            var mostRecentWinsToCount = Convert.ToInt32(ConfigurationManager.AppSettings["MostRecentWinsToCount"]);
-            var recentMatchWinsForCalculation = playerCalculation.RecentMatches.Count() < mostRecentWinsToCount ? ((decimal)mostRecentWinsToCount / 2) : (decimal)playerCalculation.RecentMatchWins;
+            var mostRecentWinsToCount = Convert.ToInt32(ConfigurationManager.AppSettings["MostRecentWinsToCount"] ?? "5");
+            var recentMatchWinsForCalculation = playerCalculation.RecentMatchCount < mostRecentWinsToCount ? ((decimal)mostRecentWinsToCount / 2) : (decimal)playerCalculation.RecentMatchWins;
             var recentWinScore = ((decimal)recentMatchWinsForCalculation / (decimal)mostRecentWinsToCount);
-            var winRatioScore = playerCalculation.WinRatio.Value / 100;
+            var winRatioScore = GetWinRatioScore(playerCalculation.WinRatio, playerCalculation.MatchesPlayed);
             var finalPlayerScore = recentWinScore + winRatioScore;
 
             return finalPlayerScore;
+        }
+
+        private static decimal GetWinRatioScore(decimal? winRatio, int? matchesPlayed)
+        {
+            if (!winRatio.HasValue || !matchesPlayed.HasValue || matchesPlayed == 0)
+            {
+                return 0.5m;
+            }
+
+            if (matchesPlayed > 0 && winRatio == 0)
+            {
+                return 0m;
+            }
+
+            return winRatio.Value / 100;
         }
 
         private static Player GetShortestPlayer(IEnumerable<Player> playersInList)

@@ -31,16 +31,16 @@ namespace FootballManagerEF.Repositories
         {
             return new List<PlayerCalculation>
            {
-              CreatePlayerCalculation(1, "Jamie", 10, 10, 2),
-              CreatePlayerCalculation(2, "Mike", 8, 10, 3),
-              CreatePlayerCalculation(3, "Caff", 7, 10, 1),
-              CreatePlayerCalculation(4, "Ant", 7, 10, 4),
-              CreatePlayerCalculation(5, "Croucho", 5, 15, 5),
-              CreatePlayerCalculation(6, "Greg", 4, 4, 5),
-              CreatePlayerCalculation(7, "Hugh", 4, 4, 2),
-              CreatePlayerCalculation(8, "Skip", 4, 12, 1),
-              CreatePlayerCalculation(9, "Imran", 2, 8, 3),
-              CreatePlayerCalculation(10, "John", 1, 8, 4),
+              CreatePlayerCalculation(1, "Jamie", 10, 10, 2, 5, 50m),
+              CreatePlayerCalculation(2, "Mike", 8, 10, 3, 5, 0m),
+              CreatePlayerCalculation(3, "Caff", 7, 10, 1, 5, 100m),
+              CreatePlayerCalculation(4, "Ant", 7, 10, 4, 2, 75m),
+              CreatePlayerCalculation(5, "Croucho", 5, 15, 5, 1, 10m),
+              CreatePlayerCalculation(6, "Greg", 4, 4, 5, 0, 45.45m),
+              CreatePlayerCalculation(7, "Hugh", 4, 4, 2, 5, 50m),
+              CreatePlayerCalculation(8, "Skip", 4, 12, 1, 4, 80m),
+              CreatePlayerCalculation(9, "Imran", 2, 8, 3, 4, 25m),
+              CreatePlayerCalculation(10, "John", 1, 8, 4, 0, 7.77m),
            };
         }
 
@@ -56,14 +56,17 @@ namespace FootballManagerEF.Repositories
             };
         }
 
-        private PlayerCalculation CreatePlayerCalculation(int playerId, string playerName, int? totalMatchWins, int? matchesPlayed, int? recentMatchWins)
+        private PlayerCalculation CreatePlayerCalculation(int playerId, string playerName, int? totalMatchWins, int? matchesPlayed, int? recentMatchWins, int recentMatchCount, decimal winRatio)
         {
             return new PlayerCalculation
             {
+                PlayerID = playerId,
                 PlayerName = playerName,
                 TotalMatchWins = totalMatchWins,
                 MatchesPlayed = matchesPlayed,
-                RecentMatchWins = recentMatchWins
+                RecentMatchWins = recentMatchWins,
+                RecentMatchCount = recentMatchCount,
+                WinRatio = winRatio
             };
         }
         #endregion

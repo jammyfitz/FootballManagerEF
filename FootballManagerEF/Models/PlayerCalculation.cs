@@ -10,6 +10,6 @@ namespace FootballManagerEF.Models
         public int? MatchesPlayed { get; set; }
         public decimal? WinRatio { get; set; }
         public int? RecentMatchWins { get; set; }
-        public IEnumerable<PlayerMatch> RecentMatches { get; internal set; }
+        public int RecentMatchCount { get; set; }
     }
 }
