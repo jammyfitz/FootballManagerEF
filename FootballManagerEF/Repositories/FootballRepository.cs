@@ -157,6 +157,11 @@ namespace FootballManagerEF.Repositories
             return playerStatsRepository.GetPlayerStats();
         }
 
+        public List<PlayerCalculation> GetPlayerCalculations()
+        {
+            return playerStatsRepository.GetPlayerCalculations();
+        }
+
         #endregion
 
         #region Private

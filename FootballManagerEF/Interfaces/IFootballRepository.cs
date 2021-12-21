@@ -17,6 +17,7 @@ namespace FootballManagerEF.Interfaces
         ObservableCollection<Team> GetTeams();
         Config GetConfig();
         List<PlayerStat> GetPlayerStats();
+        List<PlayerCalculation> GetPlayerCalculations();
         Match GetMatchByID(int matchId);
         Player GetPlayerByID(int playerId);
         Team GetTeamByID(int teamId);

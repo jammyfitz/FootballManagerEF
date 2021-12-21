@@ -5,6 +5,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Collections.Generic;
+using System.Configuration;
 
 namespace FootballManagerEF.Helpers
 {
@@ -49,6 +50,17 @@ namespace FootballManagerEF.Helpers
 
             if (ShortestPlayerNotInFirstTeam(playerMatchList, shortestPlayer))
                 playerMatchList.SwapTeams(teams);
+        }
+
+        public static decimal GetPlayerScore(PlayerCalculation playerCalculation)
+        {
+            var mostRecentWinsToCount = Convert.ToInt32(ConfigurationManager.AppSettings["MostRecentWinsToCount"]);
+            var recentMatchWinsForCalculation = playerCalculation.RecentMatches.Count() < mostRecentWinsToCount ? ((decimal)mostRecentWinsToCount / 2) : (decimal)playerCalculation.RecentMatchWins;
+            var recentWinScore = ((decimal)recentMatchWinsForCalculation / (decimal)mostRecentWinsToCount);
+            var winRatioScore = playerCalculation.WinRatio.Value / 100;
+            var finalPlayerScore = recentWinScore + winRatioScore;
+
+            return finalPlayerScore;
         }
 
         private static Player GetShortestPlayer(IEnumerable<Player> playersInList)

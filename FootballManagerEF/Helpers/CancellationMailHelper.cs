@@ -44,7 +44,7 @@ namespace FootballManagerEF.Helpers
 
         public string GetBody()
         {
-            StringBuilder body = new StringBuilder("***MoleInTheBarn v1.5***\n\n");
+            StringBuilder body = new StringBuilder("***The Octopus v1.6***\n\n");
 
             body.AppendLine("Unfortunately football has been cancelled this week.");
 

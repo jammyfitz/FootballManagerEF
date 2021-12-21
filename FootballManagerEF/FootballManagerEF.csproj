@@ -77,6 +77,7 @@
     <Compile Include="Comparers\PlayerDataComparer.cs" />
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="Events\GenericEventArgs.cs" />
+    <Compile Include="Extensions\PlayerMatchExtensions.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Handlers\CommandHandler.cs" />
     <Compile Include="Helpers\CancellationMailHelper.cs" />
@@ -106,6 +107,8 @@
     <Compile Include="Models\Config.cs">
       <DependentUpon>FootballEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PlayerCalculationWithScore.cs" />
+    <Compile Include="Models\PlayerCalculation.cs" />
     <Compile Include="Models\PlayerData.cs" />
     <Compile Include="Models\PlayerStat.cs">
       <DependentUpon>FootballEntities.tt</DependentUpon>

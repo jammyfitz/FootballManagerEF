@@ -45,7 +45,7 @@ namespace FootballManagerEF.Helpers
 
         public string GetBody()
         {
-            StringBuilder body = new StringBuilder("***OctopusInTheBarn v1.0***\n");
+            StringBuilder body = new StringBuilder("***The Octopus v1.6***\n");
 
             foreach (PlayerMatch playerMatch in _playerMatches)
             {

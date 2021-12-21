@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Comparers\PlayerMatchEqualityComparer.cs" />
+    <Compile Include="Helpers\SelectorServiceHelperTests.cs" />
     <Compile Include="Services\MailerServiceTests.cs" />
     <Compile Include="Services\MatchValidatorServiceTests.cs" />
     <Compile Include="Services\StringCipherServiceTest.cs" />

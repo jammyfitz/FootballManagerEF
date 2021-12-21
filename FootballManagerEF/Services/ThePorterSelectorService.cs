@@ -10,14 +10,14 @@ namespace FootballManagerEF.Services
 {
     public class ThePorterSelectorService : ISelectorService
     {
-        private List<PlayerStat> _playerStats;
+        private List<PlayerCalculation> _playerCalculations;
         private ObservableCollection<Team> _teams;
         private IFootballRepository _footballRepository;
 
         public ThePorterSelectorService(IFootballRepository footballRepository)
         {
             _footballRepository = footballRepository;
-            _playerStats = PlayerStatHelper.GetPlayerStatsForAllPlayers(_footballRepository.GetPlayerStats(), _footballRepository.GetAllPlayers());
+            _playerCalculations = _footballRepository.GetPlayerCalculations();
             _teams = _footballRepository.GetTeams();
         }
 
@@ -25,51 +25,42 @@ namespace FootballManagerEF.Services
         {
             ObservableCollection<PlayerMatch> outputList = new ObservableCollection<PlayerMatch>();
 
-            //Join the win stats onto list of user selected players
-            IEnumerable<PlayerData> result = from pm in playerMatches
-                                             join ps in _playerStats on pm.PlayerID equals ps.PlayerID into temp
-                                             from subtemp in temp.DefaultIfEmpty()
-                                             select new PlayerData
-                                             {
-                                                 PlayerMatch = pm,
-                                                 MatchWins = (subtemp == null ? 0 : subtemp.MatchWins),
-                                                 MatchesPlayed = subtemp.MatchesPlayed,
-                                                 WinRatio = SelectorServiceHelper.GetWinRatio(subtemp)
-                                             } into results
-                                             select results;
-
-            IList<PlayerData> playerData = result.ToList();
+            var playerCalculationsWithScore = playerMatches.Select(x => new PlayerCalculationWithScore
+            {
+                PlayerMatch = x,
+                PlayerCalculation = _playerCalculations.Single(y => y.PlayerID == x.PlayerID),
+                Score = SelectorServiceHelper.GetPlayerScore(_playerCalculations.Single(y => y.PlayerID == x.PlayerID))
+            })
+            .ToList();
 
             // Randomly shuffle list
-            playerData.Shuffle();
+            playerCalculationsWithScore.Shuffle();
 
-            // Divide list of player data into a list per team
-            IEnumerable<PlayerData> firstTeam = playerData.TakeFirstHalf();
-            IEnumerable<PlayerData> lastTeam = playerData.TakeLastHalf();
+            // Divide list of players into a list per team
+            IEnumerable<PlayerCalculationWithScore> firstTeam = playerCalculationsWithScore.TakeFirstHalf();
+            IEnumerable<PlayerCalculationWithScore> lastTeam = playerCalculationsWithScore.TakeLastHalf();
 
-            // Get total win ratios per team
-            decimal? firstTeamsTotalWinRatio = firstTeam.Sum(x => x.WinRatio);
-            decimal? lastTeamsTotalWinRatio = lastTeam.Sum(x => x.WinRatio);
+            // Get total player scores per team
+            decimal? firstTeamsTotalScore = firstTeam.Sum(x => x.Score);
+            decimal? lastTeamsTotalScore = lastTeam.Sum(x => x.Score);
 
-            // Get difference in win ratio between teams
-            decimal winRatioOffset = SelectorServiceHelper.GetOffset(firstTeamsTotalWinRatio, lastTeamsTotalWinRatio);
+            // Get difference in total player score between teams
+            decimal totalScoreDifferential = SelectorServiceHelper.GetOffset(firstTeamsTotalScore, lastTeamsTotalScore);
 
-            // Prepare swap candidates based on win ratio differential
-            PlayerData firstSwapCandidate = firstTeam.GetClosestToWinRatio(winRatioOffset / 2);
-            PlayerData lastSwapCandidate = lastTeam.GetClosestToWinRatio(winRatioOffset / 2);
+            // Prepare swap candidates based on score differential
+            var firstSwapCandidate = firstTeam.GetClosestToWinRatio(totalScoreDifferential / 2);
+            var lastSwapCandidate = lastTeam.GetClosestToWinRatio(totalScoreDifferential / 2);
 
-            // Get difference in win ratio between swap candidates
-            decimal? candidateOffset = SelectorServiceHelper.GetOffset(firstSwapCandidate.WinRatio, lastSwapCandidate.WinRatio);
+            // Get difference in player score between swap candidates
+            decimal? candidateOffset = SelectorServiceHelper.GetOffset(firstSwapCandidate.Score, lastSwapCandidate.Score);
 
             // Undertake the swap if there would be a reduction in the differential i.e. improvement in team matching
-            if (candidateOffset < winRatioOffset)
-                playerData.Swap(firstSwapCandidate, lastSwapCandidate);
+            if (candidateOffset < totalScoreDifferential)
+                playerCalculationsWithScore.Swap(firstSwapCandidate, lastSwapCandidate);
 
             // List is correctly ordered by player
-            outputList.DistributePlayersBasedOnListOrder(playerData);
-
-            // Assign the teams, smallest player should wear a bib
-            SelectorServiceHelper.AssignShortestTeamToBibs(outputList, _footballRepository);
+            outputList.DistributePlayersBasedOnListOrder(playerCalculationsWithScore);
+            outputList.AssignTeamsBasedOnListOrder(_teams);
 
             return outputList;
         }

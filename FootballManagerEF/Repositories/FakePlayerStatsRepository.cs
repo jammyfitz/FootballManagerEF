@@ -14,21 +14,38 @@ namespace FootballManagerEF.Repositories
         {
            return new List<PlayerStat> 
            { 
-              CreatePlayer(1, "Jamie", 10, 10),
-              CreatePlayer(2, "Mike", 8, 10),
-              CreatePlayer(3, "Caff", 7, 10),
-              CreatePlayer(4, "Ant", 7, 10),
-              CreatePlayer(5, "Croucho", 5, 15),
-              CreatePlayer(6, "Greg", 4, 4),
-              CreatePlayer(7, "Hugh", 4, 4),
-              CreatePlayer(8, "Skip", 4, 12),
-              CreatePlayer(9, "Imran", 2, 8),
-              CreatePlayer(10, "John", 1, 8),
+              CreatePlayerStat(1, "Jamie", 10, 10),
+              CreatePlayerStat(2, "Mike", 8, 10),
+              CreatePlayerStat(3, "Caff", 7, 10),
+              CreatePlayerStat(4, "Ant", 7, 10),
+              CreatePlayerStat(5, "Croucho", 5, 15),
+              CreatePlayerStat(6, "Greg", 4, 4),
+              CreatePlayerStat(7, "Hugh", 4, 4),
+              CreatePlayerStat(8, "Skip", 4, 12),
+              CreatePlayerStat(9, "Imran", 2, 8),
+              CreatePlayerStat(10, "John", 1, 8),
+           };
+        }
+
+        public List<PlayerCalculation> GetPlayerCalculations()
+        {
+            return new List<PlayerCalculation>
+           {
+              CreatePlayerCalculation(1, "Jamie", 10, 10, 2),
+              CreatePlayerCalculation(2, "Mike", 8, 10, 3),
+              CreatePlayerCalculation(3, "Caff", 7, 10, 1),
+              CreatePlayerCalculation(4, "Ant", 7, 10, 4),
+              CreatePlayerCalculation(5, "Croucho", 5, 15, 5),
+              CreatePlayerCalculation(6, "Greg", 4, 4, 5),
+              CreatePlayerCalculation(7, "Hugh", 4, 4, 2),
+              CreatePlayerCalculation(8, "Skip", 4, 12, 1),
+              CreatePlayerCalculation(9, "Imran", 2, 8, 3),
+              CreatePlayerCalculation(10, "John", 1, 8, 4),
            };
         }
 
         #region Private
-        private PlayerStat CreatePlayer(int playerId, string playerName, int? matchWins, int? matchesPlayed)
+        private PlayerStat CreatePlayerStat(int playerId, string playerName, int? matchWins, int? matchesPlayed)
         {
             return new PlayerStat
             {
@@ -36,6 +53,17 @@ namespace FootballManagerEF.Repositories
                 PlayerName = playerName,
                 MatchWins = matchWins,
                 MatchesPlayed = matchesPlayed
+            };
+        }
+
+        private PlayerCalculation CreatePlayerCalculation(int playerId, string playerName, int? totalMatchWins, int? matchesPlayed, int? recentMatchWins)
+        {
+            return new PlayerCalculation
+            {
+                PlayerName = playerName,
+                TotalMatchWins = totalMatchWins,
+                MatchesPlayed = matchesPlayed,
+                RecentMatchWins = recentMatchWins
             };
         }
         #endregion

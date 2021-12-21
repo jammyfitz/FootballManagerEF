@@ -39,25 +39,25 @@ namespace FootballManagerEF.Extensions
 
         #endregion
 
-        public static void Swap(this IList<PlayerData> playerDataList, PlayerData firstSwapCandidate, PlayerData lastSwapCandidate)
+        public static void Swap(this IList<PlayerCalculationWithScore> playerList, PlayerCalculationWithScore firstSwapCandidate, PlayerCalculationWithScore lastSwapCandidate)
         {
-            var firstIndex = playerDataList.GetIndexByPlayerId(firstSwapCandidate.PlayerMatch.PlayerID);
-            var secondIndex = playerDataList.GetIndexByPlayerId(lastSwapCandidate.PlayerMatch.PlayerID);
+            var firstIndex = playerList.GetIndexByPlayerId(firstSwapCandidate.PlayerMatch.PlayerID);
+            var secondIndex = playerList.GetIndexByPlayerId(lastSwapCandidate.PlayerMatch.PlayerID);
 
-            var tmp = playerDataList[firstIndex];
-            playerDataList[firstIndex] = playerDataList[secondIndex];
-            playerDataList[secondIndex] = tmp;
+            var tmp = playerList[firstIndex];
+            playerList[firstIndex] = playerList[secondIndex];
+            playerList[secondIndex] = tmp;
         }
 
-        public static PlayerData GetClosestToWinRatio(this IEnumerable<PlayerData> enumeration, decimal target)
+        public static PlayerCalculationWithScore GetClosestToWinRatio(this IEnumerable<PlayerCalculationWithScore> enumeration, decimal target)
         {
-            PlayerData closest = enumeration.OrderBy(playerData => Math.Abs((decimal)(target - playerData.WinRatio))).First();
-            return closest;
+            PlayerCalculationWithScore closestMatch = enumeration.OrderBy(player => Math.Abs((decimal)(target - player.Score))).First();
+            return closestMatch;
         }
 
-        public static int GetIndexByPlayerId(this IList<PlayerData> playerDataList, int? playerId)
+        public static int GetIndexByPlayerId(this IList<PlayerCalculationWithScore> playerList, int? playerId)
         {
-            return playerDataList.IndexOf(playerDataList.Single(x => x.PlayerMatch.PlayerID == playerId));
+            return playerList.IndexOf(playerList.Single(x => x.PlayerMatch.PlayerID == playerId));
         }
 
         public static void EvenlyDistributePlayersFromList(this ObservableCollection<PlayerMatch> playerMatchList, IList<PlayerData> playerDataList)
@@ -69,11 +69,11 @@ namespace FootballManagerEF.Extensions
             }
         }
 
-        public static void DistributePlayersBasedOnListOrder(this ObservableCollection<PlayerMatch> playerMatchList, IList<PlayerData> playerDataList)
+        public static void DistributePlayersBasedOnListOrder(this ObservableCollection<PlayerMatch> playerMatchList, IList<PlayerCalculationWithScore> playerList)
         {
-            foreach (var playerData in playerDataList)
+            foreach (var player in playerList)
             {
-                playerMatchList.Add(playerData.PlayerMatch);
+                playerMatchList.Add(player.PlayerMatch);
             }
         }
 
@@ -105,6 +105,15 @@ namespace FootballManagerEF.Extensions
                     playerMatch.TeamID = firstTeamId;
                 }
             }
+        }
+
+        public static decimal GetWinRatio(this List<PlayerMatch> playerMatches)
+        {
+            var totalMatchWins = playerMatches.Where(y => y.WonMatch()).Count();
+            var matchesPlayed = playerMatches.Count();
+            var winRatio = ((decimal)totalMatchWins / (decimal)matchesPlayed) * 100;
+
+            return winRatio;
         }
 
         private static int? GetShortestPlayersTeamId(ObservableCollection<PlayerMatch> playerMatchList)

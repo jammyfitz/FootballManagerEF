@@ -26,6 +26,5 @@ namespace FootballManagerEF.Helpers
 
             return missingPlayers.ToList();
         }
-
     }
 }

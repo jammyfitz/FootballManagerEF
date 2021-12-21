@@ -10,5 +10,7 @@ namespace FootballManagerEF.Interfaces
     public interface IPlayerStatsRepository : IDisposable
     {
         List<PlayerStat> GetPlayerStats();
+
+        List<PlayerCalculation> GetPlayerCalculations();
     }
 }
