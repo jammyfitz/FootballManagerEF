@@ -9,9 +9,9 @@
 
 namespace FootballManagerEF.Models
 {
-    using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
     
     public partial class FootballEntities : DbContext
     {
@@ -31,5 +31,10 @@ namespace FootballManagerEF.Models
         public virtual DbSet<Team> Teams { get; set; }
         public virtual DbSet<Config> Configs { get; set; }
         public virtual DbSet<PlayerStat> PlayerStats { get; set; }
+    
+        public virtual ObjectResult<DeleteData_Result> DeleteData()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DeleteData_Result>("DeleteData");
+        }
     }
 }

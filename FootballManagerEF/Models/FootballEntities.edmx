@@ -21,6 +21,8 @@
           <Property Name="MatchID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MatchDate" Type="smalldatetime" />
           <Property Name="MatchWinner" Type="int" />
+          <Property Name="BibsGoals" Type="int" />
+          <Property Name="NonBibsGoals" Type="int" />
         </EntityType>
         <EntityType Name="Player">
           <Key>
@@ -96,6 +98,7 @@ warning 6002: The table/view 'Football.dbo.PlayerStats' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="DeleteData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="FootballModelStoreContainer">
           <EntitySet Name="Config" EntityType="Self.Config" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Match" EntityType="Self.Match" Schema="dbo" store:Type="Tables" />
@@ -135,6 +138,8 @@ warning 6002: The table/view 'Football.dbo.PlayerStats' does not have a primary 
           <Property Name="MatchDate" Type="DateTime" Precision="0" />
           <Property Name="MatchWinner" Type="Int32" />
           <NavigationProperty Name="PlayerMatches" Relationship="Self.FK_PlayerMatch_Match" FromRole="Match" ToRole="PlayerMatch" />
+          <Property Name="BibsGoals" Type="Int32" />
+          <Property Name="NonBibsGoals" Type="Int32" />
         </EntityType>
         <EntityType Name="Player">
           <Key>
@@ -223,6 +228,7 @@ warning 6002: The table/view 'Football.dbo.PlayerStats' does not have a primary 
           </AssociationSet>
           <EntitySet Name="Configs" EntityType="FootballModel.Config" />
           <EntitySet Name="PlayerStats" EntityType="FootballModel.PlayerStat" />
+          <FunctionImport Name="DeleteData" ReturnType="Collection(FootballModel.DeleteData_Result)" />
         </EntityContainer>
         <EntityType Name="Config">
           <Key>
@@ -242,6 +248,13 @@ warning 6002: The table/view 'Football.dbo.PlayerStats' does not have a primary 
           <Property Name="PlayerID" Type="Int32" Nullable="false" />
           <Property Name="MatchesPlayed" Type="Int32" />
         </EntityType>
+        <ComplexType Name="DeleteData_Result">
+          <Property Type="Int32" Name="MatchID" Nullable="false" />
+          <Property Type="DateTime" Name="MatchDate" Nullable="true" Precision="16" />
+          <Property Type="Int32" Name="MatchWinner" Nullable="true" />
+          <Property Type="Int32" Name="BibsGoals" Nullable="true" />
+          <Property Type="Int32" Name="NonBibsGoals" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -251,6 +264,8 @@ warning 6002: The table/view 'Football.dbo.PlayerStats' does not have a primary 
           <EntitySetMapping Name="Matches">
             <EntityTypeMapping TypeName="FootballModel.Match">
               <MappingFragment StoreEntitySet="Match">
+                <ScalarProperty Name="NonBibsGoals" ColumnName="NonBibsGoals" />
+                <ScalarProperty Name="BibsGoals" ColumnName="BibsGoals" />
                 <ScalarProperty Name="MatchID" ColumnName="MatchID" />
                 <ScalarProperty Name="MatchDate" ColumnName="MatchDate" />
                 <ScalarProperty Name="MatchWinner" ColumnName="MatchWinner" />
@@ -307,6 +322,17 @@ warning 6002: The table/view 'Football.dbo.PlayerStats' does not have a primary 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DeleteData" FunctionName="FootballModel.Store.DeleteData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FootballModel.DeleteData_Result">
+                <ScalarProperty Name="MatchID" ColumnName="MatchID" />
+                <ScalarProperty Name="MatchDate" ColumnName="MatchDate" />
+                <ScalarProperty Name="MatchWinner" ColumnName="MatchWinner" />
+                <ScalarProperty Name="BibsGoals" ColumnName="BibsGoals" />
+                <ScalarProperty Name="NonBibsGoals" ColumnName="NonBibsGoals" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

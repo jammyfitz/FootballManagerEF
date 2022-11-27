@@ -22,6 +22,8 @@ namespace FootballManagerEF.Models
         public int MatchID { get; set; }
         public Nullable<System.DateTime> MatchDate { get; set; }
         public Nullable<int> MatchWinner { get; set; }
+        public Nullable<int> BibsGoals { get; set; }
+        public Nullable<int> NonBibsGoals { get; set; }
     
         public virtual ICollection<PlayerMatch> PlayerMatches { get; set; }
     }

@@ -10,16 +10,13 @@
 namespace FootballManagerEF.Models
 {
     using System;
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    public partial class PlayerStat
+    
+    public partial class DeleteData_Result
     {
-        public string PlayerName { get; set; }
-        public Nullable<int> MatchWins { get; set; }
-        public int PlayerID { get; set; }
-        public Nullable<int> MatchesPlayed { get; set; }
-
-        [NotMapped]
-        public decimal WinRatio { get; set; }
+        public int MatchID { get; set; }
+        public Nullable<System.DateTime> MatchDate { get; set; }
+        public Nullable<int> MatchWinner { get; set; }
+        public Nullable<int> BibsGoals { get; set; }
+        public Nullable<int> NonBibsGoals { get; set; }
     }
 }
