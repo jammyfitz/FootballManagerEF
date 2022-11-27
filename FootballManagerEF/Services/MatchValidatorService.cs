@@ -1,10 +1,7 @@
 ﻿using FootballManagerEF.Interfaces;
 using FootballManagerEF.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 
 namespace FootballManagerEF.Services
 {
@@ -105,14 +102,6 @@ namespace FootballManagerEF.Services
             return false;
         }
 
-        private bool RowsHavePlayerButNoTeam()
-        {
-            if (PlayerMatches.Where(x => x.PlayerID != null && x.TeamID == null).Count() > 0)
-                return true;
-
-            return false;
-        }
-
         private bool RowsHaveTeamButNoPlayer()
         {
             if (PlayerMatches.Where(x => x.PlayerID == null && x.TeamID != null).Count() > 0)
@@ -124,14 +113,6 @@ namespace FootballManagerEF.Services
         private bool GridHasMissingPlayers()
         {
             if (PlayerMatches.Where(x => x.PlayerID == null).Count() > 0)
-                return true;
-
-            return false;
-        }
-
-        private bool GridHasMissingRows()
-        {
-            if (PlayerMatches.Where(x => x.PlayerID == null || x.TeamID == null).Count() > 0)
                 return true;
 
             return false;

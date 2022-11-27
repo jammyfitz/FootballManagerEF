@@ -1,16 +1,9 @@
 ﻿using FootballManagerEF.Handlers;
 using FootballManagerEF.Interfaces;
 using FootballManagerEF.Models;
-using FootballManagerEF.Repositories;
-using FootballManagerEF.Services;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace FootballManagerEF.ViewModels
@@ -98,7 +91,7 @@ namespace FootballManagerEF.ViewModels
 
         private void SaveDataGrid()
         {
-            ObservableCollection<PlayerMatch> playerMatchesToInsert = GetPlayerMatchesToInsert();
+            var playerMatchesToInsert = GetPlayerMatchesToInsert();
 
             _footballRepository.InsertPlayerMatches(playerMatchesToInsert, SelectedMatch.MatchID);
             _footballRepository.Save();

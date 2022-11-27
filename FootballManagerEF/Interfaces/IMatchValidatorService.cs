@@ -1,10 +1,5 @@
-﻿using FootballManagerEF.Interfaces;
-using FootballManagerEF.Models;
-using System;
-using System.Collections.Generic;
+﻿using FootballManagerEF.Models;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 
 namespace FootballManagerEF.Interfaces
 {
