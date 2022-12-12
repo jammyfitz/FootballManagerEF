@@ -1,10 +1,6 @@
 ﻿using FootballManagerEF.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FootballManagerEF.Classes
 {
@@ -28,18 +24,22 @@ namespace FootballManagerEF.Classes
         {
             var mail = CreateMail();
 
-            SmtpClient SmtpServer = new SmtpClient(_smtpData.Host);
-            SmtpServer.Port = int.Parse(_smtpData.Port);
-            SmtpServer.UseDefaultCredentials = false;
-            SmtpServer.Credentials = new System.Net.NetworkCredential(_smtpData.AgentSine, _smtpData.AgentDutyCode);
-            SmtpServer.EnableSsl = true;
+            var SmtpServer = new SmtpClient(_smtpData.Host)
+            {
+                Port = int.Parse(_smtpData.Port),
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(_smtpData.AgentSine, _smtpData.AgentDutyCode),
+                EnableSsl = true
+            };
+
             SmtpServer.Send(mail);
+
             return true;
         }
 
         public MailMessage CreateMail()
         {
-            MailMessage mail = new MailMessage()
+            var mail = new MailMessage()
             {
                 From = new MailAddress(_mailHelper.GetFromAddress()),
                 Subject = _mailHelper.GetSubject(),

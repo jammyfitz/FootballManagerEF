@@ -8,12 +8,12 @@ namespace FootballManagerEF.Helpers
 {
     public class PlayerStatsMailHelper : IMailHelper
     {
-        private List<PlayerStat> _playerStats;
+        private List<PlayerStatisticsData> _playerStatisticsData;
         private string _toAddress;
 
-        public PlayerStatsMailHelper(List<PlayerStat> playerStats, string toAddress)
+        public PlayerStatsMailHelper(List<PlayerStatisticsData> playerStatisticsData, string toAddress)
         {
-            _playerStats = playerStats;
+            _playerStatisticsData = playerStatisticsData;
             _toAddress = toAddress;
         }
 
@@ -29,21 +29,26 @@ namespace FootballManagerEF.Helpers
 
         public string GetSubject()
         {
-            
             return DateTime.Now.ToString("yyyy-MM-dd") + " - Thursday Football Stats";
         }
 
         public string GetBody()
         {
-            StringBuilder body = new StringBuilder("***The Octopus v1.6***\n");
+            var body = new StringBuilder("***The Octopus v1.6***\n");
+            //body.AppendLine("Name - Wins - Win% - F - A");
 
-            foreach (PlayerStat playerStat in _playerStats)
-                body.Append(WritePlayerStatLine(playerStat.PlayerName, playerStat.MatchWins.ToString(), playerStat.WinRatio));
+            foreach (var playerStatistics in _playerStatisticsData)
+                body.AppendLine(WritePlayerStat(playerStatistics.PlayerName, playerStatistics.TotalMatchWins.ToString(), playerStatistics.WinRatio));
 
             return body.ToString();
         }
 
-        private static string WritePlayerStatLine(string playerName, string matchWins, decimal winRatio)
+        private static string WritePlayerStat(string playerName, string matchWins, decimal winRatio)
+        {
+            return string.Format("{0} - {1} - {2}%", playerName, matchWins, Math.Round(winRatio, 0, MidpointRounding.AwayFromZero));
+        }
+
+        private static string WritePlayerStatLine2(string playerName, string matchWins, decimal winRatio)
         {
             return string.Format("{0} - {1} - {2}%\n", playerName, matchWins, Math.Round(winRatio, 0, MidpointRounding.AwayFromZero));
         }

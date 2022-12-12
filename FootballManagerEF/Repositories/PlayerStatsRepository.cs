@@ -70,6 +70,28 @@ namespace FootballManagerEF.Repositories
             return playerCalculations;
         }
 
+        public List<PlayerStatisticsData> GetPlayerStatisticsData()
+        {
+            var playerMatchesByPlayer = context.PlayerMatches
+                .Include(x => x.Player)
+                .Include(x => x.Match)
+                .GroupBy(x => x.PlayerID)
+                .ToList();
+
+            var playerCalculations = playerMatchesByPlayer.Select(x => new PlayerStatisticsData
+            {
+                PlayerName = x.First().Player.PlayerName,
+                TotalMatchWins = x.Where(y => y.WonMatch()).Count(),
+                WinRatio = x.ToList().GetWinRatio(),
+                GoalsFor = x.ToList().GetGoalsFor(),
+                GoalsAgainst = x.ToList().GetGoalsAgainst()
+            })
+            .OrderByDescending(x => x.TotalMatchWins)
+            .ToList();
+
+            return playerCalculations;
+        }
+
         public void Save()
         {
             context.SaveChanges();

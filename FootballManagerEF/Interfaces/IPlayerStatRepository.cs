@@ -12,5 +12,7 @@ namespace FootballManagerEF.Interfaces
         List<PlayerStat> GetPlayerStats();
 
         List<PlayerCalculation> GetPlayerCalculations();
+
+        List<PlayerStatisticsData> GetPlayerStatisticsData();
     }
 }

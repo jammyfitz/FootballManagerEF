@@ -77,6 +77,11 @@ namespace FootballManagerEF.Repositories
             throw new NotImplementedException();
         }
 
+        public List<PlayerStatisticsData> GetPlayerStatisticsData()
+        {
+            throw new NotImplementedException();
+        }
+
         private bool disposed = false;
 
         protected virtual void Dispose(bool disposing)
@@ -89,6 +94,7 @@ namespace FootballManagerEF.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
         #endregion
     }
 }

@@ -111,6 +111,7 @@
     <Compile Include="Models\DeleteData_Result.cs">
       <DependentUpon>FootballEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PlayerStatisticsData.cs" />
     <Compile Include="Models\PlayerCalculationWithScore.cs" />
     <Compile Include="Models\PlayerCalculation.cs" />
     <Compile Include="Models\PlayerData.cs" />

@@ -37,9 +37,9 @@ namespace FootballManagerEF.Services
         public bool SendStats()
         {
             _footballRepository.Refresh();
-            GetPlayerStats();
+            var playerStatisticsData = _footballRepository.GetPlayerStatisticsData();
 
-            _mailHelper = new PlayerStatsMailHelper(_playerStats,_config.SmtpAgentSine);
+            _mailHelper = new PlayerStatsMailHelper(playerStatisticsData, _config.SmtpAgentSine);
             SetupMail(_mailHelper);
             return _mailer.SendMail();
         }

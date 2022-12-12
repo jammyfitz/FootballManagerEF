@@ -116,6 +116,24 @@ namespace FootballManagerEF.Extensions
             return winRatio;
         }
 
+        public static int GetGoalsFor(this List<PlayerMatch> playerMatches)
+        {
+            var totalGoalsScoredAsBibs = playerMatches.Where(x => x.Match.BibsGoals.HasValue).Sum(x => x.TeamID == 1 ? x.Match.BibsGoals.Value : 0);
+            var totalGoalsScoredAsNonBibs = playerMatches.Where(x => x.Match.NonBibsGoals.HasValue).Sum(x => x.TeamID == 2 ? x.Match.NonBibsGoals.Value : 0);
+            var totalGoalsScored = totalGoalsScoredAsBibs + totalGoalsScoredAsNonBibs;
+
+            return totalGoalsScored;
+        }
+
+        public static int GetGoalsAgainst(this List<PlayerMatch> playerMatches)
+        {
+            var totalGoalsConceededAsBibs = playerMatches.Where(x => x.Match.NonBibsGoals.HasValue).Sum(x => x.TeamID == 1 ? x.Match.NonBibsGoals.Value : 0);
+            var totalGoalsConceededAsNonBibs = playerMatches.Where(x => x.Match.BibsGoals.HasValue).Sum(x => x.TeamID == 2 ? x.Match.BibsGoals.Value : 0);
+            var totalGoalsConceeded = totalGoalsConceededAsBibs + totalGoalsConceededAsNonBibs;
+
+            return totalGoalsConceeded;
+        }
+
         private static int? GetShortestPlayersTeamId(ObservableCollection<PlayerMatch> playerMatchList)
         {
             return playerMatchList.OrderByDescending(x => x.Player.Height).First().TeamID;

@@ -2,12 +2,7 @@
 using FootballManagerEF.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Collections.ObjectModel;
-using FootballManagerEF.Helpers;
 
 namespace FootballManagerEF.Repositories
 {
@@ -162,6 +157,11 @@ namespace FootballManagerEF.Repositories
             return playerStatsRepository.GetPlayerCalculations();
         }
 
+        public List<PlayerStatisticsData> GetPlayerStatisticsData()
+        {
+            return playerStatsRepository.GetPlayerStatisticsData();
+        }
+
         #endregion
 
         #region Private
@@ -207,6 +207,7 @@ namespace FootballManagerEF.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
         #endregion
     }
 }
