@@ -1,4 +1,5 @@
-﻿using FootballManagerEF.Interfaces;
+﻿using FootballManagerEF.Extensions;
+using FootballManagerEF.Interfaces;
 using FootballManagerEF.Models;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,6 @@ namespace FootballManagerEF.Helpers
         public string GetBody()
         {
             var body = new StringBuilder("***The Octopus v1.6***\n");
-            //body.AppendLine("Name - Wins - Win% - F - A");
 
             foreach (var playerStatistics in _playerStatisticsData)
                 body.AppendLine(WritePlayerStat(playerStatistics.PlayerName, playerStatistics.TotalMatchWins.ToString(), playerStatistics.WinRatio));
@@ -43,14 +43,35 @@ namespace FootballManagerEF.Helpers
             return body.ToString();
         }
 
-        private static string WritePlayerStat(string playerName, string matchWins, decimal winRatio)
+        public string GetBody2023()
         {
-            return string.Format("{0} - {1} - {2}%", playerName, matchWins, Math.Round(winRatio, 0, MidpointRounding.AwayFromZero));
+            var body = new StringBuilder();
+            body.AppendLine("---------------------------------");
+            body.AppendLine("   The Octopus v2.0              (.  .)  ");
+            body.AppendLine("                                               ((( )))");
+            body.AppendLine("---------------------------------");
+            body.AppendLine("Name - Wins - Win% - Average For(Total) - Average Against(Total)");
+
+            foreach (var playerStatistics in _playerStatisticsData)
+                body.AppendLine(WritePlayerStat2(playerStatistics));
+
+            return body.ToString();
         }
 
-        private static string WritePlayerStatLine2(string playerName, string matchWins, decimal winRatio)
+        private static string WritePlayerStat(string playerName, string matchWins, decimal winRatio)
         {
-            return string.Format("{0} - {1} - {2}%\n", playerName, matchWins, Math.Round(winRatio, 0, MidpointRounding.AwayFromZero));
+            return string.Format("{0} - {1} - {2}%", playerName, matchWins, winRatio.Round());
+        }
+
+        private static string WritePlayerStat2(PlayerStatisticsData playerStatisticsData)
+        {
+            var winRatio = playerStatisticsData.WinRatio.Round();
+            var goalsFor = $"{playerStatisticsData.AverageGoalsForPerGame.Round()}({playerStatisticsData.GoalsFor})";
+            var goalsAgainst = $"{playerStatisticsData.AverageGoalsAgainstPerGame.Round()}({playerStatisticsData.GoalsAgainst})";
+
+            var playerStatsLine = $"{playerStatisticsData.PlayerName} - {playerStatisticsData.TotalMatchWins} - {winRatio}% - {goalsFor} - {goalsAgainst}";
+            
+            return playerStatsLine;
         }
     }
 }

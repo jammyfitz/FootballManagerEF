@@ -78,6 +78,7 @@
     <Compile Include="Comparers\PlayerDataComparer.cs" />
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="Events\GenericEventArgs.cs" />
+    <Compile Include="Extensions\DecimalExtensions.cs" />
     <Compile Include="Extensions\PlayerMatchExtensions.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Handlers\CommandHandler.cs" />

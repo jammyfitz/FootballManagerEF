@@ -7,5 +7,7 @@
         public decimal WinRatio { get; set; }
         public int GoalsFor { get; set; }
         public int GoalsAgainst { get; set; }
+        public decimal AverageGoalsForPerGame { get; set; }
+        public decimal AverageGoalsAgainstPerGame { get; set; }
     }
 }

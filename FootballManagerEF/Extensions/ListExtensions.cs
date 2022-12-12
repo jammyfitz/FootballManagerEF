@@ -134,6 +134,30 @@ namespace FootballManagerEF.Extensions
             return totalGoalsConceeded;
         }
 
+        public static decimal GetAverageGoalsFor(this List<PlayerMatch> playerMatches)
+        {
+            var goalsFor = playerMatches.GetGoalsFor();
+            var averageGoalsFor = playerMatches.GetAverageOverMatchesPlayed(goalsFor);
+
+            return averageGoalsFor;
+        }
+
+        public static decimal GetAverageGoalsAgainst(this List<PlayerMatch> playerMatches)
+        {
+            var goalsAgainst = playerMatches.GetGoalsAgainst();
+            var averageGoalsFor = playerMatches.GetAverageOverMatchesPlayed(goalsAgainst);
+
+            return averageGoalsFor;
+        }
+
+        private static decimal GetAverageOverMatchesPlayed(this List<PlayerMatch> playerMatches, decimal stat)
+        {
+            var matchesPlayed = playerMatches.Count();
+            var averageGoalsFor = (decimal)stat / (decimal)matchesPlayed;
+
+            return averageGoalsFor;
+        }
+
         private static int? GetShortestPlayersTeamId(ObservableCollection<PlayerMatch> playerMatchList)
         {
             return playerMatchList.OrderByDescending(x => x.Player.Height).First().TeamID;

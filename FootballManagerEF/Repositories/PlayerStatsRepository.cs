@@ -84,7 +84,9 @@ namespace FootballManagerEF.Repositories
                 TotalMatchWins = x.Where(y => y.WonMatch()).Count(),
                 WinRatio = x.ToList().GetWinRatio(),
                 GoalsFor = x.ToList().GetGoalsFor(),
-                GoalsAgainst = x.ToList().GetGoalsAgainst()
+                GoalsAgainst = x.ToList().GetGoalsAgainst(),
+                AverageGoalsForPerGame = x.ToList().GetAverageGoalsFor(),
+                AverageGoalsAgainstPerGame = x.ToList().GetAverageGoalsAgainst()
             })
             .OrderByDescending(x => x.TotalMatchWins)
             .ToList();
