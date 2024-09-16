@@ -12,5 +12,8 @@ namespace FootballManagerEF.Interfaces
         public string Port { get; set; }
         public string AgentSine { get; set; }
         public string AgentDutyCode { get; set; }
+        public string SmtpAgentDutyParam1 { get; set; }
+        public string SmtpAgentDutyParam2 { get; set; }
+        public string SmtpAgentDutyParam3 { get; set; }
     }
 }

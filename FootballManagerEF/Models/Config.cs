@@ -18,5 +18,8 @@ namespace FootballManagerEF.Models
         public string SmtpAgentSine { get; set; }
         public string SmtpAgentDutyCode { get; set; }
         public string SmtpPort { get; set; }
+        public string SmtpAgentDutyParam1 { get; set; }
+        public string SmtpAgentDutyParam2 { get; set; }
+        public string SmtpAgentDutyParam3 { get; set; }
     }
 }

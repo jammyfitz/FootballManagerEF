@@ -5,6 +5,7 @@ using FootballManagerEF.Models;
 using FootballManagerEF.Repositories;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace FootballManagerEF.Services
@@ -41,7 +42,11 @@ namespace FootballManagerEF.Services
 
             _mailHelper = new PlayerStatsMailHelper(playerStatisticsData, _config.SmtpAgentSine);
             SetupMail(_mailHelper);
-            return _mailer.SendMail();
+
+            ////_mailer.SendMail();
+            Task.Run(() => _mailer.SendEmailViaGraphApi());
+
+            return true;
         }
 
         public bool SendTeams()
@@ -108,6 +113,9 @@ namespace FootballManagerEF.Services
             {
                 AgentSine = _config.SmtpAgentSine,
                 AgentDutyCode = GetDecryptedAgentDutyCode(),
+                SmtpAgentDutyParam1 = _config.SmtpAgentDutyParam1,
+                SmtpAgentDutyParam2 = _config.SmtpAgentDutyParam2,
+                SmtpAgentDutyParam3 = _config.SmtpAgentDutyParam3,
                 Host = _config.SmtpServer,
                 Port = _config.SmtpPort
             };

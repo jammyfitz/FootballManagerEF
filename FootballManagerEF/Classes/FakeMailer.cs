@@ -31,5 +31,15 @@ namespace FootballManagerEF.Services
         {
             return _result;
         }
+
+        public Task<bool> SendMailUsingOAuthAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SendEmailViaGraphApi()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

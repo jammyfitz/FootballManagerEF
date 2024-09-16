@@ -12,5 +12,7 @@ namespace FootballManagerEF.Interfaces
         IMailer CreateInstance(SmtpData smtpData, IMailHelper mailHelper);
         MailMessage CreateMail();
         bool SendMail();
+        Task<bool> SendMailUsingOAuthAsync();
+        void SendEmailViaGraphApi();
     }
 }

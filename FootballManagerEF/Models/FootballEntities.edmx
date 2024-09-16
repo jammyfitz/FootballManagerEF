@@ -13,6 +13,9 @@
           <Property Name="SmtpAgentSine" Type="nvarchar" MaxLength="50" />
           <Property Name="SmtpAgentDutyCode" Type="nvarchar(max)" />
           <Property Name="SmtpPort" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="SmtpAgentDutyParam1" Type="nvarchar" MaxLength="50" />
+          <Property Name="SmtpAgentDutyParam2" Type="nvarchar" MaxLength="50" />
+          <Property Name="SmtpAgentDutyParam3" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Match">
           <Key>
@@ -238,6 +241,9 @@ warning 6002: The table/view 'Football.dbo.PlayerStats' does not have a primary 
           <Property Name="SmtpAgentSine" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SmtpAgentDutyCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SmtpPort" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="SmtpAgentDutyParam1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SmtpAgentDutyParam2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SmtpAgentDutyParam3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PlayerStat">
           <Key>
@@ -305,6 +311,9 @@ warning 6002: The table/view 'Football.dbo.PlayerStats' does not have a primary 
           <EntitySetMapping Name="Configs">
             <EntityTypeMapping TypeName="FootballModel.Config">
               <MappingFragment StoreEntitySet="Config">
+                <ScalarProperty Name="SmtpAgentDutyParam3" ColumnName="SmtpAgentDutyParam3" />
+                <ScalarProperty Name="SmtpAgentDutyParam2" ColumnName="SmtpAgentDutyParam2" />
+                <ScalarProperty Name="SmtpAgentDutyParam1" ColumnName="SmtpAgentDutyParam1" />
                 <ScalarProperty Name="SmtpPort" ColumnName="SmtpPort" />
                 <ScalarProperty Name="SmtpAgentDutyCode" ColumnName="SmtpAgentDutyCode" />
                 <ScalarProperty Name="SmtpAgentSine" ColumnName="SmtpAgentSine" />
