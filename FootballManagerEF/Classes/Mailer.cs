@@ -170,7 +170,8 @@ namespace FootballManagerEF.Classes
                 Message = GetMessage(),
             };
 
-            await graphClient.Users["f9470d39-b9ed-43e3-ad42-724eb250b640"].SendMail.PostAsync(requestBody);
+            var adminEmail = ConfigurationManager.AppSettings["AdministratorEmail"];
+            await graphClient.Users[adminEmail].SendMail.PostAsync(requestBody);
         }
 
         private Message GetMessage()
@@ -183,33 +184,8 @@ namespace FootballManagerEF.Classes
                     ContentType = BodyType.Text,
                     Content = _mailHelper.GetBody(),
                 },
-                ToRecipients = new List<Recipient>
-                {
-                    new Recipient
-                    {
-                        EmailAddress = new EmailAddress
-                        {
-                            Address = "jammyfitz@hotmail.com",
-                        },
-                    }
-                },
-                BccRecipients = new List<Recipient>
-                {
-                    new Recipient
-                    {
-                        EmailAddress = new EmailAddress
-                        {
-                            Address = "charlotteslayford@hotmail.com",
-                        },
-                    },
-                    new Recipient
-                    {
-                        EmailAddress = new EmailAddress
-                        {
-                            Address = "charlotteslayford@gmail.com",
-                        },
-                    }
-                },
+                ToRecipients = GetToRecipients(),
+                BccRecipients = GetBccRecipients(),
             };
         }
 
@@ -259,11 +235,6 @@ namespace FootballManagerEF.Classes
                 mail.To.Add(address);
 
             return mail;
-        }
-
-        public Task<bool> SendMailUsingOAuthAsync()
-        {
-            throw new NotImplementedException();
         }
 
         ////public bool SendMail()
