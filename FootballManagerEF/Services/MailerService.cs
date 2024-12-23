@@ -53,14 +53,20 @@ namespace FootballManagerEF.Services
         {
             _mailHelper = new TeamsMailHelper(_playerMatchViewModel.PlayerMatches, _footballRepository, _config.SmtpAgentSine);
             SetupMail(_mailHelper);
-            return _mailer.SendMail();
+            ////_mailer.SendMail();
+            Task.Run(() => _mailer.SendEmailViaGraphApi());
+
+            return true;
         }
 
         public bool SendCancellation()
         {
             _mailHelper = new CancellationMailHelper(_playerMatchViewModel.PlayerMatches, _footballRepository, _config.SmtpAgentSine);
             SetupMail(_mailHelper);
-            return _mailer.SendMail();
+            ////_mailer.SendMail();
+            Task.Run(() => _mailer.SendEmailViaGraphApi());
+
+            return true;
         }
 
         private void SetupMail(IMailHelper mailHelper)

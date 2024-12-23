@@ -185,7 +185,7 @@ namespace FootballManagerEF.Classes
                     Content = _mailHelper.GetBody(),
                 },
                 ToRecipients = GetToRecipients(),
-                BccRecipients = GetBccRecipients(),
+                ////BccRecipients = GetBccRecipients(),
             };
         }
 
@@ -208,18 +208,11 @@ namespace FootballManagerEF.Classes
             };
         }
 
-        private static List<Recipient> GetToRecipients()
+        private List<Recipient> GetToRecipients()
         {
-            return new List<Recipient>
-            {
-                new Recipient
-                {
-                    EmailAddress = new EmailAddress
-                    {
-                        Address = ConfigurationManager.AppSettings["OrganiserEmail"],
-                    },
-                }
-            };
+            return _mailHelper.GetToAddresses()
+                .Select(x => GetRecipient(x))
+                .ToList();
         }
 
         public MailMessage CreateMail()
